@@ -1,0 +1,116 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: linear-gradient(to right, #003676, #00aae3);
+}
+
+.fundo_dados{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border-radius: 15px;
+    width: 30%;
+    color: white;
+}
+
+fieldset{
+    border: 3px solid #0072bb;
+}
+
+legend{
+    border: 1px solid #0072bb;
+    padding: 10px;
+    text-align: center;
+    background-color: #0072bb;
+    border-radius: 10px;
+}
+
+.inputBox{
+    position: relative;
+}
+
+.inputUser{
+    background: none;
+    border: none;
+    border-bottom: 1px solid white;
+    outline: none;
+    color: white;
+    font-size: 15px;
+    width: 100%;
+    letter-spacing: 2px;
+}
+
+.labelInput{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.inputUser:focus ~ .labelInput, .inputUser:valid ~ .labelInput{
+    top: -20px;
+    font-size: 12px;
+}
+
+#submit{
+    background-image: linear-gradient(to right, #003676, #0072bb);
+    width: 100%;
+    border: none;
+    padding: 15px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#submit:hover{
+    background-image: linear-gradient(to right, #003676, #00aae3);
+}
+
+table, th, td, tr{
+    border:1px solid black;
+    margin: 0;
+    text-align: center;
+    background:  none;
+    color: white;
+    border: none;
+}
+
+th, td, tr{
+    border-bottom: 1px solid white;
+}
+
+table{
+    width: 100%;
+}
+
+.fundo_table{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%);
+    width: 95%;
+    padding: 15px;
+    border-radius: 15px;
+    color: white;
+}
+
+#informe{
+    background-image: linear-gradient(to right, #003676, #0072bb);
+    width: 70%;
+    border: none;
+    padding: 8px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#informe:hover{
+    background-image: linear-gradient(to right, #003676, #00aae3);
+}

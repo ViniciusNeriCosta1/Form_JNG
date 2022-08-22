@@ -1,6 +1,8 @@
 <?php
     include_once('config.php');
 
+    $result2 = '';
+
     if(isset($_POST['submit']))
     {
         $time_ent = $_POST['time_ent'];
@@ -14,6 +16,10 @@
         $result = mysqli_query($conexao, "INSERT INTO formulario_retira.retira
         (time_ent,nome,empresa,doc,pedido,obs,data,time_saida) 
         VALUES ('$time_ent','$nome','$empresa','$doc','$pedido','$obs','$data_retira','00:00')");
+
+        header('Location: retira.php');
+        die();//para a execução do if
+        
     }
 
     $sql = "SELECT * FROM retira where time_saida = '00:00' ORDER BY id DESC";

@@ -1,6 +1,18 @@
 <?php
+    date_default_timezone_set('America/Sao_Paulo');
     include_once('sql/Sql.php');
+
     $sql = new Sql();
+
+    if (isset($_GET['id']) && !empty($_GET['id'])) {
+        $sql->select('UPDATE formulario_retira.retira SET time_saida = :time_saida WHERE id = :id', array(
+            ':time_saida' => date('H:i'),
+            ':id' => $_GET['id']
+        ));
+
+        header('Location: retira.php');
+        die();
+    }
 
     if(isset($_POST['submit']))
     {
@@ -30,17 +42,11 @@
              ':data' => $data_retira
         ));
 
-        // $result = mysqli_query($conexao, "INSERT INTO formulario_retira.retira
-        // (time_ent,nome,empresa,doc,pedido,obs,data,time_saida) 
-        // VALUES ('$time_ent','$nome','$empresa','$doc','$pedido','$obs','$data_retira','00:00')");
-
         header('Location: retira.php');
         die();
     }
 
     $result = $sql->select("SELECT * FROM retira WHERE time_saida = '00:00' ORDER BY id DESC");
-    // $sql = "SELECT * FROM retira where time_saida = '00:00' ORDER BY id DESC";
-    // $result2 = $conexao->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +85,7 @@
                 </div>
                 <br>
                 <div class="inputBox">
-                    <input type="number" name="doc" id="doc" class="inputUser" required>
+                    <input type="file" name="doc" id="doc" class="inputUser" required>
                     <label for="doc" class="labelInput">Documento</label>
                 </div>
                 <br>
@@ -105,42 +111,33 @@
             <table>
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Nº Pedido</th>
                         <th>Nome</th>
                         <th>Empresa</th>
                         <th>Documento</th>
-                        <th>data</th>
+                        <th>Data</th>
                         <th>Entrada</th>
                         <th>Saida</th>
                         <th>OBS</th>
+                        <input type="hidden">
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                         foreach ($result as $k => $v) {
                             echo"<tr>";
-                            echo"<td>".$v['id']."</td>";
+                            echo"<td>".$v['pedido']."</td>";
                             echo"<td>".$v['nome']."</td>";
                             echo"<td>".$v['empresa']."</td>";
                             echo"<td>".$v['doc']."</td>";
                             echo"<td>".$v['data']."</td>";
                             echo"<td>".$v['time_ent']."</td>";
-                            echo"<td>".$v['time_saida']."</td>";
+                            echo"<td>
+                            <a href='retira.php?id={$v['id']}' name='informe' id='informe'>Informe</a>
+                            </td>";
                             echo"<td>".$v['obs']."</td>";
                             echo"</tr>";
                         }
-
-                        // while($aux = mysqli_fetch_assoc($result2)){
-                        //     echo"<tr>";
-                        //     echo"<td>".$aux['id']."</td>";
-                        //     echo"<td>".$aux['nome']."</td>";
-                        //     echo"<td>".$aux['empresa']."</td>";
-                        //     echo"<td>".$aux['doc']."</td>";
-                        //     echo"<td>".$aux['time_ent']."</td>";
-                        //     echo"<td>".$aux['time_saida']."</td>";
-                        //     echo"<td>".$aux['obs']."</td>";
-                        //     echo"</tr>";
-                        // }
                     ?>    
                 </tbody>
             </table>

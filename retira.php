@@ -1,11 +1,11 @@
 <?php
-    include_once('config.php');
-
-    $result2 = '';
+    include_once('sql/Sql.php');
+    $sql = new Sql();
 
     if(isset($_POST['submit']))
     {
         $time_ent = $_POST['time_ent'];
+        $time_saida = $_POST['time_saida'];
         $nome = $_POST['nome'];
         $empresa = $_POST['empresa'];
         $doc = $_POST['doc'];
@@ -13,18 +13,34 @@
         $obs = $_POST['obs'];
         $data_retira = $_POST['data_retira'];
 
-        $result = mysqli_query($conexao, "INSERT INTO formulario_retira.retira
-        (time_ent,nome,empresa,doc,pedido,obs,data,time_saida) 
-        VALUES ('$time_ent','$nome','$empresa','$doc','$pedido','$obs','$data_retira','00:00')");
+        $result = $sql->query('INSERT INTO formulario_retira.retira(
+                time_ent, nome, empresa, doc, pedido, obs, time_saida, data
+            ) VALUES (
+                :time_ent, :nome, :empresa, :doc, :pedido, :obs, :time_saida, :data
+            )
+        ', array(
+            ':time_ent' => $time_ent,
+             ':nome' => $nome,
+             ':empresa' => $empresa,
+             ':doc' => $doc,
+             ':pedido' => $pedido,
+             ':obs' => $obs,
+             ':data' => $data_retira,
+             ':time_saida' => '00:00',
+             ':data' => $data_retira
+        ));
+
+        // $result = mysqli_query($conexao, "INSERT INTO formulario_retira.retira
+        // (time_ent,nome,empresa,doc,pedido,obs,data,time_saida) 
+        // VALUES ('$time_ent','$nome','$empresa','$doc','$pedido','$obs','$data_retira','00:00')");
 
         header('Location: retira.php');
-        die();//para a execução do if
-        
+        die();
     }
 
-    $sql = "SELECT * FROM retira where time_saida = '00:00' ORDER BY id DESC";
-
-    $result2 = $conexao->query($sql);
+    $result = $sql->select("SELECT * FROM retira WHERE time_saida = '00:00' ORDER BY id DESC");
+    // $sql = "SELECT * FROM retira where time_saida = '00:00' ORDER BY id DESC";
+    // $result2 = $conexao->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -93,6 +109,7 @@
                         <th>Nome</th>
                         <th>Empresa</th>
                         <th>Documento</th>
+                        <th>data</th>
                         <th>Entrada</th>
                         <th>Saida</th>
                         <th>OBS</th>
@@ -100,17 +117,30 @@
                 </thead>
                 <tbody>
                     <?php
-                        while($aux = mysqli_fetch_assoc($result2)){
+                        foreach ($result as $k => $v) {
                             echo"<tr>";
-                            echo"<td>".$aux['id']."</td>";
-                            echo"<td>".$aux['nome']."</td>";
-                            echo"<td>".$aux['empresa']."</td>";
-                            echo"<td>".$aux['doc']."</td>";
-                            echo"<td>".$aux['time_ent']."</td>";
-                            echo"<td>".$aux['time_saida']."</td>";
-                            echo"<td>".$aux['obs']."</td>";
+                            echo"<td>".$v['id']."</td>";
+                            echo"<td>".$v['nome']."</td>";
+                            echo"<td>".$v['empresa']."</td>";
+                            echo"<td>".$v['doc']."</td>";
+                            echo"<td>".$v['data']."</td>";
+                            echo"<td>".$v['time_ent']."</td>";
+                            echo"<td>".$v['time_saida']."</td>";
+                            echo"<td>".$v['obs']."</td>";
                             echo"</tr>";
                         }
+
+                        // while($aux = mysqli_fetch_assoc($result2)){
+                        //     echo"<tr>";
+                        //     echo"<td>".$aux['id']."</td>";
+                        //     echo"<td>".$aux['nome']."</td>";
+                        //     echo"<td>".$aux['empresa']."</td>";
+                        //     echo"<td>".$aux['doc']."</td>";
+                        //     echo"<td>".$aux['time_ent']."</td>";
+                        //     echo"<td>".$aux['time_saida']."</td>";
+                        //     echo"<td>".$aux['obs']."</td>";
+                        //     echo"</tr>";
+                        // }
                     ?>    
                 </tbody>
             </table>

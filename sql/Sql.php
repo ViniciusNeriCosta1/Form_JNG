@@ -4,10 +4,10 @@
 
 class Sql {
 
-	const HOSTNAME = "127.0.0.1";
-	const USERNAME = "userdocumentacao";
-	const PASSWORD = "1jp5JFg8@~==axj";
-	const DBNAME = "sistema_documentacao";
+	const HOSTNAME = "localhost";
+	const USERNAME = "suporteti";
+	const PASSWORD = "q1Q!q1Q!";
+	const DBNAME = "formulario_retira";
 
 	private $conn;
 	private $errors;

@@ -75,27 +75,27 @@
                 </div>
                 <br>
                 <div class="inputBox">
-                    <input type="text" name="nome" id="nome" class="inputUser" required>
+                    <input type="text" name="nome" id="nome" class="inputUser" required maxlength="20">
                     <label for="nome" class="labelInput">Nome</label>
                 </div>
                 <br>
                 <div class="inputBox">
-                    <input type="text" name="empresa" id="empresa" class="inputUser" required>
+                    <input type="text" name="empresa" id="empresa" class="inputUser" required maxlength="20">
                     <label for="empresa" class="labelInput">Empresa</label>
                 </div>
                 <br>
                 <div class="inputBox">
-                    <input type="file" name="doc" id="doc" class="inputUser" required>
+                    <input type="number" name="doc" id="doc" class="inputUser" required maxlength="11">
                     <label for="doc" class="labelInput">Documento</label>
                 </div>
                 <br>
                 <div class="inputBox">
-                    <input type="number" name="pedido" id="pedido" class="inputUser" required>
+                    <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6">
                     <label for="pedido" class="labelInput">Pedido</label>
                 </div>
                 <br></br>
                 <div class="inputBox">
-                    <input type="text" name="obs" id="obs" class="inputUser">
+                    <input type="text" name="obs" id="obs" class="inputUser" maxlength="20">
                     <label for="obs" class="labelInput">OBS</label>
                 </div>
                 <br>

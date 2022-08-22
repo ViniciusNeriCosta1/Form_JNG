@@ -3,17 +3,6 @@
 
     if(isset($_POST['submit']))
     {
-        
-        print_r($_POST['time_ent']);
-        print_r($_POST['nome']);
-        print_r($_POST['empresa']);
-        print_r($_POST['doc']);
-        print_r($_POST['pedido']);
-        print_r($_POST['obs']);
-        print_r($_POST['data_retira']);
-
-        include_once('config.php');
-
         $time_ent = $_POST['time_ent'];
         $nome = $_POST['nome'];
         $empresa = $_POST['empresa'];
@@ -27,10 +16,9 @@
         VALUES ('$time_ent','$nome','$empresa','$doc','$pedido','$obs','$data_retira','00:00')");
     }
 
-    $sql = "SELECT * FROM retira ORDER BY id DESC";
+    $sql = "SELECT * FROM retira where time_saida = '00:00' ORDER BY id DESC";
 
     $result2 = $conexao->query($sql);
-
 ?>
 
 <!DOCTYPE html>
@@ -106,9 +94,16 @@
                 </thead>
                 <tbody>
                     <?php
-                        while($aux = mysqli_fetch_assoc($sql)){
+                        while($aux = mysqli_fetch_assoc($result2)){
                             echo"<tr>";
-                            echo"<td>".$aux['id']"</td>";
+                            echo"<td>".$aux['id']."</td>";
+                            echo"<td>".$aux['nome']."</td>";
+                            echo"<td>".$aux['empresa']."</td>";
+                            echo"<td>".$aux['doc']."</td>";
+                            echo"<td>".$aux['time_ent']."</td>";
+                            echo"<td>".$aux['time_saida']."</td>";
+                            echo"<td>".$aux['obs']."</td>";
+                            echo"</tr>";
                         }
                     ?>    
                 </tbody>

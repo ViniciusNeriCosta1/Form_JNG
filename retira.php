@@ -60,7 +60,7 @@
 </head>
 <header></header>
 <main>
-    <body>
+    <section>
         <div class="fundo_dados">
             <form action="retira.php" method="POST">
                 <fieldset>
@@ -107,6 +107,8 @@
                 </fieldset>
             </form>
         </div>
+    </section>
+    <section>
         <div class="fundo_table">
             <fieldset>
                 <legend><b>INFOS</b></legend>
@@ -145,7 +147,7 @@
                 </table>
             </fieldset>
         </div>
-    </body>
+    </section>
 </main>
 <footer></footer>
 </html>

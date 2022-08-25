@@ -103,7 +103,7 @@
                     <br>
                     <input type="submit" name="submit" id="submit">
                     <br></br>
-                    <button type="submit" name="submit" id="submit">Pesquisar</button>
+                    <button type="pesquisar" name="pesquisar" id="pesquisar">Pesquisar</button>
                 </fieldset>
             </form>
         </div>

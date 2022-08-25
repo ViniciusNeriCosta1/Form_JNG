@@ -66,7 +66,18 @@ legend{
     border-radius: 10px;
 }
 
-#submit:hover{
+#pesquisar{
+    background-image: linear-gradient(to right, #003676, #0072bb);
+    width: 100%;
+    border: none;
+    padding: 15px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#submit:hover,#pesquisar:hover{
     background-image: linear-gradient(to right, #003676, #00aae3);
 }
 

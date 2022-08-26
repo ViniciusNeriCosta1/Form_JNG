@@ -50,7 +50,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
     <link rel="stylesheet" href="./style.css">
 <head>
     <meta charset="UTF-8">
@@ -58,7 +58,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Retira | JNG</title>
 </head>
-<header></header>
+<header>
+    <div class="">
+
+    </div>
+</header>
 <main>
     <section>
         <div class="fundo_dados">
@@ -149,5 +153,11 @@
         </div>
     </section>
 </main>
-<footer></footer>
+<footer>
+    <section>
+        <div class="rodape">
+            <p>Copyright © 2022 Intranet JNG</p>
+        </div>
+    </section>
+</footer>
 </html>

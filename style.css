@@ -1,3 +1,8 @@
+*{
+    box-sizing: border-box;
+    margin-bottom: 4px;
+}
+
 body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-image: linear-gradient(to right, #003676, #00aae3);
@@ -124,4 +129,14 @@ table{
 
 #informe:hover{
     background-image: linear-gradient(to right, #003676, #00aae3);
+}
+
+.rodape{
+    position: fixed;
+    bottom: 0%;
+    right: 0%;
+    width: 100%;
+    background-color: black;
+    color: white;
+    align-items: end;
 }

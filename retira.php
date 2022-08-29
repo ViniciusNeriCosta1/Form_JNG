@@ -24,11 +24,14 @@
         $pedido = $_POST['pedido'];
         $obs = $_POST['obs'];
         $data_retira = $_POST['data_retira'];
+        $ip = $_POST['ip'];
+
+        $ip_maquina = getenv['REMOTE_ADDR'];
 
         $result = $sql->query('INSERT INTO formulario_retira.retira(
-                time_ent, nome, empresa, doc, pedido, obs, time_saida, data
+                time_ent, nome, empresa, doc, pedido, obs, time_saida, data, ip
             ) VALUES (
-                :time_ent, :nome, :empresa, :doc, :pedido, :obs, :time_saida, :data
+                :time_ent, :nome, :empresa, :doc, :pedido, :obs, :time_saida, :data, :ip
             )
         ', array(
             ':time_ent' => $time_ent,
@@ -39,7 +42,8 @@
              ':obs' => $obs,
              ':data' => $data_retira,
              ':time_saida' => '00:00',
-             ':data' => $data_retira
+             ':data' => $data_retira,
+             'ip' => $_SERVER['REMOTE_ADDR']
         ));
 
         header('Location: retira.php');

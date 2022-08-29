@@ -127,9 +127,12 @@ legend{
     background-image: linear-gradient(to right, #003676, #00aae3);
 }
 
+table{
+    width: 100%;
+}
+
 table, th, td, tr{
     border:1px solid black;
-    margin: 0;
     text-align: center;
     background:  none;
     color: white;
@@ -140,8 +143,8 @@ th, td, tr{
     border-bottom: 1px solid white;
 }
 
-table{
-    width: 100%;
+tr{
+    padding: 3px;
 }
 
 .fundo_table{
@@ -158,7 +161,7 @@ table{
     background-image: linear-gradient(to right, #003676, #0072bb);
     width: 30%;
     border: none;
-    padding: 3px 10px;
+    padding: 0px 10px;
     color: white;
     font-size: 15px;
     cursor: pointer;

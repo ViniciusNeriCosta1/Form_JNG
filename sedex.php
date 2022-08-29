@@ -1,66 +1,56 @@
 <?php
-    date_default_timezone_set('America/Sao_Paulo');
     include_once('sql/Sql.php');
 
     $sql = new Sql();
 
-    if (isset($_GET['id']) && !empty($_GET['id'])) {
-        $sql->select('UPDATE formulario_retira.retira SET time_saida = :time_saida WHERE id = :id', array(
-            ':time_saida' => date('H:i'),
-            ':id' => $_GET['id']
-        ));
-
-        header('Location: retira.php');
-        die();
-    }
-
     if(isset($_POST['submit']))
     {
-        $time_ent = $_POST['time_ent'];
-        $time_saida = $_POST['time_saida'];
-        $nome = $_POST['nome'];
         $empresa = $_POST['empresa'];
-        $doc = $_POST['doc'];
         $pedido = $_POST['pedido'];
-        $obs = $_POST['obs'];
-        $data_retira = $_POST['data_retira'];
+        $nf = $_POST['nf'];
+        $prazo = $_POST['prazo'];
+        $volume = $_POST['volume'];
+        $data_retira = $_POST['data_saida'];
+        $rastreio = $_POST['rastreio'];
         $ip = $_POST['ip'];
 
-        $ip_maquina = getenv['REMOTE_ADDR'];
-
-        $result = $sql->query('INSERT INTO formulario_retira.retira(
-                time_ent, nome, empresa, doc, pedido, obs, time_saida, data, ip
+        $result = $sql->query('INSERT INTO formulario_retira.sedex(
+                empresa, pedido, nf, prazo, volume, data_saida, rastreio, ip
             ) VALUES (
-                :time_ent, :nome, :empresa, :doc, :pedido, :obs, :time_saida, :data, :ip
+                :empresa, :pedido, :nf, :prazo, :volume, :data_saida, :rastreio :ip
             )
         ', array(
-            ':time_ent' => $time_ent,
-             ':nome' => $nome,
              ':empresa' => $empresa,
-             ':doc' => $doc,
              ':pedido' => $pedido,
-             ':obs' => $obs,
-             ':data' => $data_retira,
-             ':time_saida' => '00:00',
-             ':data' => $data_retira,
+             ':nf' => $nf,
+             ':prazo' => $prazo,
+             ':volume' => $volume,
+             ':data_saida' => $data_saida,
+             ':rastreio' => $rastreio,
              'ip' => $_SERVER['REMOTE_ADDR']
         ));
 
-        header('Location: retira.php');
+        header('Location: sedex.php');
         die();
+    }else{
+        $erro = $_POST['erro'];
+        $erros = $sql->setErrors();
     }
 
-    $result = $sql->select("SELECT * FROM retira WHERE time_saida = '00:00' ORDER BY id DESC");
+    echo "$erros";
+
+    $result = $sql->select("SELECT * FROM sedex ORDER BY id LIMIT 10");
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
     <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" type = "imagem/x-icon" href = "./assets/logo_jng.ico"/>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retira | JNG</title>
+    <title>Sedex | JNG</title>
 </head>
 <body>
     <header>
@@ -78,23 +68,13 @@
     </header>
     <main>
         <div class="fundo_dados">
-            <form action="retira.php" method="POST">
+            <form action="sedex.php" method="POST">
                 <fieldset>
-                    <legend><b>Formulário de Retira</b></legend>
+                    <legend><b>Formulário de Sedex</b></legend>
                     <br>
                     <div class="inputBox">
-                        <label for="data_retira" class="labelTime">Data</label>
-                        <input type="date" name="data_retira" id="data_retira" class="inputUser" required>
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <label for="time_ent" class="labelTime">Horario Entrada</label>
-                        <input type="time" name="time_ent" id="time_ent" class="inputUser" required>
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <input type="text" name="nome" id="nome" class="inputUser" required maxlength="20">
-                        <label for="nome" class="labelInput">Nome</label>
+                        <label for="data_saida" class="labelTime">Data</label>
+                        <input type="date" name="data_saida" id="data_saida" class="inputUser" required>
                     </div>
                     <br>
                     <div class="inputBox">
@@ -103,20 +83,30 @@
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="text" name="doc" id="doc" class="inputUser" required maxlength="11">
-                        <label for="doc" class="labelInput">Documento</label>
-                    </div>
-                    <br>
-                    <div class="inputBox">
                         <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6" min="0">
                         <label for="pedido" class="labelInput">Pedido</label>
                     </div>
-                    <br></br>
+                    <br>
                     <div class="inputBox">
-                        <input type="text" name="obs" id="obs" class="inputUser" maxlength="20">
-                        <label for="obs" class="labelInput">OBS</label>
+                        <input type="number" name="nf" id="nf" class="inputUser" required maxlength="6" min="0">
+                        <label for="nf" class="labelInput">NF</label>
                     </div>
                     <br>
+                    <div class="inputBox">
+                        <input type="number" name="prazo" id="prazo" class="inputUser" required maxlength="2" min="0">
+                        <label for="prazo" class="labelInput">Prazo</label>
+                    </div>
+                    <br>
+                    <div class="inputBox">
+                        <input type="number" name="volume" id="volume" class="inputUser" required maxlength="2" min="0">
+                        <label for="volume" class="labelInput">Volume</label>
+                    </div>
+                    <br>
+                    <div class="inputBox">
+                        <input type="number" name="rastreio" id="rastreio" class="inputUser" required maxlength="13" min="0">
+                        <label for="rastreio" class="labelInput">Rastreio</label>
+                    </div>
+                    <br></br>
                     <input type="submit" name="submit" id="submit">
                     <br></br>
                 </fieldset>
@@ -129,14 +119,12 @@
                     <thead>
                         <tr>
                             <th>Nº Pedido</th>
-                            <th>Nome</th>
                             <th>Empresa</th>
-                            <th>Documento</th>
+                            <th>Nº NF</th>
                             <th>Data</th>
-                            <th>Entrada</th>
-                            <th>Saida</th>
-                            <th>OBS</th>
-                            <input type="hidden">
+                            <th>Prazo</th>
+                            <th>Volume</th>
+                            <th>Rastreio</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -144,15 +132,12 @@
                             foreach ($result as $k => $v) {
                                 echo"<tr>";
                                 echo"<td>".$v['pedido']."</td>";
-                                echo"<td>".$v['nome']."</td>";
                                 echo"<td>".$v['empresa']."</td>";
-                                echo"<td>".$v['doc']."</td>";
+                                echo"<td>".$v['nf']."</td>";
                                 echo"<td>".$v['data']."</td>";
-                                echo"<td>".$v['time_ent']."</td>";
-                                echo"<td>
-                                <a href='retira.php?id={$v['id']}' name='informe' id='informe'>Informe</a>
-                                </td>";
-                                echo"<td>".$v['obs']."</td>";
+                                echo"<td>".$v['prazo']."</td>";
+                                echo"<td>".$v['volume']."</td>";
+                                echo"<td>".$v['rastreio']."</td>";
                                 echo"</tr>";
                             }
                         ?>    

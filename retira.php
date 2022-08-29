@@ -58,13 +58,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Retira | JNG</title>
 </head>
-<header>
-    <div class="">
-
-    </div>
-</header>
-<main>
-    <section>
+<body>
+    <header>
+        <div class="logo_header">
+            <img src="./assets/logo_JNG_azul.png" alt="Logo JNG" class="img_logo_header">
+        </div>
+        <div class="header-content">
+            <div class="navbar">
+                <a href="./retira.php">Retira</a>
+                <a href="./retira.php">Entrada e Saída</a>
+                <a href="./retira.php">Sedex</a>
+                <a href="./retira.php">Pesquisa</a>
+            </div>    
+        </div>
+    </header>
+    <main>
         <div class="fundo_dados">
             <form action="retira.php" method="POST">
                 <fieldset>
@@ -91,12 +99,12 @@
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="doc" id="doc" class="inputUser" required maxlength="11">
+                        <input type="text" name="doc" id="doc" class="inputUser" required maxlength="11">
                         <label for="doc" class="labelInput">Documento</label>
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6">
+                        <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6" min="0">
                         <label for="pedido" class="labelInput">Pedido</label>
                     </div>
                     <br></br>
@@ -107,12 +115,9 @@
                     <br>
                     <input type="submit" name="submit" id="submit">
                     <br></br>
-                    <button type="pesquisar" name="pesquisar" id="pesquisar">Pesquisar</button>
                 </fieldset>
             </form>
         </div>
-    </section>
-    <section>
         <div class="fundo_table">
             <fieldset>
                 <legend><b>INFOS</b></legend>
@@ -151,13 +156,22 @@
                 </table>
             </fieldset>
         </div>
-    </section>
-</main>
-<footer>
-    <section>
+    </main>
+    <footer>
         <div class="rodape">
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
-    </section>
-</footer>
+    </footer>
+    <script>
+        //funcao para selecionar todos os input tipo number e maxlength funcionar
+        document.querySelectorAll('input[type="number"]').forEach(input =>{
+            input.oninput = () => {
+                if(input.value.length > input.maxLength) input.value = input.value.slice(0, input.maxLength);
+            };
+        });
+    </script>
+</body>
 </html>
+
+
+

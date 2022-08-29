@@ -134,7 +134,7 @@
                                 echo"<td>".$v['pedido']."</td>";
                                 echo"<td>".$v['empresa']."</td>";
                                 echo"<td>".$v['nf']."</td>";
-                                echo"<td>".$v['data']."</td>";
+                                echo"<td>".$v['data_saida']."</td>";
                                 echo"<td>".$v['prazo']."</td>";
                                 echo"<td>".$v['volume']."</td>";
                                 echo"<td>".$v['rastreio']."</td>";

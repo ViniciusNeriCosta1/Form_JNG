@@ -10,14 +10,14 @@
         $nf = $_POST['nf'];
         $prazo = $_POST['prazo'];
         $volume = $_POST['volume'];
-        $data_retira = $_POST['data_saida'];
+        $data_saida = $_POST['data_saida'];
         $rastreio = $_POST['rastreio'];
         $ip = $_POST['ip'];
 
         $result = $sql->query('INSERT INTO formulario_retira.sedex(
                 empresa, pedido, nf, prazo, volume, data_saida, rastreio, ip
             ) VALUES (
-                :empresa, :pedido, :nf, :prazo, :volume, :data_saida, :rastreio :ip
+                :empresa, :pedido, :nf, :prazo, :volume, :data_saida, :rastreio, :ip
             )
         ', array(
              ':empresa' => $empresa,
@@ -27,19 +27,13 @@
              ':volume' => $volume,
              ':data_saida' => $data_saida,
              ':rastreio' => $rastreio,
-             'ip' => $_SERVER['REMOTE_ADDR']
+             ':ip' => $_SERVER['REMOTE_ADDR']
         ));
-
         header('Location: sedex.php');
         die();
-    }else{
-        $erro = $_POST['erro'];
-        $erros = $sql->setErrors();
     }
 
-    echo "$erros";
-
-    $result = $sql->select("SELECT * FROM sedex ORDER BY id LIMIT 10");
+        $result = $sql->select("SELECT * FROM sedex ORDER BY id DESC LIMIT 10");
 ?>
 
 <!DOCTYPE html>

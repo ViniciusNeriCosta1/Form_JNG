@@ -17,7 +17,7 @@
         $result = $sql->query('INSERT INTO formulario_retira.sedex(
                 empresa, pedido, nf, prazo, volume, data_saida, rastreio, ip
             ) VALUES (
-                :empresa, :pedido, :nf, :prazo, :volume, :data_saida, :rastreio :ip
+                :empresa, :pedido, :nf, :prazo, :volume, :data_saida, :rastreio, :ip
             )
         ', array(
              ':empresa' => $empresa,
@@ -29,12 +29,14 @@
              ':rastreio' => $rastreio,
              ':ip' => $_SERVER['REMOTE_ADDR']
         ));
-    }elseif(! $result) {//valida se o resultado do array e informa o erro do insert
-        $errors = $sql->getErrors();
-    }else{
-        header('Location: sedex.php');
-        die();
-    }    
+        if(! $result){//valida se o resultado do array e informa o erro do insert
+            $erros = $sql->getErrors();
+            echo "<script>alert($erros);</script>";
+        }else{
+            header('Location: sedex.php');
+            die();
+        }
+    }
 
     $result = $sql->select("SELECT * FROM sedex ORDER BY id DESC LIMIT 10");
    

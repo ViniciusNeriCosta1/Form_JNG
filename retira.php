@@ -43,9 +43,13 @@
              ':data' => $data_retira,
              'ip' => $_SERVER['REMOTE_ADDR']
         ));
-
-        header('Location: retira.php');
-        die();
+        if(! $result){//valida se o resultado do array e informa o erro do insert
+            $erros = $sql->getErrors();
+            echo "<script>alert($erros);</script>";
+        }else{
+            header('Location: retira.php');
+            die();
+        }
     }
 
     $result = $sql->select("SELECT * FROM retira WHERE time_saida = '00:00' ORDER BY id ASC");

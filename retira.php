@@ -48,7 +48,7 @@
         die();
     }
 
-    $result = $sql->select("SELECT * FROM retira WHERE time_saida = '00:00' ORDER BY id DESC");
+    $result = $sql->select("SELECT * FROM retira WHERE time_saida = '00:00' ORDER BY id ASC");
 ?>
 
 <!DOCTYPE html>
@@ -98,12 +98,12 @@
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="text" name="empresa" id="empresa" class="inputUser" oninput="this.value = this.value.toUpperCase()" required maxlength="20">
+                        <input type="text" name="empresa" id="empresa" class="inputUser" required maxlength="20">
                         <label for="empresa" class="labelInput">Empresa</label>
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="text" name="doc" id="doc" class="inputUser" oninput="this.value = this.value.toUpperCase()" required maxlength="11">
+                        <input type="text" name="doc" id="doc" class="inputUser" required maxlength="11">
                         <label for="doc" class="labelInput">Documento</label>
                     </div>
                     <br>

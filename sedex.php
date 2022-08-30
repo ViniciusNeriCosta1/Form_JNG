@@ -29,15 +29,15 @@
              ':rastreio' => $rastreio,
              ':ip' => $_SERVER['REMOTE_ADDR']
         ));
+    }elseif(! $result) {//valida se o resultado do array e informa o erro do insert
+        $errors = $sql->getErrors();
+    }else{
         header('Location: sedex.php');
         die();
-    }else{
+    }    
 
-        $result = $sql->getErrors($_POST['submit']);
-        return;
-    }
-
-        $result = $sql->select("SELECT * FROM sedex ORDER BY id DESC LIMIT 10");
+    $result = $sql->select("SELECT * FROM sedex ORDER BY id DESC LIMIT 10");
+   
 ?>
 
 <!DOCTYPE html>

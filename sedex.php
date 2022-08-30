@@ -31,6 +31,9 @@
         ));
         header('Location: sedex.php');
         die();
+    }else{
+        $result = $sql->getErrors($_POST['erros']);
+        return;
     }
 
         $result = $sql->select("SELECT * FROM sedex ORDER BY id DESC LIMIT 10");

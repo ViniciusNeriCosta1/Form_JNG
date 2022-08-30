@@ -26,6 +26,8 @@
         $data_retira = $_POST['data_retira'];
         $ip = $_POST['ip'];
 
+        $ip_maquina = getenv['REMOTE_ADDR'];
+
         $result = $sql->query('INSERT INTO formulario_retira.retira(
                 time_ent, nome, empresa, doc, pedido, obs, time_saida, data, ip
             ) VALUES (

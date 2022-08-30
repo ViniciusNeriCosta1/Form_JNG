@@ -17,7 +17,7 @@
         $result = $sql->query('INSERT INTO formulario_retira.sedex(
                 empresa, pedido, nf, prazo, volume, data_saida, rastreio, ip
             ) VALUES (
-                :empresa, :pedido, :nf, :prazo, :volume, :data_saida, :rastreio, :ip
+                :empresa, :pedido, :nf, :prazo, :volume, :data_saida, :rastreio :ip
             )
         ', array(
              ':empresa' => $empresa,

@@ -54,10 +54,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" type = "imagem/x-icon" href = "./assets/logo_jng.ico"/>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="300">
     <title>Retira | JNG</title>
 </head>
 <body>
@@ -96,12 +98,12 @@
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="text" name="empresa" id="empresa" class="inputUser" required maxlength="20">
+                        <input type="text" name="empresa" id="empresa" class="inputUser" oninput="this.value = this.value.toUpperCase()" required maxlength="20">
                         <label for="empresa" class="labelInput">Empresa</label>
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="text" name="doc" id="doc" class="inputUser" required maxlength="11">
+                        <input type="text" name="doc" id="doc" class="inputUser" oninput="this.value = this.value.toUpperCase()" required maxlength="11">
                         <label for="doc" class="labelInput">Documento</label>
                     </div>
                     <br>

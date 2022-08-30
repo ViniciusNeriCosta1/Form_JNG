@@ -32,7 +32,8 @@
         header('Location: sedex.php');
         die();
     }else{
-        $result = $sql->getErrors($_POST['erros']);
+
+        $result = $sql->getErrors($_POST['submit']);
         return;
     }
 
@@ -47,6 +48,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="300">
     <title>Sedex | JNG</title>
 </head>
 <body>

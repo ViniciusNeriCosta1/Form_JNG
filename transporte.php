@@ -48,7 +48,7 @@
         }
     }
 
-    $result = $sql->select("SELECT * FROM formulario_retira.transporte WHERE data_saida = '1999-01-01' ORDER BY id ASC");
+    $result = $sql->select("SELECT * FROM formulario_retira.transporte WHERE data_saida = '' OR nf = '' ORDER BY id ASC");
 ?>
 
 <!DOCTYPE html>

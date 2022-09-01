@@ -74,7 +74,7 @@ legend{
 }
 
 .inputBox{
-    position: unset;
+    position: relative;
     background-color: black;
 }
 
@@ -88,14 +88,16 @@ legend{
     width: 100%;
     letter-spacing: 2px;
     text-transform: uppercase;
+    background-color: white;
 }
 
 .labelInput{
-    position: absolute;
+    position: inherit;
     top: 0px;
     left: 0px;
     pointer-events: none;
-    transition: .5s;
+    /*transition: .5s;*/
+    background-color: purple;
 }
 
 .inputSelect{
@@ -179,7 +181,8 @@ tr{
     margin-top: 2%;
 }
 
-#informe{
+#informe,
+#editar{
     background-image: linear-gradient(to right, #003676, #0072bb);
     width: 30%;
     border: none;
@@ -191,7 +194,8 @@ tr{
     text-decoration: none;
 }
 
-#informe:hover{
+#informe:hover,
+#editar:hover{
     background-image: linear-gradient(to right, #003676, #00aae3);
 }
 

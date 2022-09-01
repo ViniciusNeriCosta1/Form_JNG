@@ -10,7 +10,7 @@
 //            ':id' => $_GET['id']
 //        ));
 //
-//        header('Location: transporte.php');
+//        header('Location: transporteEdit.php');
 //        die();
 //    }
 
@@ -43,7 +43,7 @@
             var_dump($erros);
             //echo "<script>alert($erros);</script>";
         }else{
-            header('Location: transporte.php');
+            header('Location: transporteEdit.php');
             die();
         }
     }
@@ -150,7 +150,7 @@
                                 echo"<td>".$v['motorista']."</td>";
                                 echo"<td>".$v['data_entrada']."</td>";
                                 echo"<td>
-                                <a href='transporte.php?id={$v['id']}' name='informe' id='informe'>Informe</a>
+                                <a href='entrada_saida.php?id={$v['id']}' name='informe' id='informe'>Informe</a>
                                 </td>";
                                 echo"<td>".$v['obs']."</td>";
                                 echo"<td>

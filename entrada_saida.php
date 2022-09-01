@@ -5,60 +5,63 @@
     $sql = new Sql();
 
     if (isset($_GET['id']) && !empty($_GET['id'])) {
-        $sql->select('UPDATE formulario_retira.retira SET time_saida = :time_saida WHERE id = :id', array(
-            ':time_saida' => date('H:i'),
+        $sql->select('UPDATE formulario_retira.entrada_saida SET data_saida = :data_saida WHERE id = :id', array(
+            ':data_saida' => date('Y-M-D'),
             ':id' => $_GET['id']
         ));
 
-        header('Location: entrada_saida.php');
+        header('Location: retira.php');
         die();
     }
 
     if(isset($_POST['submit']))
     {
-        $time_ent = $_POST['time_ent'];
-        $time_saida = $_POST['time_saida'];
-        $nome = $_POST['nome'];
-        $empresa = $_POST['empresa'];
-        $doc = $_POST['doc'];
         $pedido = $_POST['pedido'];
+        $nf = $_POST['nf'];
+        $motorista = $_POST['motorista'];
+        $data_entrada = $_POST['data_entrada'];
+        $data_saida = $_POST['data_saida'];
         $obs = $_POST['obs'];
-        $data_retira = $_POST['data_retira'];
         $ip = $_POST['ip'];
 
-        $result = $sql->query('INSERT INTO formulario_retira.retira(
-                time_ent, nome, empresa, doc, pedido, obs, time_saida, data, ip
+        $result = $sql->query('INSERT INTO formulario_retira.entrada_saida(
+                pedido, nf, motorista, data_entrada, data_saida, obs, ip
             ) VALUES (
-                :time_ent, :nome, :empresa, :doc, :pedido, :obs, :time_saida, :data, :ip
+                :pedido, :nf, :motorista, :data_entrada, :data_saida, :obs, :ip
             )
         ', array(
-            ':time_ent' => $time_ent,
-             ':nome' => $nome,
-             ':empresa' => $empresa,
-             ':doc' => $doc,
-             ':pedido' => $pedido,
-             ':obs' => $obs,
-             ':data' => $data_retira,
-             ':time_saida' => '00:00',
-             ':data' => $data_retira,
-             'ip' => $_SERVER['REMOTE_ADDR']
+            ':pedido' => $pedido,
+            ':nf' => $nf,
+            ':motorista' => $motorista,
+            ':obs' => $obs,
+            ':data_saida' => '1999-01-02',
+            ':data_entrada' => $data_entrada,
+            'ip' => $_SERVER['REMOTE_ADDR']
         ));
-
-        header('Location: entrada_saida.php');
-        die();
+        if(! $result){//valida se o resultado do array e informa o erro do insert
+            $erros = $sql->getErrors();
+            var_dump($erros);
+            //echo "<script>alert($erros);</script>";
+        }else{
+            header('Location: entrada_saida.php');
+            die();
+        }
+        var_dump(date('Y-m-d'));
     }
 
-    $result = $sql->select("SELECT * FROM retira WHERE time_saida = '00:00' ORDER BY id DESC");
+    $result = $sql->select("SELECT * FROM formulario_retira.entrada_saida WHERE data_saida = '1999-01-01' ORDER BY id ASC");
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
     <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" type = "imagem/x-icon" href = "./assets/logo_jng.ico"/>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retira | JNG</title>
+    <meta http-equiv="refresh" content="300">
+    <title>Entrada e Saída | JNG</title>
 </head>
 <body>
     <header>
@@ -68,46 +71,43 @@
         <div class="header-content">
             <div class="navbar">
                 <a href="./retira.php">Retira</a>
-                <a href="./retira.php">Entrada e Saída</a>
-                <a href="./retira.php">Sedex</a>
+                <a href="./entrada_saida.php">Entrada e Saída</a>
+                <a href="./sedex.php">Sedex</a>
                 <a href="./retira.php">Pesquisa</a>
             </div>    
         </div>
     </header>
     <main>
         <div class="fundo_dados">
-            <form action="retira.php" method="POST">
+            <form action="entrada_saida.php" method="POST">
                 <fieldset>
-                    <legend><b>Formulário de Retira</b></legend>
+                    <legend><b>Formulário de Entrada e Saída</b></legend>
                     <br>
                     <div class="inputBox">
-                        <label for="data_retira" class="labelTime">Data</label>
-                        <input type="date" name="data_retira" id="data_retira" class="inputUser" required>
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <label for="time_ent" class="labelTime">Horario Entrada</label>
-                        <input type="time" name="time_ent" id="time_ent" class="inputUser" required>
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <input type="text" name="nome" id="nome" class="inputUser" required maxlength="20">
-                        <label for="nome" class="labelInput">Nome</label>
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <input type="text" name="empresa" id="empresa" class="inputUser" required maxlength="20">
-                        <label for="empresa" class="labelInput">Empresa</label>
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <input type="text" name="doc" id="doc" class="inputUser" required maxlength="11">
-                        <label for="doc" class="labelInput">Documento</label>
+                        <label for="data_entrada" class="labelTime">Data Entrada</label>
+                        <input type="date" name="data_entrada" id="data_entrada" class="inputUser" required>
                     </div>
                     <br>
                     <div class="inputBox">
                         <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6" min="0">
                         <label for="pedido" class="labelInput">Pedido</label>
+                    </div>
+                    <br>
+                    <div class="inputBox">
+                        <input type="number" name="nf" id="nf" class="inputUser" required maxlength="6" min="0">
+                        <label for="nf" class="labelInput">NF</label>
+                    </div>
+                    <br>
+                    <div class="inputSelect">
+                        <label for="motorista" class="labelSelect">Motorista</label>
+                        <select type="text" name="motorista" id="motorista">
+                            <option value="extramila">Extramila</option>
+                            <option value="eduardo">Eduardo</option>
+                            <option value="jonas">Jonas</option>
+                            <option value="gilvan">Gilvan</option>
+                            <option value="douglas">Douglas</option>
+                            <option value="jefferson">Jefferson</option>
+                        </select>
                     </div>
                     <br></br>
                     <div class="inputBox">
@@ -127,12 +127,10 @@
                     <thead>
                         <tr>
                             <th>Nº Pedido</th>
-                            <th>Nome</th>
-                            <th>Empresa</th>
-                            <th>Documento</th>
-                            <th>Data</th>
-                            <th>Entrada</th>
-                            <th>Saida</th>
+                            <th>NF</th>
+                            <th>Motorista</th>
+                            <th>Data Entrada</th>
+                            <th>Data Saida</th>
                             <th>OBS</th>
                             <input type="hidden">
                         </tr>
@@ -142,13 +140,11 @@
                             foreach ($result as $k => $v) {
                                 echo"<tr>";
                                 echo"<td>".$v['pedido']."</td>";
-                                echo"<td>".$v['nome']."</td>";
-                                echo"<td>".$v['empresa']."</td>";
-                                echo"<td>".$v['doc']."</td>";
-                                echo"<td>".$v['data']."</td>";
-                                echo"<td>".$v['time_ent']."</td>";
+                                echo"<td>".$v['nf']."</td>";
+                                echo"<td>".$v['motorista']."</td>";
+                                echo"<td>".$v['data_entrada']."</td>";
                                 echo"<td>
-                                <a href='retira.php?id={$v['id']}' name='informe' id='informe'>Informe</a>
+                                <a href='entrada_saida.php?id={$v['id']}' name='informe' id='informe'>Informe</a>
                                 </td>";
                                 echo"<td>".$v['obs']."</td>";
                                 echo"</tr>";

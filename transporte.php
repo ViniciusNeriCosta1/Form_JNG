@@ -34,7 +34,7 @@
             ':nf' => $nf,
             ':motorista' => $motorista,
             ':obs' => $obs,
-            ':data_saida' => '1999-01-01',
+            ':data_saida' => $data_saida,
             ':data_entrada' => $data_entrada,
             'ip' => $_SERVER['REMOTE_ADDR']
         ));
@@ -105,6 +105,7 @@
                     <div class="inputSelect">
                         <label for="motorista" class="labelSelect">Motorista</label>
                         <select type="text" name="motorista" id="motorista">
+                            <option value="vazio"></option>
                             <option value="extramila">Extramila</option>
                             <option value="eduardo">Eduardo</option>
                             <option value="jonas">Jonas</option>
@@ -149,9 +150,7 @@
                                 echo"<td>".$v['nf']."</td>";
                                 echo"<td>".$v['motorista']."</td>";
                                 echo"<td>".$v['data_entrada']."</td>";
-                                echo"<td>
-                                <a href='transporte.php?id={$v['id']}' name='informe' id='informe'>Informe</a>
-                                </td>";
+                                echo"<td>".$v['data_saida']."</td>";
                                 echo"<td>".$v['obs']."</td>";
                                 echo"<td>
                                 <a href='transporteEdit.php?id={$v['id']}' name='editar' id='editar'>☐</a>

@@ -74,7 +74,7 @@
         <div class="header-content">
             <div class="navbar">
                 <a href="./retira.php">Retira</a>
-                <a href="./retira.php">Entrada e Saída</a>
+                <a href="./transporte.php">Transporte</a>
                 <a href="./retira.php">Sedex</a>
                 <a href="./retira.php">Pesquisa</a>
             </div>    

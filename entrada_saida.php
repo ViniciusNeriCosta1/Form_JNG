@@ -6,11 +6,11 @@
 
     if (isset($_GET['id']) && !empty($_GET['id'])) {
         $sql->select('UPDATE formulario_retira.entrada_saida SET data_saida = :data_saida WHERE id = :id', array(
-            ':data_saida' => date('Y-M-D'),
+            ':data_saida' => date('Y-m-d'),
             ':id' => $_GET['id']
         ));
 
-        header('Location: retira.php');
+        header('Location: entrada_saida.php');
         die();
     }
 
@@ -34,7 +34,7 @@
             ':nf' => $nf,
             ':motorista' => $motorista,
             ':obs' => $obs,
-            ':data_saida' => '1999-01-02',
+            ':data_saida' => '1999-01-01',
             ':data_entrada' => $data_entrada,
             'ip' => $_SERVER['REMOTE_ADDR']
         ));
@@ -46,7 +46,6 @@
             header('Location: entrada_saida.php');
             die();
         }
-        var_dump(date('Y-m-d'));
     }
 
     $result = $sql->select("SELECT * FROM formulario_retira.entrada_saida WHERE data_saida = '1999-01-01' ORDER BY id ASC");
@@ -132,7 +131,8 @@
                             <th>Data Entrada</th>
                             <th>Data Saida</th>
                             <th>OBS</th>
-                            <input type="hidden">
+                            <th>Editar</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -147,6 +147,7 @@
                                 <a href='entrada_saida.php?id={$v['id']}' name='informe' id='informe'>Informe</a>
                                 </td>";
                                 echo"<td>".$v['obs']."</td>";
+                                echo"<td><input type='checkbox' name='editar' id='editar'></td>";
                                 echo"</tr>";
                             }
                         ?>    

@@ -75,7 +75,6 @@ legend{
 
 .inputBox{
     position: relative;
-    background-color: black;
 }
 
 .inputUser{
@@ -87,17 +86,19 @@ legend{
     font-size: 15px;
     width: 100%;
     letter-spacing: 2px;
-    text-transform: uppercase;
-    background-color: white;
 }
 
 .labelInput{
-    position: inherit;
+    position: absolute;
     top: 0px;
     left: 0px;
     pointer-events: none;
-    /*transition: .5s;*/
-    background-color: purple;
+    transition: .5s;
+}
+
+.inputUser:focus ~ .labelInput, .inputUser:valid ~ .labelInput{
+    top: -20px;
+    font-size: 12px;
 }
 
 .inputSelect{

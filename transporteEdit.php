@@ -4,15 +4,25 @@
 
     $sql = new Sql();
 
-//    if (isset($_GET['id']) && !empty($_GET['id'])) {
-//        $sql->select('UPDATE formulario_retira.transporte SET data_saida = :data_saida WHERE id = :id', array(
-//            ':data_saida' => date('Y-m-d'),
-//            ':id' => $_GET['id']
-//        ));
-//
-//        header('Location: transporteEdit.php');
-//        die();
-//    }
+    if (isset($_GET['id']) && !empty($_GET['id'])) {
+        $info = $sql->select('SELECT * FROM formulario_retira.transporte WHERE id = :id', array(
+            ':id' => $_GET['id']
+        ));
+        print_r($info);
+        if($info)
+        {
+            foreach($info as $k => $v)
+            {
+            $pedido = $GET['pedido'];
+            $nf = $info['nf'];
+            $motorista = $info['motorista'];
+            $data_entrada = $info['data_entrada'];
+            $data_saida = $info['data_saida'];
+            $obs = $info['obs'];
+            }
+            print_r($pedido);
+        }
+    }
 
     if(isset($_POST['submit']))
     {
@@ -43,12 +53,10 @@
             var_dump($erros);
             //echo "<script>alert($erros);</script>";
         }else{
-            header('Location: transporteEdit.php');
+            header('Location: transporte.php');
             die();
         }
     }
-
-    $result = $sql->select("SELECT * FROM formulario_retira.transporte WHERE data_saida = '1999-01-01' ORDER BY id ASC");
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +101,7 @@
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6" min="0">
+                        <input type="number" name="pedido" id="pedido" class="inputUser" value="<?php echo $pedido ?>" required maxlength="6" min="0" >
                         <label for="pedido" class="labelInput">Pedido</label>
                     </div>
                     <br>
@@ -125,7 +133,7 @@
                 </fieldset>
             </form>
         </div>
-        <div class="fundo_table">
+<!--        <div class="fundo_table">
             <fieldset>
                 <legend><b>INFOS</b></legend>
                 <table>
@@ -149,9 +157,7 @@
                                 echo"<td>".$v['nf']."</td>";
                                 echo"<td>".$v['motorista']."</td>";
                                 echo"<td>".$v['data_entrada']."</td>";
-                                echo"<td>
-                                <a href='entrada_saida.php?id={$v['id']}' name='informe' id='informe'>Informe</a>
-                                </td>";
+                                echo"<td>".$v['data_saida']."</td>";
                                 echo"<td>".$v['obs']."</td>";
                                 echo"<td>
                                 <a href='transporteEdit.php?id={$v['id']}' name='editar' id='editar'>☐</a>
@@ -162,7 +168,7 @@
                     </tbody>
                 </table>
             </fieldset>
-        </div>
+        </div>-->
     </main>
     <footer>
         <div class="rodape">

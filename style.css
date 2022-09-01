@@ -74,7 +74,8 @@ legend{
 }
 
 .inputBox{
-    position: relative;
+    position: unset;
+    background-color: black;
 }
 
 .inputUser{

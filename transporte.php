@@ -88,12 +88,17 @@
                     </div>
                     <br>
                     <div class="inputBox">
+                        <label for="data_saida" class="labelTime">Data Saida</label>
+                        <input type="date" name="data_saida" id="data_saida" class="inputUser">
+                    </div>
+                    <br>
+                    <div class="inputBox">
                         <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6" min="0">
                         <label for="pedido" class="labelInput">Pedido</label>
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="nf" id="nf" class="inputUser" required maxlength="6" min="0">
+                        <input type="number" name="nf" id="nf" class="inputUser" maxlength="6" min="0">
                         <label for="nf" class="labelInput">NF</label>
                     </div>
                     <br>
@@ -106,6 +111,7 @@
                             <option value="gilvan">Gilvan</option>
                             <option value="douglas">Douglas</option>
                             <option value="jefferson">Jefferson</option>
+                            <option value="jefferson">Silvan</option>
                         </select>
                     </div>
                     <br></br>

@@ -5,12 +5,12 @@
     $sql = new Sql();
 
     if (isset($_GET['id']) && !empty($_GET['id'])) {
-        $sql->select('UPDATE formulario_retira.entrada_saida SET data_saida = :data_saida WHERE id = :id', array(
+        $sql->select('UPDATE formulario_retira.transporte SET data_saida = :data_saida WHERE id = :id', array(
             ':data_saida' => date('Y-m-d'),
             ':id' => $_GET['id']
         ));
 
-        header('Location: entrada_saida.php');
+        header('Location: transporte.php');
         die();
     }
 
@@ -24,7 +24,7 @@
         $obs = $_POST['obs'];
         $ip = $_POST['ip'];
 
-        $result = $sql->query('INSERT INTO formulario_retira.entrada_saida(
+        $result = $sql->query('INSERT INTO formulario_retira.transporte(
                 pedido, nf, motorista, data_entrada, data_saida, obs, ip
             ) VALUES (
                 :pedido, :nf, :motorista, :data_entrada, :data_saida, :obs, :ip
@@ -43,12 +43,12 @@
             var_dump($erros);
             //echo "<script>alert($erros);</script>";
         }else{
-            header('Location: entrada_saida.php');
+            header('Location: transporte.php');
             die();
         }
     }
 
-    $result = $sql->select("SELECT * FROM formulario_retira.entrada_saida WHERE data_saida = '1999-01-01' ORDER BY id ASC");
+    $result = $sql->select("SELECT * FROM formulario_retira.transporte WHERE data_saida = '1999-01-01' ORDER BY id ASC");
 ?>
 
 <!DOCTYPE html>
@@ -60,7 +60,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="300">
-    <title>Entrada e Saída | JNG</title>
+    <title>Transporte | JNG</title>
 </head>
 <body>
     <header>
@@ -70,7 +70,7 @@
         <div class="header-content">
             <div class="navbar">
                 <a href="./retira.php">Retira</a>
-                <a href="./entrada_saida.php">Entrada e Saída</a>
+                <a href="./transporte.php">Transporte</a>
                 <a href="./sedex.php">Sedex</a>
                 <a href="./retira.php">Pesquisa</a>
             </div>    
@@ -78,9 +78,9 @@
     </header>
     <main>
         <div class="fundo_dados">
-            <form action="entrada_saida.php" method="POST">
+            <form action="transporte.php" method="POST">
                 <fieldset>
-                    <legend><b>Formulário de Entrada e Saída</b></legend>
+                    <legend><b>Formulário de Transporte</b></legend>
                     <br>
                     <div class="inputBox">
                         <label for="data_entrada" class="labelTime">Data Entrada</label>

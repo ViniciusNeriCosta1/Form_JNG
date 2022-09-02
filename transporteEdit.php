@@ -9,19 +9,7 @@
             ':id' => $_GET['id']
         ));
         print_r($info);
-        if($info)
-        {
-            foreach($info as $k => $v)
-            {
-            $pedido = $GET['pedido'];
-            $nf = $info['nf'];
-            $motorista = $info['motorista'];
-            $data_entrada = $info['data_entrada'];
-            $data_saida = $info['data_saida'];
-            $obs = $info['obs'];
-            }
-            print_r($pedido);
-        }
+        foreach($info as $k => $v){}
     }
 
     if(isset($_POST['submit']))
@@ -101,7 +89,7 @@
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="pedido" id="pedido" class="inputUser" value="<?php echo $pedido ?>" required maxlength="6" min="0" >
+                        <input type="text" name="pedido" id="pedido" class="inputUser" value="<?php echo $v['pedido'] ?>" required maxlength="6" min="0" >
                         <label for="pedido" class="labelInput">Pedido</label>
                     </div>
                     <br>

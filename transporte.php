@@ -4,50 +4,6 @@
 
     $sql = new Sql();
 
-//    if (isset($_GET['id']) && !empty($_GET['id'])) {
-//        $sql->select('UPDATE formulario_retira.transporte SET data_saida = :data_saida WHERE id = :id', array(
-//            ':data_saida' => date('Y-m-d'),
-//            ':id' => $_GET['id']
-//        ));
-//
-//        header('Location: transporte.php');
-//        die();
-//    }
-
-    if(isset($_POST['submit']))
-    {
-        $pedido = $_POST['pedido'];
-        $nf = $_POST['nf'];
-        $motorista = $_POST['motorista'];
-        $data_entrada = $_POST['data_entrada'];
-        $data_saida = $_POST['data_saida'];
-        $obs = $_POST['obs'];
-        $ip = $_POST['ip'];
-
-        $result = $sql->query('INSERT INTO formulario_retira.transporte(
-                pedido, nf, motorista, data_entrada, data_saida, obs, ip
-            ) VALUES (
-                :pedido, :nf, :motorista, :data_entrada, :data_saida, :obs, :ip
-            )
-        ', array(
-            ':pedido' => $pedido,
-            ':nf' => $nf,
-            ':motorista' => $motorista,
-            ':obs' => $obs,
-            ':data_saida' => $data_saida,
-            ':data_entrada' => $data_entrada,
-            'ip' => $_SERVER['REMOTE_ADDR']
-        ));
-        if(! $result){//valida se o resultado do array e informa o erro do insert
-            $erros = $sql->getErrors();
-            var_dump($erros);
-            //echo "<script>alert($erros);</script>";
-        }else{
-            header('Location: transporte.php');
-            die();
-        }
-    }
-
     $result = $sql->select("SELECT * FROM formulario_retira.transporte WHERE data_saida = '' OR nf = '' ORDER BY id ASC");
 ?>
 
@@ -105,14 +61,14 @@
                     <div class="inputSelect">
                         <label for="motorista" class="labelSelect">Motorista</label>
                         <select type="text" name="motorista" id="motorista">
-                            <option value="vazio"></option>
-                            <option value="extramila">Extramila</option>
-                            <option value="eduardo">Eduardo</option>
-                            <option value="jonas">Jonas</option>
-                            <option value="gilvan">Gilvan</option>
-                            <option value="douglas">Douglas</option>
-                            <option value="jefferson">Jefferson</option>
-                            <option value="jefferson">Silvan</option>
+                            <option value=""></option>
+                            <option value="Extramila">Extramila</option>
+                            <option value="Eduardo">Eduardo</option>
+                            <option value="Jonas">Jonas</option>
+                            <option value="Gilvan">Gilvan</option>
+                            <option value="Douglas">Douglas</option>
+                            <option value="Jefferson">Jefferson</option>
+                            <option value="Silvan">Silvan</option>
                         </select>
                     </div>
                     <br></br>

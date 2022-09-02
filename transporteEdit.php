@@ -10,41 +10,31 @@
         ));
         print_r($info);
         foreach($info as $k => $v){}
-    }
 
-    if(isset($_POST['submit']))
-    {
-        $pedido = $_POST['pedido'];
-        $nf = $_POST['nf'];
-        $motorista = $_POST['motorista'];
-        $data_entrada = $_POST['data_entrada'];
-        $data_saida = $_POST['data_saida'];
-        $obs = $_POST['obs'];
-        $ip = $_POST['ip'];
-
-        $result = $sql->query('INSERT INTO formulario_retira.transporte(
-                pedido, nf, motorista, data_entrada, data_saida, obs, ip
-            ) VALUES (
-                :pedido, :nf, :motorista, :data_entrada, :data_saida, :obs, :ip
-            )
-        ', array(
-            ':pedido' => $pedido,
-            ':nf' => $nf,
-            ':motorista' => $motorista,
-            ':obs' => $obs,
-            ':data_saida' => '1999-01-01',
-            ':data_entrada' => $data_entrada,
-            'ip' => $_SERVER['REMOTE_ADDR']
+        if(isset($_POST['submit']))
+        {   
+        $result = $sql->select('UPDATE formulario_retira.transporte SET nf = :nf, motorista = :motorista, data_saida = :data_saida, obs = :obs 
+        WHERE id = :id', 
+        array(
+            ':nf' => $_POST['nf'],
+            ':motorista' => $_POST['motorista'],
+            ':obs' => $_POST['obs'],
+            ':data_saida' => $_POST['data_saida'],
+            ':id' => $v['id']
         ));
         if(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
             var_dump($erros);
-            //echo "<script>alert($erros);</script>";
+            //print_r("<script>alert($erros);</script>");
         }else{
-            header('Location: transporte.php');
+            header('Location: transporteEdit.php');
             die();
         }
+        }
+
     }
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +64,7 @@
     </header>
     <main>
         <div class="fundo_dados">
-            <form action="transporte.php" method="POST">
+            <form action="transporteEdit.php" method="POST">
                 <fieldset>
                     <legend><b>Formulário de Transporte</b></legend>
                     <br>
@@ -101,14 +91,14 @@
                     <div class="inputSelect">
                         <label for="motorista" class="labelSelect">Motorista</label>
                         <select type="text" name="motorista" id="motorista">
-                            <option value="valor"><?php echo $v['motorista'] ?></option>
-                            <option value="extramila">Extramila</option>
-                            <option value="eduardo">Eduardo</option>
-                            <option value="jonas">Jonas</option>
-                            <option value="gilvan">Gilvan</option>
-                            <option value="douglas">Douglas</option>
-                            <option value="jefferson">Jefferson</option>
-                            <option value="jefferson">Silvan</option>
+                            <option value="<?php echo $v['motorista'] ?>"><?php echo $v['motorista'] ?></option>
+                            <option value="Extramila">Extramila</option>
+                            <option value="Eduardo">Eduardo</option>
+                            <option value="Jonas">Jonas</option>
+                            <option value="Gilvan">Gilvan</option>
+                            <option value="Douglas">Douglas</option>
+                            <option value="Jefferson">Jefferson</option>
+                            <option value="Silvan">Silvan</option>
                         </select>
                     </div>
                     <br></br>
@@ -122,42 +112,6 @@
                 </fieldset>
             </form>
         </div>
-<!--        <div class="fundo_table">
-            <fieldset>
-                <legend><b>INFOS</b></legend>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nº Pedido</th>
-                            <th>NF</th>
-                            <th>Motorista</th>
-                            <th>Data Entrada</th>
-                            <th>Data Saida</th>
-                            <th>OBS</th>
-                            <th>Editar</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            foreach ($result as $k => $v) {
-                                echo"<tr>";
-                                echo"<td>".$v['pedido']."</td>";
-                                echo"<td>".$v['nf']."</td>";
-                                echo"<td>".$v['motorista']."</td>";
-                                echo"<td>".$v['data_entrada']."</td>";
-                                echo"<td>".$v['data_saida']."</td>";
-                                echo"<td>".$v['obs']."</td>";
-                                echo"<td>
-                                <a href='transporteEdit.php?id={$v['id']}' name='editar' id='editar'>☐</a>
-                                </td>";
-                                echo"</tr>";
-                            }
-                        ?>    
-                    </tbody>
-                </table>
-            </fieldset>
-        </div>-->
     </main>
     <footer>
         <div class="rodape">

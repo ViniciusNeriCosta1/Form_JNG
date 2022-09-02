@@ -5,7 +5,8 @@
     $sql = new Sql();
 
     if (isset($_GET['id']) && !empty($_GET['id'])) {
-        $sql->select('UPDATE formulario_retira.retira SET time_saida = :time_saida WHERE id = :id', array(
+        $sql->select('UPDATE formulario_retira.retira SET time_saida = :time_saida WHERE id = :id', 
+        array(
             ':time_saida' => date('H:i'),
             ':id' => $_GET['id']
         ));

@@ -80,7 +80,7 @@
                     <br>
                     <div class="inputBox">
                         <label for="data_entrada" class="labelTime">Data Entrada</label>
-                        <input type="date" name="data_entrada" id="data_entrada" class="inputUser" required>
+                        <input type="date" name="data_entrada" id="data_entrada" class="inputUser" value="<?php echo $v['data_entrada'] ?>" required>
                     </div>
                     <br>
                     <div class="inputBox">
@@ -94,13 +94,14 @@
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="nf" id="nf" class="inputUser" maxlength="6" min="0">
+                        <input type="number" name="nf" id="nf" class="inputUser" value="<?php echo $v['nf'] ?>" maxlength="6" min="0">
                         <label for="nf" class="labelInput">NF</label>
                     </div>
                     <br>
                     <div class="inputSelect">
                         <label for="motorista" class="labelSelect">Motorista</label>
                         <select type="text" name="motorista" id="motorista">
+                            <option value="valor"><?php echo $v['motorista'] ?></option>
                             <option value="extramila">Extramila</option>
                             <option value="eduardo">Eduardo</option>
                             <option value="jonas">Jonas</option>

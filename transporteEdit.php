@@ -58,7 +58,7 @@
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
                 <a href="./sedex.php">Sedex</a>
-                <a href="./retira.php">Pesquisa</a>
+                <a href="./pesquisa.php">Pesquisa</a>
             </div>    
         </div>
     </header>
@@ -69,23 +69,23 @@
                     <legend><b>Formulário de Transporte</b></legend>
                     <br>
                     <div class="inputBox">
-                        <label for="data_entrada" class="labelTime">Data Entrada</label>
+                        <label for="data_entrada" class="labelInput">Data Entrada</label>
                         <input type="date" name="data_entrada" id="data_entrada" class="inputUser" value="<?php echo $v['data_entrada'] ?>" required>
                     </div>
                     <br>
                     <div class="inputBox">
-                        <label for="data_saida" class="labelTime">Data Saida</label>
+                        <label for="data_saida" class="labelInput">Data Saida</label>
                         <input type="date" name="data_saida" id="data_saida" class="inputUser">
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="text" name="pedido" id="pedido" class="inputUser" value="<?php echo $v['pedido'] ?>" required maxlength="6" min="0" >
                         <label for="pedido" class="labelInput">Pedido</label>
+                        <input type="text" name="pedido" id="pedido" class="inputUser" value="<?php echo $v['pedido'] ?>" required maxlength="6" min="0" >
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="nf" id="nf" class="inputUser" value="<?php echo $v['nf'] ?>" maxlength="6" min="0">
                         <label for="nf" class="labelInput">NF</label>
+                        <input type="number" name="nf" id="nf" class="inputUser" value="<?php echo $v['nf'] ?>" maxlength="6" min="0">
                     </div>
                     <br>
                     <div class="inputSelect">
@@ -103,12 +103,12 @@
                     </div>
                     <br></br>
                     <div class="inputBox">
-                        <input type="text" name="obs" id="obs" class="inputUser" maxlength="20">
                         <label for="obs" class="labelInput">OBS</label>
+                        <input type="text" name="obs" id="obs" class="inputUser" maxlength="20">
                     </div>
                     <br>
                     <input type="submit" name="submit" id="submit">
-                    <br></br>
+                    <br>
                 </fieldset>
             </form>
         </div>

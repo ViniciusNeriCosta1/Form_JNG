@@ -88,14 +88,6 @@ legend{
     letter-spacing: 2px;
 }
 
-.labelInput{
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    pointer-events: none;
-    transition: .5s;
-}
-
 .inputUser:focus ~ .labelInput, .inputUser:valid ~ .labelInput{
     top: -20px;
     font-size: 12px;
@@ -108,16 +100,16 @@ legend{
     border-bottom: 1px solid white;
 }
 
-.labelSelect{
-    padding-bottom: 2px;
+.labelSelect, .labelInput{
+    padding-bottom: 5px;
 }
 
-select{
+select,
+option{
     position: relative;
     display: flex;
     border: 0!important;
     font-size: medium;
-    background-color: none;
     cursor: pointer;
 }
 

@@ -62,8 +62,8 @@
             <div class="navbar">
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
-                <a href="./retira.php">Sedex</a>
-                <a href="./retira.php">Pesquisa</a>
+                <a href="./sedex.php">Sedex</a>
+                <a href="./pesquisa.php">Pesquisa</a>
             </div>    
         </div>
     </header>
@@ -74,42 +74,42 @@
                     <legend><b>Formulário de Sedex</b></legend>
                     <br>
                     <div class="inputBox">
-                        <label for="data_saida" class="labelTime">Data</label>
+                        <label for="data_saida" class="labelInput">Data</label>
                         <input type="date" name="data_saida" id="data_saida" class="inputUser" required>
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="text" name="empresa" id="empresa" class="inputUser" required maxlength="20">
                         <label for="empresa" class="labelInput">Empresa</label>
+                        <input type="text" name="empresa" id="empresa" class="inputUser" required maxlength="20">
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6" min="0">
                         <label for="pedido" class="labelInput">Pedido</label>
+                        <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6" min="0">
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="nf" id="nf" class="inputUser" required maxlength="6" min="0">
                         <label for="nf" class="labelInput">NF</label>
+                        <input type="number" name="nf" id="nf" class="inputUser" required maxlength="6" min="0">
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="prazo" id="prazo" class="inputUser" required maxlength="2" min="0">
                         <label for="prazo" class="labelInput">Prazo</label>
+                        <input type="number" name="prazo" id="prazo" class="inputUser" required maxlength="2" min="0">
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="volume" id="volume" class="inputUser" required maxlength="2" min="0">
                         <label for="volume" class="labelInput">Volume</label>
+                        <input type="number" name="volume" id="volume" class="inputUser" required maxlength="2" min="0">
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="rastreio" id="rastreio" class="inputUser" required maxlength="13" min="0">
                         <label for="rastreio" class="labelInput">Rastreio</label>
+                        <input type="number" name="rastreio" id="rastreio" class="inputUser" required maxlength="13" min="0">
                     </div>
                     <br></br>
                     <input type="submit" name="submit" id="submit">
-                    <br></br>
+                    <br>
                 </fieldset>
             </form>
         </div>

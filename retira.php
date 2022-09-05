@@ -76,8 +76,8 @@
             <div class="navbar">
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
-                <a href="./retira.php">Sedex</a>
-                <a href="./retira.php">Pesquisa</a>
+                <a href="./sedex.php">Sedex</a>
+                <a href="./pesquisa.php">Pesquisa</a>
             </div>    
         </div>
     </header>
@@ -88,42 +88,42 @@
                     <legend><b>Formulário de Retira</b></legend>
                     <br>
                     <div class="inputBox">
-                        <label for="data_retira" class="labelTime">Data</label>
+                        <label for="data_retira" class="labelInput">Data</label>
                         <input type="date" name="data_retira" id="data_retira" class="inputUser" required>
                     </div>
                     <br>
                     <div class="inputBox">
-                        <label for="time_ent" class="labelTime">Horario Entrada</label>
+                        <label for="time_ent" class="labelInput">Horario Entrada</label>
                         <input type="time" name="time_ent" id="time_ent" class="inputUser" required>
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="text" name="nome" id="nome" class="inputUser" required maxlength="20">
                         <label for="nome" class="labelInput">Nome</label>
+                        <input type="text" name="nome" id="nome" class="inputUser" required maxlength="20">
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="text" name="empresa" id="empresa" class="inputUser" required maxlength="20">
                         <label for="empresa" class="labelInput">Empresa</label>
+                        <input type="text" name="empresa" id="empresa" class="inputUser" required maxlength="20">
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="text" name="doc" id="doc" class="inputUser" required maxlength="11">
                         <label for="doc" class="labelInput">Documento</label>
+                        <input type="text" name="doc" id="doc" class="inputUser" required maxlength="11">
                     </div>
                     <br>
                     <div class="inputBox">
-                        <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6" min="0">
                         <label for="pedido" class="labelInput">Pedido</label>
+                        <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6" min="0">
                     </div>
-                    <br></br>
+                    <br>
                     <div class="inputBox">
-                        <input type="text" name="obs" id="obs" class="inputUser" maxlength="20">
                         <label for="obs" class="labelInput">OBS</label>
+                        <input type="text" name="obs" id="obs" class="inputUser" maxlength="20">
                     </div>
                     <br>
                     <input type="submit" name="submit" id="submit">
-                    <br></br>
+                    <br>
                 </fieldset>
             </form>
         </div>

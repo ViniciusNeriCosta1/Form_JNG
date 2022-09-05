@@ -4,8 +4,9 @@
 
     $sql = new Sql();
 
-    $result = $sql->query("SELECT * FROM transporte");
-    var_dump($result);
+    $result_retira = $sql->select("SELECT * FROM formulario_retira.retira");
+    $result_sedex = $sql->select("SELECT * FROM formulario_retira.sedex");
+    $result_transporte = $sql->select("SELECT * FROM formulario_retira.transporte");
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +18,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="300">
-    <title>Transporte | JNG</title>
+    <title>Pesquisar | JNG</title>
 </head>
 <body>
     <header>
@@ -29,43 +30,22 @@
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
                 <a href="./sedex.php">Sedex</a>
-                <a href="./retira.php">Pesquisa</a>
+                <a href="./pesquisar.php">Pesquisa</a>
             </div>    
         </div>
     </header>
     <main>
-        <div class="pesquisar">
-
-        </div>
-        <div class="fundo_table">
+        <div class="fundo_dados">
             <fieldset>
-                <legend><b>INFOS</b></legend>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Nº Pedido</th>
-                            <th>NF</th>
-                            <th>Motorista</th>
-                            <th>Data Entrada</th>
-                            <th>Data Saida</th>
-                            <th>OBS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            foreach ($result as $k => $v) {
-                                echo"<tr>";
-                                echo"<td>".$v['pedido']."</td>";
-                                echo"<td>".$v['nf']."</td>";
-                                echo"<td>".$v['motorista']."</td>";
-                                echo"<td>".$v['data_entrada']."</td>";
-                                echo"<td>".$v['data_saida']."</td>";
-                                echo"<td>".$v['obs']."</td>";
-                                echo"</tr>";
-                            }
-                        ?>    
-                    </tbody>
-                </table>
+                <legend><b>Pesquisa</b></legend>
+                <br>
+                <div class="inputBox">
+                    <select name="opcao" id="opcao" onchange="window.location.href=this.value;">
+                        <option value="retira.php">Retira</option>
+                        <option value="sedex.php">Sedex</option>
+                        <option value="home.php">Transporte</option>
+                    </select>
+                </div>
             </fieldset>
         </div>
     </main>

@@ -106,12 +106,37 @@ legend{
 
 .inputPesq{
     display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
     width: 100%;
 }
 
 .inputPesq select{
     width: 100%;
     text-align: center;
+}
+
+.inputPesq input{
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+}
+
+.inputPesq button{
+    background-image: linear-gradient(to right, #003676, #0072bb);
+    width: 30%;
+    border: none;
+    padding: 0px 10px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.inputPesq button:hover{
+    background-image: linear-gradient(to right, #003676, #00aae3);
 }
 
 select,

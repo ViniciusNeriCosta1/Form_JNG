@@ -53,7 +53,7 @@
         }
     }
 
-    $result = $sql->select("SELECT * FROM retira WHERE time_saida = '00:00' ORDER BY id ASC");
+    $result = $sql->select("SELECT * FROM retira WHERE time_saida = '00:00' ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>

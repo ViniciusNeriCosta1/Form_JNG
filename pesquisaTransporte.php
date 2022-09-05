@@ -3,26 +3,16 @@
     include_once('sql/Sql.php');
 
     $sql = new Sql();
+    $info = "Ultimos 5";
 
     if(!empty($_GET['search']))
     {   
         $data = $_GET['search'];
-        echo $data;
-        echo "<br>";
-        $info = "SELECT * FROM formulario_retira.transporte WHERE nf = '%$data%' OR pedido = '%$data%' ORDER BY id ASC";
-        var_dump ($info);
-        echo "funciona";
-        echo "<br>";
+        $result = $sql->select("SELECT * FROM formulario_retira.transporte WHERE nf = '$data' OR pedido = '$data' ORDER BY id DESC");
+        $info = "Infos";
     }else{
-        echo "n funciona";
-        echo "<br>";
-        $info = "SELECT * FROM formulario_retira.transporte ORDER BY id ASC LIMIT 5"; 
+        $result = $sql->select("SELECT * FROM formulario_retira.transporte ORDER BY id DESC LIMIT 5"); 
     }
-    print_r($info);
-    echo "<br>";
-    $result = $conexao->query($info);
-    print_r($result);
-
 ?>
 
 <!DOCTYPE html>
@@ -56,14 +46,14 @@
                     <legend><b>Pesquisa Transporte</b></legend>
                     <br>
                     <div class="inputPesq">
-                        <input type="search" placeholder="Nº Pedido ou NF" id="pesquisar">
+                        <input type="search" placeholder="Nº Pedido ou NF" id="pesquisar" maxlength="6">
                         <button onclick="searchData()">Pesquisar</button>
                     </div>
                 </fieldset>
             </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>INFOS</b></legend>
+                <legend><b><?php echo $info; ?></b></legend>
                 <table>
                     <thead>
                         <tr>

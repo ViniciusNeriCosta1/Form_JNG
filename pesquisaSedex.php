@@ -1,45 +1,18 @@
 <?php
+    date_default_timezone_set('America/Sao_Paulo');
     include_once('sql/Sql.php');
 
     $sql = new Sql();
-
-    if(isset($_POST['submit']))
-    {
-        $empresa = $_POST['empresa'];
-        $pedido = $_POST['pedido'];
-        $nf = $_POST['nf'];
-        $prazo = $_POST['prazo'];
-        $volume = $_POST['volume'];
-        $data_saida = $_POST['data_saida'];
-        $rastreio = $_POST['rastreio'];
-        $ip = $_POST['ip'];
-
-        $result = $sql->query('INSERT INTO formulario_retira.sedex(
-                empresa, pedido, nf, prazo, volume, data_saida, rastreio, ip
-            ) VALUES (
-                :empresa, :pedido, :nf, :prazo, :volume, :data_saida, :rastreio, :ip
-            )
-        ', array(
-             ':empresa' => $empresa,
-             ':pedido' => $pedido,
-             ':nf' => $nf,
-             ':prazo' => $prazo,
-             ':volume' => $volume,
-             ':data_saida' => $data_saida,
-             ':rastreio' => $rastreio,
-             ':ip' => $_SERVER['REMOTE_ADDR']
-        ));
-        if(! $result){//valida se o resultado do array e informa o erro do insert
-            $erros = $sql->getErrors();
-            echo "<script>alert($erros);</script>";
-        }else{
-            header('Location: sedex.php');
-            die();
-        }
+    $info = "Ultimos 5";
+    
+    if(!empty($_GET['search']))
+    {   
+        $data = $_GET['search'];
+        $result = $sql->select("SELECT * FROM formulario_retira.sedex WHERE nf = '$data' OR pedido = '$data' ORDER BY id DESC");
+        $info = "Infos";
+    }else{
+        $result = $sql->select("SELECT * FROM formulario_retira.sedex ORDER BY id DESC LIMIT 5"); 
     }
-
-    $result = $sql->select("SELECT * FROM sedex ORDER BY id DESC LIMIT 10");
-   
 ?>
 
 <!DOCTYPE html>
@@ -51,7 +24,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="300">
-    <title>Sedex | JNG</title>
+    <title>Pesquisa Transporte | JNG</title>
 </head>
 <body>
     <header>
@@ -69,53 +42,18 @@
     </header>
     <main>
         <div class="fundo_dados">
-            <form action="sedex.php" method="POST">
                 <fieldset>
-                    <legend><b>Formulário de Sedex</b></legend>
+                    <legend><b>Pesquisa Sedex</b></legend>
                     <br>
-                    <div class="inputBox">
-                        <label for="data_saida" class="labelInput">Data</label>
-                        <input type="date" name="data_saida" id="data_saida" class="inputUser" required>
+                    <div class="inputPesq">
+                        <input type="search" placeholder="Nº Pedido ou NF" id="pesquisar" maxlength="6">
+                        <button onclick="searchData()">Pesquisar</button>
                     </div>
-                    <br>
-                    <div class="inputBox">
-                        <label for="empresa" class="labelInput">Empresa</label>
-                        <input type="text" name="empresa" id="empresa" class="inputUser" required maxlength="20">
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <label for="pedido" class="labelInput">Pedido</label>
-                        <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6" min="0">
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <label for="nf" class="labelInput">NF</label>
-                        <input type="number" name="nf" id="nf" class="inputUser" required maxlength="6" min="0">
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <label for="prazo" class="labelInput">Prazo</label>
-                        <input type="number" name="prazo" id="prazo" class="inputUser" required maxlength="2" min="0">
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <label for="volume" class="labelInput">Volume</label>
-                        <input type="number" name="volume" id="volume" class="inputUser" required maxlength="2" min="0">
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <label for="rastreio" class="labelInput">Rastreio</label>
-                        <input type="number" name="rastreio" id="rastreio" class="inputUser" required maxlength="13" min="0">
-                    </div>
-                    <br></br>
-                    <input type="submit" name="submit" id="submit">
-                    <br>
                 </fieldset>
-            </form>
-        </div>
+            </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>INFOS</b></legend>
+                <legend><b><?php echo $info; ?></b></legend>
                 <table>
                     <thead>
                         <tr>
@@ -153,12 +91,22 @@
         </div>
     </footer>
     <script>
-        //funcao para selecionar todos os input tipo number e maxlength funcionar
-        document.querySelectorAll('input[type="number"]').forEach(input =>{
-            input.oninput = () => {
-                if(input.value.length > input.maxLength) input.value = input.value.slice(0, input.maxLength);
-            };
-        });
-    </script>
+    var search = document.getElementById('pesquisar');
+
+    search.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") 
+        {
+            searchData();
+        }
+    });
+
+    function searchData()
+    {
+        window.location = 'pesquisaSedex.php?search='+search.value;
+    }
+</script>
 </body>
 </html>
+
+
+

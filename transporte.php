@@ -4,7 +4,40 @@
 
     $sql = new Sql();
 
-    $result = $sql->select("SELECT * FROM formulario_retira.transporte WHERE data_saida = '' OR nf = '' ORDER BY id ASC");
+    if(isset($_POST['submit']))
+    {
+        $data_entrada = $_POST['data_entrada'];
+        $data_saida = $_POST['data_saida'];
+        $pedido = $_POST['pedido'];
+        $nf = $_POST['nf'];
+        $motorista = $_POST['motorista'];
+        $obs = $_POST['obs'];
+        $ip = $_POST['ip'];
+
+        $result = $sql->query('INSERT INTO formulario_retira.transporte(
+                data_entrada, data_saida, pedido, nf, motorista, obs, ip
+            ) VALUES (
+                :data_entrada, :data_saida, :pedido, :nf, :motorista, :obs, :ip
+            )
+        ', array(
+            ':data_entrada' => $data_entrada,
+            ':data_saida' => $data_saida,
+            ':pedido' => $pedido,
+            ':nf' => $nf,
+            ':motorista' => $motorista,
+            ':obs' => $obs,
+            'ip' => $_SERVER['REMOTE_ADDR']
+        ));
+        if(! $result){//valida se o resultado do array e informa o erro do insert
+            $erros = $sql->getErrors();
+            echo "<script>alert($erros);</script>";
+        }else{
+            header('Location: transporte.php');
+            die();
+        }
+    }
+
+    $result = $sql->select("SELECT * FROM formulario_retira.transporte WHERE data_saida = '' OR nf = '' ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>

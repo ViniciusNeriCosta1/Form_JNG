@@ -104,6 +104,16 @@ legend{
     padding-bottom: 5px;
 }
 
+.inputPesq{
+    display: flex;
+    width: 100%;
+}
+
+.inputPesq select{
+    width: 100%;
+    text-align: center;
+}
+
 select,
 option{
     position: relative;

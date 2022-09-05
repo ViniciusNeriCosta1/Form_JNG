@@ -19,7 +19,7 @@
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
                 <a href="./sedex.php">Sedex</a>
-                <a href="./pesquisar.php">Pesquisa</a>
+                <a href="./pesquisa.php">Pesquisa</a>
             </div>    
         </div>
     </header>

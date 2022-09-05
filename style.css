@@ -139,18 +139,7 @@ option{
     border-radius: 10px;
 }
 
-#pesquisar{
-    background-image: linear-gradient(to right, #003676, #0072bb);
-    width: 100%;
-    border: none;
-    padding: 15px;
-    color: white;
-    font-size: 15px;
-    cursor: pointer;
-    border-radius: 10px;
-}
-
-#submit:hover,#pesquisar:hover{
+#submit:hover{
     background-image: linear-gradient(to right, #003676, #00aae3);
 }
 
@@ -203,7 +192,7 @@ tr{
 }
 
 footer{
-    position: fixed;
+    position: relative;
     display: end;
     bottom: 0;
     background-color: black;
@@ -211,4 +200,5 @@ footer{
     width: 100%;
     height: 50px;    
     text-align: center;
+    line-height: 50px;
 }

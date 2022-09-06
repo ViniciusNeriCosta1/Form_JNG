@@ -67,6 +67,10 @@ main{
     outline: none;
 }
 
+.fundo_dados legend{
+    margin-bottom: 5px;
+}
+
 .fundo_dados{
     background-color: rgba(0, 0, 0, 0.6);
     padding: 15px;

@@ -27,7 +27,6 @@
         <div class="fundo_dados">
             <fieldset>
                 <legend><b>Pesquisa</b></legend>
-                <br>
                 <div class="inputPesq">
                     <select name="opcao" id="opcao" onchange="window.location.href=this.value;">
                         <option value=""></option>

@@ -70,7 +70,6 @@
             <form action="transporte.php" method="POST">
                 <fieldset>
                     <legend><b>Formulário de Transporte</b></legend>
-                    <br>
                     <div class="inputBox">
                         <label for="data_entrada" class="labelInput">Data Entrada</label>
                         <input type="date" name="data_entrada" id="data_entrada" class="inputUser" required>

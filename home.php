@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login | JNG</title>
+    <title>Home | JNG</title>
 </head>
 <body>
     <header>
@@ -16,19 +16,18 @@
     </header>
     <main>
         <div class="fundo_dados">
-            <fieldset>
-                <legend><b>Login</b></legend>
-                <br>
-                <form action="" method="POST">
-                    <div class="inputLogin">
-                        <input type="text" placeholder="login" name="login" id="login">
-                        <br>
-                        <input type="password" placeholder="senha" name="senha" id="senha">
-                        <br>
-                        <input type="submit" value="Login" id="submit">
-                    </div>
-                </form>
-            </fieldset>
+            <form action="login.php" method="POST">
+                <fieldset>
+                    <legend><b>Login</b></legend>
+                        <div class="inputLogin">
+                            <input type="text" placeholder="login" name="login" id="login">
+                            <br>
+                            <input type="password" placeholder="senha" name="senha" id="senha">
+                            <br>
+                            <input type="submit" value="Login" id="submit">
+                        </div>
+                </fieldset>
+            </form>
         </div>
     </main>
     <footer>

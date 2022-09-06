@@ -44,7 +44,6 @@
         <div class="fundo_dados">
                 <fieldset>
                     <legend><b>Pesquisa Sedex</b></legend>
-                    <br>
                     <div class="inputPesq">
                         <input type="search" placeholder="Nº Pedido ou NF" id="pesquisar" maxlength="6">
                         <button onclick="searchData()">Pesquisar</button>

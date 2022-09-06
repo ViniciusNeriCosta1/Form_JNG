@@ -72,7 +72,6 @@
             <form action="sedex.php" method="POST">
                 <fieldset>
                     <legend><b>Formulário de Sedex</b></legend>
-                    <br>
                     <div class="inputBox">
                         <label for="data_saida" class="labelInput">Data</label>
                         <input type="date" name="data_saida" id="data_saida" class="inputUser" required>

@@ -86,7 +86,6 @@
             <form action="retira.php" method="POST">
                 <fieldset>
                     <legend><b>Formulário de Retira</b></legend>
-                    <br>
                     <div class="inputBox">
                         <label for="data_retira" class="labelInput">Data</label>
                         <input type="date" name="data_retira" id="data_retira" class="inputUser" required>

@@ -53,6 +53,20 @@ main{
     margin: 2%;
 }
 
+.inputLogin{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 0!important;
+}
+
+.inputLogin input{
+    padding: 10px;
+    outline: none;
+}
+
 .fundo_dados{
     background-color: rgba(0, 0, 0, 0.6);
     padding: 15px;
@@ -121,6 +135,7 @@ legend{
     width: 100%;
     border: none;
     border-radius: 5px;
+    font-size: 15px;
 }
 
 .inputPesq button{

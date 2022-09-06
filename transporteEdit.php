@@ -10,28 +10,28 @@
         ));
         print_r($info);
         foreach($info as $k => $v){}
+    }
 
-        if(isset($_POST['submit']))
-        {   
-        $result = $sql->select('UPDATE formulario_retira.transporte SET nf = :nf, motorista = :motorista, data_saida = :data_saida, obs = :obs 
+    if(isset($_POST['submit']))
+    {
+        $result = $sql->query('UPDATE formulario_retira.transporte SET nf = :nf, motorista = :motorista, data_saida = :data_saida, obs = :obs 
         WHERE id = :id', 
         array(
             ':nf' => $_POST['nf'],
             ':motorista' => $_POST['motorista'],
             ':obs' => $_POST['obs'],
             ':data_saida' => $_POST['data_saida'],
-            ':id' => $v['id']
+            ':id' => $_POST['id']
         ));
+        print_r($result);
         if(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
             var_dump($erros);
             //print_r("<script>alert($erros);</script>");
         }else{
-            header('Location: transporteEdit.php');
+            header('Location: transporte.php');
             die();
         }
-        }
-
     }
 
     
@@ -63,10 +63,13 @@
         </div>
     </header>
     <main>
+        
         <div class="fundo_dados">
-            <form action="transporteEdit.php" method="POST">
+            <form action="transporte.php" method="POST">
                 <fieldset>
                     <legend><b>Formulário de Transporte</b></legend>
+                    <br>
+                    <input type="text" name="teste" value="<?php echo $v['id']?>">
                     <br>
                     <div class="inputBox">
                         <label for="data_entrada" class="labelInput">Data Entrada</label>
@@ -101,7 +104,7 @@
                             <option value="Silvan">Silvan</option>
                         </select>
                     </div>
-                    <br></br>
+                    <br>
                     <div class="inputBox">
                         <label for="obs" class="labelInput">OBS</label>
                         <input type="text" name="obs" id="obs" class="inputUser" maxlength="20">

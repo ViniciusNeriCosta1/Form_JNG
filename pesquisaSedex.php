@@ -8,7 +8,7 @@
     if(!empty($_GET['search']))
     {   
         $data = $_GET['search'];
-        $result = $sql->select("SELECT * FROM formulario_retira.sedex WHERE nf = '$data' OR pedido = '$data' ORDER BY id DESC");
+        $result = $sql->select("SELECT * FROM formulario_retira.sedex WHERE nf = '$data' OR pedido = '$data' OR data_saida = '$data' ORDER BY id DESC");
         $info = "Infos";
     }else{
         $result = $sql->select("SELECT * FROM formulario_retira.sedex ORDER BY id DESC LIMIT 5"); 
@@ -45,7 +45,7 @@
                 <fieldset>
                     <legend><b>Pesquisa Sedex</b></legend>
                     <div class="inputPesq">
-                        <input type="search" placeholder="Nº Pedido ou NF" id="pesquisar" maxlength="6">
+                        <input type="search" placeholder="Nº Pedido, NF ou Data(Ano-Mes-Dia)" id="pesquisar" maxlength="6">
                         <button onclick="searchData()">Pesquisar</button>
                     </div>
                 </fieldset>

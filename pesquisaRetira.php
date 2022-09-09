@@ -8,7 +8,7 @@
     if(!empty($_GET['search']))
     {   
         $data = $_GET['search'];
-        $result = $sql->select("SELECT * FROM formulario_retira.retira WHERE pedido = '$data' ORDER BY id DESC");
+        $result = $sql->select("SELECT * FROM formulario_retira.retira WHERE pedido = '$data' OR data_retira = '$data'ORDER BY id DESC");
         $info = "Infos";
     }else{
         $result = $sql->select("SELECT * FROM formulario_retira.retira ORDER BY id DESC LIMIT 5"); 
@@ -45,7 +45,7 @@
                 <fieldset>
                     <legend><b><?php echo $info; ?></b></legend>
                     <div class="inputPesq">
-                        <input type="search" placeholder="Nº Pedido ou NF" id="pesquisar" maxlength="6">
+                        <input type="search" placeholder="Nº Pedido ou Data(Ano-Mes-Dia)" id="pesquisar" maxlength="6">
                         <button onclick="searchData()">Pesquisar</button>
                     </div>
                 </fieldset>

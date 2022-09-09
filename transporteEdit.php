@@ -8,11 +8,10 @@
         $info = $sql->select('SELECT * FROM formulario_retira.transporte WHERE id = :id', array(
             ':id' => $_GET['id']
         ));
-        print_r($info);
         foreach($info as $k => $v){}
     }
 
-    if(isset($_POST['submit']))
+    if(isset($_POST['submit']) && !empty($_POST))
     {
         $result = $sql->query('UPDATE formulario_retira.transporte SET nf = :nf, motorista = :motorista, data_saida = :data_saida, obs = :obs 
         WHERE id = :id', 
@@ -23,7 +22,6 @@
             ':data_saida' => $_POST['data_saida'],
             ':id' => $_POST['id']
         ));
-        print_r($result);
         if(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
             var_dump($erros);
@@ -65,11 +63,11 @@
     <main>
         
         <div class="fundo_dados">
-            <form action="transporte.php" method="POST">
+            <form action="transporteEdit.php" method="POST">
                 <fieldset>
                     <legend><b>Formulário de Transporte</b></legend>
                     <br>
-                    <input type="text" name="teste" value="<?php echo $v['id']?>">
+                    <input type="hidden" name="id" value="<?php echo $v['id']?>">
                     <br>
                     <div class="inputBox">
                         <label for="data_entrada" class="labelInput">Data Entrada</label>

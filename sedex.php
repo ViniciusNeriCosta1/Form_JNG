@@ -14,7 +14,7 @@
         $rastreio = $_POST['rastreio'];
         $ip = $_POST['ip'];
 
-        $result = $sql->query('INSERT INTO formulario_retira.sedex(
+        $result = $sql->query('INSERT INTO prd_p12.sza(
                 empresa, pedido, nf, prazo, volume, data_saida, rastreio, ip
             ) VALUES (
                 :empresa, :pedido, :nf, :prazo, :volume, :data_saida, :rastreio, :ip
@@ -38,7 +38,7 @@
         }
     }
 
-    $result = $sql->select("SELECT * FROM sedex ORDER BY id DESC LIMIT 10");
+    $result = $sql->select("SELECT * FROM prd_p12.sza ORDER BY id DESC LIMIT 10");
    
 ?>
 

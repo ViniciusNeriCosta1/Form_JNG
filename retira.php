@@ -5,7 +5,7 @@
     $sql = new Sql();
 
     if (isset($_GET['id']) && !empty($_GET['id'])) {
-        $sql->select('UPDATE formulario_retira.retira SET time_saida = :time_saida WHERE id = :id', 
+        $sql->select('UPDATE prd_p12.sza SET time_saida = :time_saida WHERE id = :id', 
         array(
             ':time_saida' => date('H:i'),
             ':id' => $_GET['id']
@@ -27,7 +27,7 @@
         $data_retira = $_POST['data_retira'];
         $ip = $_POST['ip'];
 
-        $result = $sql->query('INSERT INTO formulario_retira.retira(
+        $result = $sql->query('INSERT INTO prd_p12.sza(
                 time_ent, nome, empresa, doc, pedido, obs, time_saida, data, ip
             ) VALUES (
                 :time_ent, :nome, :empresa, :doc, :pedido, :obs, :time_saida, :data, :ip

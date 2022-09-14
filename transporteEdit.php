@@ -5,7 +5,7 @@
     $sql = new Sql();
 
     if (isset($_GET['id']) && !empty($_GET['id'])) {
-        $info = $sql->select('SELECT * FROM formulario_retira.transporte WHERE id = :id', array(
+        $info = $sql->select('SELECT * FROM prd_p12.sza WHERE id = :id', array(
             ':id' => $_GET['id']
         ));
         foreach($info as $k => $v){}
@@ -13,7 +13,7 @@
 
     if(isset($_POST['submit']) && !empty($_POST))
     {
-        $result = $sql->query('UPDATE formulario_retira.transporte SET nf = :nf, motorista = :motorista, data_saida = :data_saida, obs = :obs 
+        $result = $sql->query('UPDATE prd_p12.sza SET nf = :nf, motorista = :motorista, data_saida = :data_saida, obs = :obs 
         WHERE id = :id', 
         array(
             ':nf' => $_POST['nf'],
@@ -31,7 +31,6 @@
             die();
         }
     }
-
     
 ?>
 
@@ -61,7 +60,6 @@
         </div>
     </header>
     <main>
-        
         <div class="fundo_dados">
             <form action="transporteEdit.php" method="POST">
                 <fieldset>

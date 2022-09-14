@@ -1,6 +1,6 @@
 <?php
 
-    include_once('sql/Sql1.php');
+    include_once('sql/Sql.php');
 
     $sql = new Sql();
 
@@ -8,7 +8,7 @@
     {
         $login = $_POST['login'];
         $senha = $_POST['senha'];
-        $result = $sql->query("SELECT * FROM prd_p12.szd WHERE ZD_login = '$login' and ZD_senha = '$senha'");
+        $result = $sql->query("SELECT * FROM prd_p12.szc WHERE ZD_login = '$login' and ZD_senha = '$senha'");
         var_dump($result);
         if(($result) <= 1)
         {

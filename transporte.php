@@ -14,7 +14,7 @@
         $obs = $_POST['obs'];
         $ip = $_POST['ip'];
 
-        $result = $sql->query('INSERT INTO formulario_retira.transporte(
+        $result = $sql->query('INSERT INTO prd_p12.sza(
                 data_entrada, data_saida, pedido, nf, motorista, obs, ip
             ) VALUES (
                 :data_entrada, :data_saida, :pedido, :nf, :motorista, :obs, :ip
@@ -37,7 +37,7 @@
         }
     }
 
-    $result = $sql->select("SELECT * FROM formulario_retira.transporte WHERE data_saida = '' OR nf = '' ORDER BY id DESC");
+    $result = $sql->select("SELECT * FROM prd_p12.sza WHERE data_saida = '' OR nf = '' ORDER BY id DESC");
 ?>
 
 <!DOCTYPE html>

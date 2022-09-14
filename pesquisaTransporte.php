@@ -8,10 +8,10 @@
     if(!empty($_GET['search']))
     {   
         $data = $_GET['search'];
-        $result = $sql->select("SELECT * FROM formulario_retira.transporte WHERE nf = '$data' OR pedido = '$data' OR data_saida = '$data' ORDER BY id DESC");
+        $result = $sql->select("SELECT * FROM prd_p12.sza WHERE nf = '$data' OR pedido = '$data' OR data_saida = '$data' ORDER BY id DESC");
         $info = "Infos";
     }else{
-        $result = $sql->select("SELECT * FROM formulario_retira.transporte ORDER BY id DESC LIMIT 5"); 
+        $result = $sql->select("SELECT * FROM prd_p12.sza ORDER BY id DESC LIMIT 5"); 
     }
 ?>
 

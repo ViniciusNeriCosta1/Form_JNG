@@ -7,7 +7,7 @@ class Sql {
 	const HOSTNAME = "localhost";
 	const USERNAME = "suporteti";
 	const PASSWORD = "q1Q!q1Q!";
-	const DBNAME = "formulario_retira";
+	const DBNAME = "prd_p12";
 
 	private $conn;
 	private $errors;

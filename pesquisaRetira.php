@@ -8,10 +8,10 @@
     if(!empty($_GET['search']))
     {   
         $data = $_GET['search'];
-        $result = $sql->select("SELECT * FROM formulario_retira.retira WHERE pedido = '$data' OR data_retira = '$data'ORDER BY id DESC");
+        $result = $sql->select("SELECT * FROM prd_p12.sza WHERE pedido = '$data' OR data_retira = '$data'ORDER BY id DESC");
         $info = "Infos";
     }else{
-        $result = $sql->select("SELECT * FROM formulario_retira.retira ORDER BY id DESC LIMIT 5"); 
+        $result = $sql->select("SELECT * FROM prd_p12.sza ORDER BY id DESC LIMIT 5"); 
     }
 ?>
 
@@ -43,16 +43,16 @@
     <main>
         <div class="fundo_dados">
                 <fieldset>
-                    <legend><b><?php echo $info; ?></b></legend>
+                    <legend><b>Pesquisa Retira</b></legend>
                     <div class="inputPesq">
-                        <input type="search" placeholder="Nº Pedido ou Data(Ano-Mes-Dia)" id="pesquisar" maxlength="6">
+                        <input type="search" placeholder="Nº Pedido ou Data(Ano-Mes-Dia)" id="pesquisar">
                         <button onclick="searchData()">Pesquisar</button>
                     </div>
                 </fieldset>
             </div>
             <div class="fundo_table">
             <fieldset>
-                <legend><b>INFOS</b></legend>
+                <legend><b><?php echo $info; ?></b></legend>
                 <table>
                     <thead>
                         <tr>
@@ -64,7 +64,6 @@
                             <th>Entrada</th>
                             <th>Saida</th>
                             <th>OBS</th>
-                            <input type="hidden">
                         </tr>
                     </thead>
                     <tbody>
@@ -75,7 +74,7 @@
                                 echo"<td>".$v['nome']."</td>";
                                 echo"<td>".$v['empresa']."</td>";
                                 echo"<td>".$v['doc']."</td>";
-                                echo"<td>".$v['data']."</td>";
+                                echo"<td>".$v['data_retira']."</td>";
                                 echo"<td>".$v['time_ent']."</td>";
                                 echo"<td>".$v['time_saida']."</td>";
                                 echo"<td>".$v['obs']."</td>";

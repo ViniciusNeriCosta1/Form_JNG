@@ -9,16 +9,18 @@
         $pedido = $_POST['pedido'];
         $tp_saida = $_POST['tp_saida'];
         $dt_lib_fat = $_POST['dt_lib_fat'];
+        $ip = $_POST['ip'];
 
         $result = $sql->query('INSERT INTO prd_p12.sza(
-                za_pedido, za_tp_saida, za_dt_lib_fat
+                za_pedido, za_tp_saida, za_dt_lib_fat, za_ip
             ) VALUES (
-                :za_pedido, :za_tp_saida, :za_dt_lib_fat
+                :za_pedido, :za_tp_saida, :za_dt_lib_fat, :za_ip
             )
         ', array(
             ':za_pedido' => $pedido,
             ':za_tp_saida' => $tp_saida,
-            ':za_dt_lib_fat' => date('Y-m-d')
+            ':za_dt_lib_fat' => date('Y-m-d'),
+            ':za_ip' => $_SERVER['REMOTE_ADDR']
         ));
         if(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
@@ -29,19 +31,19 @@
         }
     }
 
-    $result = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat FROM prd_p12.sza");
+    $result = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat FROM prd_p12.sza WHERE za_dt_saida IS NULL ORDER BY za_id DESC");
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./fontawesome/css/all.css">
     <link rel="shortcut icon" type = "imagem/x-icon" href = "./assets/logo_jng.ico"/>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="300">
+    <script src="https://kit.fontawesome.com/dadbdef077.js" crossorigin="anonymous"></script>
     <title>Inserir | JNG</title>
 </head>
 <body>
@@ -67,18 +69,17 @@
                     <label for="pedido" class="labelSelect">Numero do Pedido</label>
                         <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6" min="0">
                     </div>
-                    <input type="hidden" name="dt_lib_fat">
                     <div class="inputSelect">
                         <label for="tp_saida" class="labelSelect">Tipo de Saída</label>
                         <select type="text" name="tp_saida" id="tp_saida">
-                            <option value="interno">Interno</option>
-                            <option value="externo">Externo</option>
+                            <option value="retira">Retira</option>
+                            <option value="transporte">Transporte</option>
+                            <option value="sedex">Sedex</option>
                         </select>
                     </div>
                     <br>
                     <input type="submit" name="submit" id="submit">
                     <br>
-                    
                 </fieldset>
             </form>
         </div>
@@ -102,13 +103,12 @@
                                 echo"<td>".$v['za_tp_saida']."</td>";
                                 echo"<td>".$v['za_dt_lib_fat']."</td>";
                                 echo"<td>
-                                <a href='#'><i class='fa-light fa-pen-to-square'></i></a>
+                                <a href='#'><i class='fal fa-solid fa-file-pen'></i></a>
                                 </td>";
                                 echo"</tr>";
                             }
-                        ?>    
+                        ?>
                     </tbody>
-                    <td><i class="fa-light"></i></td>
                 </table>
             </fieldset>
         </div>
@@ -118,5 +118,13 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
+    <script>
+        //funcao para selecionar todos os input tipo number e maxlength funcionar
+        document.querySelectorAll('input[type="number"]').forEach(input =>{
+            input.oninput = () => {
+                if(input.value.length > input.maxLength) input.value = input.value.slice(0, input.maxLength);
+            };
+        });
+    </script>
 </body>
 </html>

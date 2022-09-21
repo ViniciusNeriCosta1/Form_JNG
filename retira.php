@@ -3,47 +3,35 @@
     include_once('sql/Sql.php');
 
     $sql = new Sql();
-
-    if (isset($_GET['id']) && !empty($_GET['id'])) {
-        $sql->select('UPDATE prd_p12.sza SET time_saida = :time_saida WHERE id = :id', 
-        array(
-            ':time_saida' => date('H:i'),
-            ':id' => $_GET['id']
+/*
+    if(isset($_GET['za_id']) && ($_POST['editar'])){
+        echo "teste";
+    }
+*/
+    if(isset($_GET['za_id']) && !empty($_GET['za_id'])) 
+    {
+        $result = $sql->select('SELECT za_pedido, za_id FROM prd_p12.sza WHERE za_id = :za_id', array(
+            ':za_id' => $_GET['za_id']
         ));
-
-        header('Location: retira.php');
-        die();
+        foreach($result as $k => $v){}
     }
 
-    if(isset($_POST['submit']))
+    if(isset($_POST['submit']) && !empty($_POST['submit']))
     {
-        $time_ent = $_POST['time_ent'];
-        $time_saida = $_POST['time_saida'];
-        $nome = $_POST['nome'];
-        $empresa = $_POST['empresa'];
-        $doc = $_POST['doc'];
-        $pedido = $_POST['pedido'];
-        $obs = $_POST['obs'];
-        $data_retira = $_POST['data_retira'];
-        $ip = $_POST['ip'];
-
-        $result = $sql->query('INSERT INTO prd_p12.sza(
-                time_ent, nome, empresa, doc, pedido, obs, time_saida, data, ip
-            ) VALUES (
-                :time_ent, :nome, :empresa, :doc, :pedido, :obs, :time_saida, :data, :ip
-            )
-        ', array(
-            ':time_ent' => $time_ent,
-             ':nome' => $nome,
-             ':empresa' => $empresa,
-             ':doc' => $doc,
-             ':pedido' => $pedido,
-             ':obs' => $obs,
-             ':data' => $data_retira,
-             ':time_saida' => '00:00',
-             ':data' => $data_retira,
-             'ip' => $_SERVER['REMOTE_ADDR']
-        ));
+        $result = $sql->query('UPDATE prd_p12.sza SET 
+        za_nome = :za_nome, za_empresa = :za_empresa, za_documento = :za_documento, za_hr_chegada = :za_hr_chegada, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
+        array(
+            ':za_nome' => $_POST['nome'],
+            ':za_empresa' => $_POST['empresa'],
+            ':za_documento' => $_POST['doc'],
+            ':za_hr_chegada' => $_POST['time_ent'],
+            ':za_obs' => $_POST['obs'],
+            ':za_ip' => $_SERVER['REMOTE_ADDR'],
+            ':za_id' => $_POST['za_id']
+        ));/*
+        if(isset($_POST['editar'])){
+            echo "teste";
+        }*/
         if(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
             echo "<script>alert($erros);</script>";
@@ -53,8 +41,8 @@
         }
     }
 
-    $result = $sql->select("SELECT za_pedido FROM prd_p12.sza WHERE za_tp_saida = 'retira' AND za_dt_saida IS NULL ORDER BY za_id DESC");
-    
+    $result = $sql->select("SELECT za_pedido, za_nome, za_empresa, za_documento, za_hr_chegada, za_obs, za_id
+    FROM prd_p12.sza WHERE za_tp_saida = 'retira' AND za_dt_saida IS NULL ORDER BY za_id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -88,9 +76,10 @@
             <form action="retira.php" method="POST">
                 <fieldset>
                     <legend><b>Formulário de Retira</b></legend>
+                    <input type="hidden" name="za_id" id="za_id" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_id'];}else{ echo "";}?>">
                     <div class="inputBox">
                         <label for="pedido" class="labelInput">Pedido</label>
-                        <input type="text" name="za_pedido" class="inputUser" value="<?php foreach($result as $k => $v){ echo $v['za_pedido']; }?>">
+                        <input type="text" name="pedido" id="pedido" class="inputUser" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_pedido'];}else{ echo "";}?>">
                     </div>
                     <br>
                     <div class="inputBox">
@@ -118,7 +107,8 @@
                         <input type="text" name="obs" id="obs" class="inputUser" maxlength="20">
                     </div>
                     <br>
-                    <input type="submit" name="submit" id="submit">
+                    <input type="submit" name="submit" id="submit" class="fa-solid fa-check">
+                    <i class="fa-solid fa-check"></i>
                     <br>
                 </fieldset>
             </form>
@@ -130,6 +120,12 @@
                     <thead>
                         <tr>
                             <th>Nº Pedido</th>
+                            <th>Nome</th>
+                            <th>Empresa</th>
+                            <th>Documento</th>
+                            <th>Chegada</th>
+                            <th>Saída</th>
+                            <th>OBS</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -137,6 +133,14 @@
                             foreach ($result as $k => $v) {
                                 echo"<tr>";
                                 echo"<td>".$v['za_pedido']."</td>";
+                                echo"<td>".$v['za_nome']."</td>";
+                                echo"<td>".$v['za_empresa']."</td>";
+                                echo"<td>".$v['za_documento']."</td>";
+                                echo"<td>".$v['za_hr_chegada']."</td>";
+                                echo"<td>"?>
+                                <i class="fa-solid fa-check"></i>
+                                <?php echo"</td>";
+                                echo"<td>".$v['za_obs']."</td>";
                                 echo"</tr>";
                             }
                         ?>    
@@ -160,6 +164,3 @@
     </script>
 </body>
 </html>
-
-
-

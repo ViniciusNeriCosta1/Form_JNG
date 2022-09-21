@@ -9,19 +9,39 @@
         $pedido = $_POST['pedido'];
         $tp_saida = $_POST['tp_saida'];
         $dt_lib_fat = $_POST['dt_lib_fat'];
+        $pag = $_POST['pag'];
         $ip = $_POST['ip'];
 
-        $result = $sql->query('INSERT INTO prd_p12.sza(
-                za_pedido, za_tp_saida, za_dt_lib_fat, za_ip
+        if($tp_saida == "retira"){
+            $pag = "retira";
+            $result = $sql->query('INSERT INTO prd_p12.sza(
+                za_pedido, za_tp_saida, za_pag, za_dt_lib_fat, za_ip
             ) VALUES (
-                :za_pedido, :za_tp_saida, :za_dt_lib_fat, :za_ip
+                :za_pedido, :za_tp_saida, :za_pag, :za_dt_lib_fat, :za_ip
             )
         ', array(
             ':za_pedido' => $pedido,
             ':za_tp_saida' => $tp_saida,
+            ':za_pag' => $pag,
             ':za_dt_lib_fat' => date('Y-m-d'),
             ':za_ip' => $_SERVER['REMOTE_ADDR']
         ));
+        }else{
+            $pag = "transporte";
+            $result = $sql->query('INSERT INTO prd_p12.sza(
+                za_pedido, za_tp_saida, za_pag, za_dt_lib_fat, za_ip
+            ) VALUES (
+                :za_pedido, :za_tp_saida, :za_pag, :za_dt_lib_fat, :za_ip
+            )
+        ', array(
+            ':za_pedido' => $pedido,
+            ':za_tp_saida' => $tp_saida,
+            ':za_pag' => $pag,
+            ':za_dt_lib_fat' => date('Y-m-d'),
+            ':za_ip' => $_SERVER['REMOTE_ADDR']
+        )); 
+        }
+
         if(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
             echo "<script>alert($erros);</script>";
@@ -31,7 +51,7 @@
         }
     }
 
-    $result = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat FROM prd_p12.sza WHERE za_dt_saida IS NULL ORDER BY za_id DESC");
+    $result = $sql->select("SELECT za_pedido, za_tp_saida, za_pag, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_dt_saida IS NULL ORDER BY za_id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -85,7 +105,7 @@
         </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>Ultimos 5</b></legend>
+                <legend><b>Pendentes</b></legend>
                 <table>
                     <thead>
                         <tr>
@@ -103,7 +123,7 @@
                                 echo"<td>".$v['za_tp_saida']."</td>";
                                 echo"<td>".$v['za_dt_lib_fat']."</td>";
                                 echo"<td>
-                                <a href='#'><i class='fal fa-solid fa-file-pen'></i></a>
+                                <a href='{$v['za_pag']}.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen' name='editar' id='editar'></i></a>
                                 </td>";
                                 echo"</tr>";
                             }

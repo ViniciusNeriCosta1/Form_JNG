@@ -11,7 +11,7 @@
         foreach($info as $k => $v){}
     }
 
-    if(isset($_POST['submit']) && !empty($_POST))
+    if(isset($_POST['submit']) && !empty($_POST['submit']))
     {
         $result = $sql->query('UPDATE prd_p12.sza SET nf = :nf, motorista = :motorista, data_saida = :data_saida, obs = :obs 
         WHERE id = :id', 

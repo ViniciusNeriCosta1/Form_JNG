@@ -22,16 +22,19 @@ use function PHPSTORM_META\map;
         array(
             ':za_id' => $_GET['za_id'],
         ));
-        if($info[0]['za_tp_saida'] == 'retira'){
+        var_dump($info);
+        if($info[0]['za_tp_saida'] === "retira"){
             echo "retira";
             #header('Location: retira.php');
-        }if($info[0]['za_tp_saida'] == 'sedex'){
+        }elseif($info[0]['za_tp_saida'] == 'sedex'){
             echo "sedex";
             #header('Location: sedex.php');
-        }else{
-            echo "ruim";
+        }elseif($info[0]['za_tp_saida'] == 'transporte'){
+            echo "transporte";
             #header('Location: transporte.php');
+        }else{
+            echo "sair";
+            #header('Location: inserir.php');
         }
-        
     }
 ?>

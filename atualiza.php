@@ -18,13 +18,16 @@ use function PHPSTORM_META\map;
             ':za_id' => $_GET['za_id']
         ));
         */
-        $info = $sql->select('SELECT za_pag FROM prd_p12.sza WHERE za_id = :za_id',
+        $info = $sql->select('SELECT za_tp_saida FROM prd_p12.sza WHERE za_id = :za_id',
         array(
             ':za_id' => $_GET['za_id'],
         ));
-        if($info[0]['za_pag'] == 'retira'){
-            echo "bom";
+        if($info[0]['za_tp_saida'] == 'retira'){
+            echo "retira";
             #header('Location: retira.php');
+        }if($info[0]['za_tp_saida'] == 'sedex'){
+            echo "sedex";
+            #header('Location: sedex.php');
         }else{
             echo "ruim";
             #header('Location: transporte.php');

@@ -154,6 +154,11 @@ legend{
     text-decoration: none;
 }
 
+.inputTransp{
+    display: flex;
+    flex-direction: row;
+}
+
 .inputPesq button:hover{
     background-image: linear-gradient(to right, #003676, #00aae3);
 }

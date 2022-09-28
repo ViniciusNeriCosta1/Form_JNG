@@ -15,12 +15,14 @@
             <img src="./assets/logo_JNG_azul.png" alt="Logo JNG" class="img_logo_header">
         </div>
         <div class="header-content">
-            <div class="navbar">
+        <div class="navbar">
+                <a href="./inserir.php">Inicio</a>
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
                 <a href="./sedex.php">Sedex</a>
                 <a href="./pesquisa.php">Pesquisa</a>
             </div>    
+        </div>
         </div>
     </header>
     <main>

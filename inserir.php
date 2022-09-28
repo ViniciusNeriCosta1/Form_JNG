@@ -9,35 +9,17 @@
         $pedido = $_POST['pedido'];
         $tp_saida = $_POST['tp_saida'];
 
-        if($tp_saida == "retira"){
-            $pag = "retira";
-            $result = $sql->query('INSERT INTO prd_p12.sza(
-                za_pedido, za_tp_saida, za_pag, za_dt_lib_fat, za_ip
-            ) VALUES (
-                :za_pedido, :za_tp_saida, :za_pag, :za_dt_lib_fat, :za_ip
-            )
+        $result = $sql->query('INSERT INTO prd_p12.sza(
+            za_pedido, za_tp_saida, za_dt_lib_fat, za_ip
+        ) VALUES (
+            :za_pedido, :za_tp_saida, :za_dt_lib_fat, :za_ip
+        )
         ', array(
-            ':za_pedido' => $pedido,
-            ':za_tp_saida' => $tp_saida,
-            ':za_pag' => $pag,
-            ':za_dt_lib_fat' => date('Y-m-d'),
-            ':za_ip' => $_SERVER['REMOTE_ADDR']
-        ));
-        }else{
-            $pag = "transporte";
-            $result = $sql->query('INSERT INTO prd_p12.sza(
-                za_pedido, za_tp_saida, za_pag, za_dt_lib_fat, za_ip
-            ) VALUES (
-                :za_pedido, :za_tp_saida, :za_pag, :za_dt_lib_fat, :za_ip
-            )
-        ', array(
-            ':za_pedido' => $pedido,
-            ':za_tp_saida' => $tp_saida,
-            ':za_pag' => $pag,
-            ':za_dt_lib_fat' => date('Y-m-d'),
-            ':za_ip' => $_SERVER['REMOTE_ADDR']
-        )); 
-        }
+        ':za_pedido' => $pedido,
+        ':za_tp_saida' => $tp_saida,
+        ':za_dt_lib_fat' => date('Y-m-d'),
+        ':za_ip' => $_SERVER['REMOTE_ADDR']
+        ));        
         if(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
             echo "<script>alert($erros);</script>";
@@ -47,7 +29,7 @@
         }
     }
 
-    $result = $sql->select("SELECT za_pedido, za_tp_saida, za_pag, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_dt_saida IS NULL ORDER BY za_id DESC");
+    $result = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_dt_saida IS NULL ORDER BY za_id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -120,7 +102,7 @@
                                 echo"<td>".$v['za_tp_saida']."</td>";
                                 echo"<td>".$v['za_dt_lib_fat']."</td>";
                                 echo"<td>
-                                <a href='{$v['za_pag']}.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen' name='editar' id='editar'></i></a>
+                                <a href='{$v['za_tp_saida']}.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen' name='editar' id='editar'></i></a>
                                 </td>";
                                 echo"</tr>";
                             }

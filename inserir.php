@@ -8,9 +8,6 @@
     {
         $pedido = $_POST['pedido'];
         $tp_saida = $_POST['tp_saida'];
-        $dt_lib_fat = $_POST['dt_lib_fat'];
-        $pag = $_POST['pag'];
-        $ip = $_POST['ip'];
 
         if($tp_saida == "retira"){
             $pag = "retira";
@@ -41,7 +38,6 @@
             ':za_ip' => $_SERVER['REMOTE_ADDR']
         )); 
         }
-
         if(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
             echo "<script>alert($erros);</script>";
@@ -76,6 +72,7 @@
                 <a href="./inserir.php">Inicio</a>
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
+                <a href="./transporte.php">Sedex</a>
                 <a href="./pesquisa.php">Pesquisa</a>
             </div>    
         </div>
@@ -138,13 +135,6 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
-    <script>
-        //funcao para selecionar todos os input tipo number e maxlength funcionar
-        document.querySelectorAll('input[type="number"]').forEach(input =>{
-            input.oninput = () => {
-                if(input.value.length > input.maxLength) input.value = input.value.slice(0, input.maxLength);
-            };
-        });
-    </script>
+    <script src="./js/maxTam.js"></script>
 </body>
 </html>

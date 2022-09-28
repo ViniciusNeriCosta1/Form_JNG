@@ -135,7 +135,7 @@
                                 echo"<td>".$v['za_documento']."</td>";
                                 echo"<td>".$v['za_hr_chegada']."</td>";
                                 echo"<td>
-                                <button onclick='confirme(".$v['za_id'].")' name='saida' id='saida'><i class='fa-solid fa-check'></i></button>
+                                <a href='atualiza.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fa-solid fa-check'></i></a>
                                 </td>";
                                 echo"<td>".$v['za_obs']."</td>";
                                 echo"</tr>";
@@ -151,7 +151,13 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
-    <script src="./js/maxTam.js"></script>
-    <script src="./js/saidaPedido.js"></script>
+    <script>
+        //funcao para selecionar todos os input tipo number e maxlength funcionar
+        document.querySelectorAll('input[type="number"]').forEach(input =>{
+            input.oninput = () => {
+                if(input.value.length > input.maxLength) input.value = input.value.slice(0, input.maxLength);
+            };
+        });
+    </script>
 </body>
 </html>

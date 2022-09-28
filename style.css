@@ -218,7 +218,8 @@ tr{
 }
 
 #informe,
-#editar{
+#editar,
+#saida{
     background-image: linear-gradient(to right, #003676, #0072bb);
     width: 30%;
     border: none;
@@ -231,7 +232,8 @@ tr{
 }
 
 #informe:hover,
-#editar:hover{
+#editar:hover,
+#saida:hover{
     background-image: linear-gradient(to right, #003676, #00aae3);
 }
 

@@ -8,7 +8,7 @@ function confirme(id)
     }
     else
     {
-        x = "retira.php";
+        x = "inserir.php";
     }
     window.location.href=x;
 }

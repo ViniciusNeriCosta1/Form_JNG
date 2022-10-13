@@ -14,9 +14,7 @@
         if(empty($info) and count($info) == 0){
             $retorna = ['erro' => true, 'msg' => "Transportador nao encontrado"];
         }else{
-            foreach($info as $k => $v){
-                $retorna = ['erro' => false, 'dados' => $info];
-            }
+            $retorna = ['erro' => false, 'dados' => $info];
         }
     }else{
         $retorna = ['erro' => true, 'msg' => "Transportador nao encontrado"];

@@ -15,11 +15,12 @@
     if(isset($_POST['submit']) && !empty($_POST['submit']))
     {
         $result = $sql->query('UPDATE prd_p12.sza SET 
-        za_nome = :za_nome, za_empresa = :za_empresa, za_documento = :za_documento, za_hr_chegada = :za_hr_chegada, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
+        za_nome = :za_nome, za_empresa = :za_empresa, za_documento = :za_documento, za_dt_entrada = :za_dt_entrada, za_hr_chegada = :za_hr_chegada, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
         array(
             ':za_nome' => $_POST['nome'],
             ':za_empresa' => $_POST['empresa'],
             ':za_documento' => $_POST['doc'],
+            ':za_dt_entrada' => date('Y-m-d'),
             ':za_hr_chegada' => $_POST['time_ent'],
             ':za_obs' => $_POST['obs'],
             ':za_ip' => $_SERVER['REMOTE_ADDR'],

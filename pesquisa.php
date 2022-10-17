@@ -31,7 +31,7 @@
                 <legend><b>Pesquisa</b></legend>
                 <div class="inputPesq">
                     <select name="opcao" id="opcao" onchange="window.location.href=this.value;">
-                        <option value="" disabled></option>
+                        <option value="" style="display: none;"></option>
                         <option value="pesquisaRetira.php">Retira</option>
                         <option value="pesquisaSedex.php">Sedex</option>
                         <option value="pesquisaTransporte.php">Transporte</option>

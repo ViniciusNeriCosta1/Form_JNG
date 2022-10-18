@@ -85,7 +85,7 @@
                     <br>
                     <div class="inputBox">
                         <label for="empresa" class="labelInput">Empresa</label>
-                        <input type="text" name="empresa" id="empresa" class="inputUser" required maxlength="20">
+                        <input type="text" name="empresa" id="empresa" class="inputUser" required maxlength="20" style="text-transform: uppercase" oninput="this.value = this.value.toUpperCase()">
                     </div>
                     <br>
                     <div class="inputBox">

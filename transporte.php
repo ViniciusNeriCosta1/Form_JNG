@@ -4,15 +4,15 @@
 
     $sql = new Sql();
 
-    if(isset($_POST['incluir']))
-    {
-        echo "teste";
-        die();
+    function incluirTranps(){
+        $sql = new Sql();
+        $transp = $_POST['transp'];
+        $sql->query('INSERT INTO prd_p12.szb (zb_transportador) VALUES (:zb_transportador)', array(':zb_transportador' => $transp));
     }
 
     if(isset($_GET['za_id']) && !empty($_GET['za_id'])) 
     {
-        $result = $sql->select('SELECT za_pedido, za_id FROM prd_p12.sza WHERE za_id = :za_id', array(
+        $result = $sql->select('SELECT za_pedido, za_empresa, za_nf, za_transportador, za_hr_chegada, za_obs, za_id FROM prd_p12.sza WHERE za_id = :za_id', array(
             ':za_id' => $_GET['za_id']
         ));
         foreach($result as $k => $v){}
@@ -20,18 +20,25 @@
 
     if(isset($_POST['submit']) && !empty($_POST['submit']))
     {
+        $transp = $_POST['transp'];
+
         $result = $sql->query('UPDATE prd_p12.sza SET 
         za_empresa = :za_empresa, za_nf = :za_nf, za_transportador = :za_transportador, za_hr_chegada = :za_hr_chegada, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
         array(
             ':za_empresa' => $_POST['empresa'],
             ':za_nf' => $_POST['nf'],
-            ':za_transportador' => $_POST['transp'],
+            ':za_transportador' => $transp,
             ':za_hr_chegada' => $_POST['time_ent'],
             ':za_obs' => $_POST['obs'],
             ':za_ip' => $_SERVER['REMOTE_ADDR'],
             ':za_id' => $_POST['za_id']
         ));
-        if(! $result){//valida se o resultado do array e informa o erro do insert
+        $verifica = $sql->select('SELECT zb_id, zb_transportador FROM prd_p12.szb WHERE zb_transportador LIKE :zb_transportador', array(
+            ':zb_transportador' => $transp
+        ));
+        if(empty($verifica)){
+            echo "<script type='text/javascript'>confirm('Deseja incluir ".$transp." nos transportes?')".incluirTranps()."</script>";
+        }elseif(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
             echo "<script>alert($erros);</script>";
         }else{
@@ -42,6 +49,8 @@
 
     $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_transportador, za_hr_chegada, za_obs, za_id
     FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_dt_saida IS NULL ORDER BY za_id DESC");
+
+    
 ?>
 
 <!DOCTYPE html>
@@ -79,40 +88,40 @@
                     <input type="hidden" name="za_id" id="za_id" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_id'];}else{ echo "";}?>">
                     <div class="inputBox">
                         <label for="pedido" class="labelInput">Pedido</label>
-                        <input type="text" name="pedido" id="pedido" class="inputUser" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_pedido'];}else{ echo "";}?>" maxlength="6">
+                        <input type="text" name="pedido" id="pedido" class="inputUser" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_pedido'];}else{ echo "Clique em editar pedido";}?>" maxlength="6" disabled>
                     </div>
                     <br>
                     <div class="inputBox">
                         <label for="time_ent" class="labelInput">Horario Entrada</label>
-                        <input type="time" name="time_ent" id="time_ent" class="inputUser" >
+                        <input type="time" name="time_ent" id="time_ent" class="inputUser" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_hr_chegada'];}else{ echo "";}?>">
                     </div>
                     <br>
                     <div class="inputBox">
                         <label for="empresa" class="labelInput">Empresa</label>
-                        <input type="text" name="empresa" id="empresa" class="inputUser" maxlength="20">
+                        <input type="text" name="empresa" id="empresa" class="inputUser" maxlength="20" style="text-transform: uppercase" oninput="this.value = this.value.toUpperCase()"
+                        value="<?php if(!empty($_GET['za_id'])){ echo $v['za_empresa'];}else{ echo "";}?>">
                     </div>
                     <br>
                     <div class="inputBox">
                         <label for="nf" class="labelInput">Nota Fiscal</label>
-                        <input type="text" name="nf" id="nf" class="inputUser" maxlength="7">
+                        <input type="text" name="nf" id="nf" class="inputUser" maxlength="7" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_nf'];}else{ echo "";}?>">
                     </div>
                     <br>
                     <div class="inputBox">
                         <label for="transp" class="labelInput">Transporte</label>
-                        <div class="inputTransp">
-                            <input type="text" name="transp" id="transp" class="inputUser" onkeyup="listTrans(this.value)" style="text-transform: uppercase">
-                            <button onclick='incluir' id='incluir'><i class="fa-solid fa-plus"></i></button>
-                        </div>
+                        <input type="text" name="transp" id="transp" class="inputUser" onkeyup="listTrans(this.value)" style="text-transform: uppercase" oninput="this.value = this.value.toUpperCase()" 
+                        value="<?php if(!empty($_GET['za_id'])){ echo $v['za_transportador'];}else{ echo "";}?>">
                         <span id="resultado_pesquisa"></span>
                         <input type="hidden" name="id_transp" id="id_transp" class="inputUser">
                     </div>
                     <br>
                     <div class="inputBox">
                         <label for="obs" class="labelInput">OBS</label>
-                        <input type="text" name="obs" id="obs" class="inputUser" maxlength="20">
+                        <input type="text" name="obs" id="obs" class="inputUser" maxlength="20" style="text-transform: uppercase" oninput="this.value = this.value.toUpperCase()"
+                        value="<?php if(!empty($_GET['za_id'])){ echo $v['za_obs'];}else{ echo "";}?>">
                     </div>
                     <br>
-                    <input type="submit" name="submit" id="submit">
+                    <input type="submit" name="submit" id="submit" value="Atualizar">
                     <br>
                 </fieldset>
             </form>

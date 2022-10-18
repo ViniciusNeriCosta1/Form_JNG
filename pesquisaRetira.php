@@ -8,10 +8,10 @@
     if(!empty($_GET['search']))
     {   
         $data = $_GET['search'];
-        $result = $sql->select("SELECT * FROM prd_p12.sza WHERE pedido = '$data' OR data_retira = '$data'ORDER BY id DESC");
+        $result = $sql->select("SELECT za_pedido, za_nome, za_empresa, za_documento, za_dt_lib_fat, za_dt_entrada, za_hr_chegada, za_hr_saida, za_obs FROM prd_p12.sza WHERE za_pedido = '$data' OR za_dt_entrada = '$data' ORDER BY za_id DESC");
         $info = "Infos";
     }else{
-        $result = $sql->select("SELECT * FROM prd_p12.sza ORDER BY id DESC LIMIT 5"); 
+        $result = $sql->select("SELECT za_pedido, za_nome, za_empresa, za_documento, za_dt_lib_fat, za_dt_entrada, za_hr_chegada, za_hr_saida, za_obs FROM prd_p12.sza ORDER BY za_id DESC LIMIT 5");
     }
 ?>
 
@@ -45,7 +45,12 @@
                 <fieldset>
                     <legend><b>Pesquisa Retira</b></legend>
                     <div class="inputPesq">
-                        <input type="search" placeholder="Nº Pedido ou Data(Ano-Mes-Dia)" id="pesquisar">
+                        <select name="filtro" id="filtro" onclick="chancePlaceholder()">
+                            <option value="" style="display: none;">Tipo</option>
+                            <option value="za_pedido" name="pedido" >Pedido</option>
+                            <option value="za_dt_entrada" name="data_retira">Data Retira</option>
+                        </select>
+                        <input type="search" name="pesquisar" id="pesquisar">
                         <button onclick="searchData()">Pesquisar</button>
                     </div>
                 </fieldset>
@@ -60,9 +65,10 @@
                             <th>Nome</th>
                             <th>Empresa</th>
                             <th>Documento</th>
-                            <th>Data</th>
+                            <th>Faturamento</th>
+                            <th>Retirada</th>
                             <th>Entrada</th>
-                            <th>Saida</th>
+                            <th>Saída</th>
                             <th>OBS</th>
                         </tr>
                     </thead>
@@ -70,14 +76,15 @@
                         <?php
                             foreach ($result as $k => $v) {
                                 echo"<tr>";
-                                echo"<td>".$v['pedido']."</td>";
-                                echo"<td>".$v['nome']."</td>";
-                                echo"<td>".$v['empresa']."</td>";
-                                echo"<td>".$v['doc']."</td>";
-                                echo"<td>".$v['data_retira']."</td>";
-                                echo"<td>".$v['time_ent']."</td>";
-                                echo"<td>".$v['time_saida']."</td>";
-                                echo"<td>".$v['obs']."</td>";
+                                echo"<td>".$v['za_pedido']."</td>";
+                                echo"<td>".$v['za_nome']."</td>";
+                                echo"<td>".$v['za_empresa']."</td>";
+                                echo"<td>".$v['za_documento']."</td>";
+                                echo"<td>".$v['za_dt_lib_fat']."</td>";
+                                echo"<td>".$v['za_dt_lib_fat']."</td>";
+                                echo"<td>".$v['za_hr_chegada']."</td>";
+                                echo"<td>".$v['za_hr_saida']."</td>";
+                                echo"<td>".$v['za_obs']."</td>";
                                 echo"</tr>";
                             }
                         ?>    
@@ -91,21 +98,8 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
-    <script>
-    var search = document.getElementById('pesquisar');
-
-    search.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") 
-        {
-            searchData();
-        }
-    });
-
-    function searchData()
-    {
-        window.location = 'pesquisaRetira.php?search='+search.value;
-    }
-</script>
+    <script src="./js/getPesquisa.js"></script>
+    <script src="./js/chancePlaceholder.js"></script>
 </body>
 </html>
 

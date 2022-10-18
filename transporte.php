@@ -87,7 +87,7 @@
                     <legend><b>Formulário de Transporte</b></legend>
                     <input type="hidden" name="za_id" id="za_id" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_id'];}else{ echo "";}?>">
                     <div class="inputBox">
-                        <label for="pedido" class="labelInput">Pedido</label>
+                        <label for="pedido" class="labelInput">Pedido </label>
                         <input type="text" name="pedido" id="pedido" class="inputUser" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_pedido'];}else{ echo "Clique em editar pedido";}?>" disabled>
                     </div>
                     <br>

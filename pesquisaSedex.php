@@ -58,24 +58,26 @@
                         <tr>
                             <th>Nº Pedido</th>
                             <th>Empresa</th>
-                            <th>Nº NF</th>
-                            <th>Data</th>
+                            <th>NF</th>
                             <th>Prazo</th>
                             <th>Volume</th>
                             <th>Rastreio</th>
+                            <th>Chegada</th>
+                            <th>OBS</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                            foreach ($result as $k => $v) {
+                            foreach($result as $k => $v) {
                                 echo"<tr>";
-                                echo"<td>".$v['pedido']."</td>";
-                                echo"<td>".$v['empresa']."</td>";
-                                echo"<td>".$v['nf']."</td>";
-                                echo"<td>".$v['data_saida']."</td>";
-                                echo"<td>".$v['prazo']."</td>";
-                                echo"<td>".$v['volume']."</td>";
-                                echo"<td>".$v['rastreio']."</td>";
+                                echo"<td>".$v['za_pedido']."</td>";
+                                echo"<td>".$v['za_empresa']."</td>";
+                                echo"<td>".$v['za_nf']."</td>";
+                                echo"<td>".$v['za_prazo']."</td>";
+                                echo"<td>".$v['za_volume']."</td>";
+                                echo"<td>".$v['za_rastreio']."</td>";
+                                echo"<td>".$v['za_hr_chegada']."</td>";
+                                echo"<td>".$v['za_obs']."</td>";
                                 echo"</tr>";
                             }
                         ?>    
@@ -89,21 +91,9 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
-    <script>
-    var search = document.getElementById('pesquisar');
-
-    search.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") 
-        {
-            searchData();
-        }
-    });
-
-    function searchData()
-    {
-        window.location = 'pesquisaSedex.php?search='+search.value;
-    }
-</script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="./js/getPesquisa.js"></script>
+    <script src="./js/chancePlaceholder.js"></script>
 </body>
 </html>
 

@@ -45,10 +45,10 @@
                 <fieldset>
                     <legend><b>Pesquisa Retira</b></legend>
                     <div class="inputPesq">
-                        <select name="filtro" id="filtro" onclick="chancePlaceholder()">
+                        <select name="filtro" id="filtro" >
                             <option value="" style="display: none;">Tipo</option>
-                            <option value="za_pedido" name="pedido" >Pedido</option>
-                            <option value="za_dt_entrada" name="data_retira">Data Retira</option>
+                            <option value="za_pedido">Pedido</option>
+                            <option value="za_dt_entrada">Data Retira</option>
                         </select>
                         <input type="search" name="pesquisar" id="pesquisar">
                         <button onclick="searchData()">Pesquisar</button>
@@ -81,7 +81,7 @@
                                 echo"<td>".$v['za_empresa']."</td>";
                                 echo"<td>".$v['za_documento']."</td>";
                                 echo"<td>".$v['za_dt_lib_fat']."</td>";
-                                echo"<td>".$v['za_dt_lib_fat']."</td>";
+                                echo"<td>".$v['za_dt_entrada']."</td>";
                                 echo"<td>".$v['za_hr_chegada']."</td>";
                                 echo"<td>".$v['za_hr_saida']."</td>";
                                 echo"<td>".$v['za_obs']."</td>";
@@ -98,6 +98,7 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="./js/getPesquisa.js"></script>
     <script src="./js/chancePlaceholder.js"></script>
 </body>

@@ -109,7 +109,7 @@
         </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>INFOS</b></legend>
+                <legend><b>Pendentes</b></legend>
                 <table>
                     <thead>
                         <tr>

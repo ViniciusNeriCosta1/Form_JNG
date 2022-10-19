@@ -51,11 +51,11 @@
                             <option value="za_dt_entrada">Data Retira</option>
                         </select>
                         <input type="search" name="pesquisar" id="pesquisar">
-                        <button onclick="searchData()">Pesquisar</button>
+                        <button onclick="searchDataRetira()">Pesquisar</button>
                     </div>
                 </fieldset>
-            </div>
-            <div class="fundo_table">
+        </div>
+        <div class="fundo_table">
             <fieldset>
                 <legend><b><?php echo $info; ?></b></legend>
                 <table>
@@ -99,7 +99,7 @@
         </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="./js/getPesquisa.js"></script>
+    <script src="./js/getPesquisaRetira.js"></script>
     <script src="./js/chancePlaceholder.js"></script>
 </body>
 </html>

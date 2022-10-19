@@ -8,10 +8,12 @@
     if(!empty($_GET['search']))
     {   
         $data = $_GET['search'];
-        $result = $sql->select("SELECT * FROM prd_p12.sza WHERE nf = '$data' OR pedido = '$data' OR data_saida = '$data' ORDER BY id DESC");
+        $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_prazo, za_volume, za_rastreio, za_dt_lib_fat, za_dt_saida, za_obs
+         FROM prd_p12.sza WHERE za_nf = '$data' OR za_pedido = '$data' OR za_dt_saida = '$data' ORDER BY za_id DESC");
         $info = "Infos";
     }else{
-        $result = $sql->select("SELECT za_pedido, za_empresa, za_dt_lib_fat, za_dt_entrada, za_hr_chegada, za_hr_saida, za_obs FROM prd_p12.sza ORDER BY id DESC LIMIT 5"); 
+        $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_prazo, za_volume, za_rastreio, za_dt_lib_fat, za_dt_saida, za_obs 
+        FROM prd_p12.sza ORDER BY za_id DESC LIMIT 5"); 
     }
 ?>
 
@@ -24,7 +26,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="refresh" content="300">
-    <title>Pesquisa Transporte | JNG</title>
+    <title>Pesquisa Sedex | JNG</title>
 </head>
 <body>
     <header>
@@ -45,8 +47,14 @@
                 <fieldset>
                     <legend><b>Pesquisa Sedex</b></legend>
                     <div class="inputPesq">
-                        <input type="search" placeholder="Nº Pedido, NF ou Data(Ano-Mes-Dia)" id="pesquisar" maxlength="6">
-                        <button onclick="searchData()">Pesquisar</button>
+                        <select name="filtro" id="filtro" >
+                            <option value="" style="display: none;">Tipo</option>
+                            <option value="za_nf">NF</option>
+                            <option value="za_pedido">Pedido</option>
+                            <option value="za_dt_entrada">Data Saída</option>
+                        </select>
+                        <input type="search" name="pesquisar" id="pesquisar">
+                        <button onclick="searchDataSedex()">Pesquisar</button>
                     </div>
                 </fieldset>
             </div>
@@ -62,7 +70,7 @@
                             <th>Prazo</th>
                             <th>Volume</th>
                             <th>Rastreio</th>
-                            <th>Chegada</th>
+                            <th>Faturamento</th>
                             <th>Saída</th>
                             <th>OBS</th>
                         </tr>
@@ -77,8 +85,8 @@
                                 echo"<td>".$v['za_prazo']."</td>";
                                 echo"<td>".$v['za_volume']."</td>";
                                 echo"<td>".$v['za_rastreio']."</td>";
-                                echo"<td>".$v['za_hr_chegada']."</td>";
-                                echo"<td>".$v['za_hr_saida']."</td>";
+                                echo"<td>".$v['za_dt_lib_fat']."</td>";
+                                echo"<td>".$v['za_dt_saida']."</td>";
                                 echo"<td>".$v['za_obs']."</td>";
                                 echo"</tr>";
                             }
@@ -94,7 +102,7 @@
         </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="./js/getPesquisa.js"></script>
+    <script src="./js/getPesquisaSedex.js"></script>
     <script src="./js/chancePlaceholder.js"></script>
 </body>
 </html>

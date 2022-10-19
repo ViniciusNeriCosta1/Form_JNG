@@ -22,7 +22,7 @@
             ':za_prazo' => $_POST['prazo'],
             ':za_volume' => $_POST['volume'],
             ':za_rastreio' => $_POST['rastreio'],
-            ':za_dt_saida' => $_POST['time_ent'],
+            ':za_dt_saida' => date('Y-m-d'),
             ':za_obs' => $_POST['obs'],
             ':za_ip' => $_SERVER['REMOTE_ADDR'],
             ':za_id' => $_POST['za_id']
@@ -31,7 +31,7 @@
             $erros = $sql->getErrors();
             echo "<script>alert($erros);</script>";
         }else{
-            header('Location: transporte.php');
+            header('Location: sedex.php');
             die();
         }
     }

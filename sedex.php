@@ -15,14 +15,14 @@
     if(isset($_POST['submit']) && !empty($_POST['submit']))
     {
         $result = $sql->query('UPDATE prd_p12.sza SET 
-        za_empresa = :za_empresa, za_nf = :za_nf, za_prazo = :za_prazo, za_volume = :za_volume, za_rastreio = :za_rastreio, za_hr_chegada = :za_hr_chegada, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
+        za_empresa = :za_empresa, za_nf = :za_nf, za_prazo = :za_prazo, za_volume = :za_volume, za_rastreio = :za_rastreio, za_dt_entrada = :za_dt_entrada, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
         array(
             ':za_empresa' => $_POST['empresa'],
             ':za_nf' => $_POST['nf'],
             ':za_prazo' => $_POST['prazo'],
             ':za_volume' => $_POST['volume'],
             ':za_rastreio' => $_POST['rastreio'],
-            ':za_hr_chegada' => $_POST['time_ent'],
+            ':za_dt_saida' => $_POST['time_ent'],
             ':za_obs' => $_POST['obs'],
             ':za_ip' => $_SERVER['REMOTE_ADDR'],
             ':za_id' => $_POST['za_id']
@@ -36,7 +36,7 @@
         }
     }
 
-    $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_prazo, za_volume, za_rastreio, za_hr_chegada, za_obs, za_id
+    $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_prazo, za_volume, za_rastreio, za_dt_entrada, za_obs, za_id
     FROM prd_p12.sza WHERE za_tp_saida = 'sedex' AND za_dt_saida IS NULL ORDER BY za_id DESC");
 ?>
 
@@ -76,11 +76,6 @@
                     <div class="inputBox">
                         <label for="pedido" class="labelInput">Pedido</label>
                         <input type="text" name="pedido" id="pedido" class="inputUser" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_pedido'];}else{ echo "Clique em editar pedido";}?>" disabled>
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <label for="time_ent" class="labelInput">Horario Entrada</label>
-                        <input type="time" name="time_ent" id="time_ent" class="inputUser">
                     </div>
                     <br>
                     <div class="inputBox">
@@ -126,14 +121,6 @@
                         <tr>
                             <th>Editar</th>
                             <th>Nº Pedido</th>
-                            <th>Empresa</th>
-                            <th>NF</th>
-                            <th>Prazo</th>
-                            <th>Volume</th>
-                            <th>Rastreio</th>
-                            <th>Chegada</th>
-                            <th>Saída</th>
-                            <th>OBS</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -144,16 +131,6 @@
                                 <a href='sedex.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen'></i></a>
                                 </td>";
                                 echo"<td>".$v['za_pedido']."</td>";
-                                echo"<td>".$v['za_empresa']."</td>";
-                                echo"<td>".$v['za_nf']."</td>";
-                                echo"<td>".$v['za_prazo']."</td>";
-                                echo"<td>".$v['za_volume']."</td>";
-                                echo"<td>".$v['za_rastreio']."</td>";
-                                echo"<td>".$v['za_hr_chegada']."</td>";
-                                echo"<td>
-                                <button onclick='confirme(".$v['za_id'].")' name='saida' id='saida'><i class='fa-solid fa-check'></i></button>
-                                </td>";
-                                echo"<td>".$v['za_obs']."</td>";
                                 echo"</tr>";
                             }
                         ?>    
@@ -168,6 +145,5 @@
         </div>
     </footer>
     <script src="./js/maxTam.js"></script>
-    <script src="./js/saidaPedido.js"></script>
 </body>
 </html>

@@ -20,7 +20,6 @@ use function PHPSTORM_META\map;
         array(
             ':za_id' => $_GET['za_id'],
         ));
-        var_dump($info);
         switch($info[0]['za_tp_saida']){
             case "retira":
                 header('Location: retira.php');

@@ -11,7 +11,7 @@
         $result = $sql->select("SELECT * FROM prd_p12.sza WHERE nf = '$data' OR pedido = '$data' OR data_saida = '$data' ORDER BY id DESC");
         $info = "Infos";
     }else{
-        $result = $sql->select("SELECT * FROM prd_p12.sza ORDER BY id DESC LIMIT 5"); 
+        $result = $sql->select("SELECT za_pedido, za_empresa, za_dt_lib_fat, za_dt_entrada, za_hr_chegada, za_hr_saida, za_obs FROM prd_p12.sza ORDER BY id DESC LIMIT 5"); 
     }
 ?>
 
@@ -63,6 +63,7 @@
                             <th>Volume</th>
                             <th>Rastreio</th>
                             <th>Chegada</th>
+                            <th>Saída</th>
                             <th>OBS</th>
                         </tr>
                     </thead>
@@ -77,6 +78,7 @@
                                 echo"<td>".$v['za_volume']."</td>";
                                 echo"<td>".$v['za_rastreio']."</td>";
                                 echo"<td>".$v['za_hr_chegada']."</td>";
+                                echo"<td>".$v['za_hr_saida']."</td>";
                                 echo"<td>".$v['za_obs']."</td>";
                                 echo"</tr>";
                             }

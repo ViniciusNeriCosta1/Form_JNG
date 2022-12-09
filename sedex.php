@@ -15,7 +15,8 @@
     if(isset($_POST['submit']) && !empty($_POST['submit']))
     {
         $result = $sql->query('UPDATE prd_p12.sza SET 
-        za_empresa = :za_empresa, za_nf = :za_nf, za_prazo = :za_prazo, za_volume = :za_volume, za_rastreio = :za_rastreio, za_dt_entrada = :za_dt_entrada, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
+        za_empresa = :za_empresa, za_nf = :za_nf, za_prazo = :za_prazo, za_volume = :za_volume, za_rastreio = :za_rastreio, za_dt_saida = :za_dt_saida, za_obs = :za_obs, za_ip = :za_ip, za_id = :za_id  
+        WHERE za_id = :za_id', 
         array(
             ':za_empresa' => $_POST['empresa'],
             ':za_nf' => $_POST['nf'],
@@ -36,7 +37,7 @@
         }
     }
 
-    $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_prazo, za_volume, za_rastreio, za_dt_entrada, za_obs, za_id
+    $result = $sql->select("SELECT za_pedido, za_dt_lib_fat, za_id
     FROM prd_p12.sza WHERE za_tp_saida = 'sedex' AND za_dt_saida IS NULL ORDER BY za_id DESC");
 ?>
 
@@ -90,12 +91,12 @@
                     <br>
                     <div class="inputBox">
                         <label for="prazo" class="labelInput">Prazo</label>
-                        <input type="text" name="prazo" id="prazo" class="inputUser">
+                        <input type="text" name="prazo" id="prazo" class="inputUser" maxlength="2">
                     </div>
                     <br>
                     <div class="inputBox">
                         <label for="volume" class="labelInput">Volume</label>
-                        <input type="text" name="volume" id="volume" class="inputUser">
+                        <input type="text" name="volume" id="volume" class="inputUser" maxlength="3">
                     </div>
                     <br>
                     <div class="inputBox">
@@ -108,7 +109,7 @@
                         <input type="text" name="obs" id="obs" class="inputUser" maxlength="20">
                     </div>
                     <br>
-                    <input type="submit" name="submit" id="submit">
+                    <input type="submit" name="submit" id="submit" value="Atualizar">
                     <br>
                 </fieldset>
             </form>
@@ -121,6 +122,7 @@
                         <tr>
                             <th>Editar</th>
                             <th>Nº Pedido</th>
+                            <th>Faturamento</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -131,6 +133,7 @@
                                 <a href='sedex.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen'></i></a>
                                 </td>";
                                 echo"<td>".$v['za_pedido']."</td>";
+                                echo"<td>".$v['za_dt_lib_fat']."</td>";
                                 echo"</tr>";
                             }
                         ?>    

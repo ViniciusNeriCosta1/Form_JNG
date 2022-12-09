@@ -4,14 +4,16 @@
 
     $sql = new Sql();
     $info = "Ultimos 5";
-    
+
     if(!empty($_GET['search']))
     {   
         $data = $_GET['search'];
-        $result = $sql->select("SELECT za_pedido, za_nome, za_empresa, za_documento, za_dt_lib_fat, za_dt_entrada, za_hr_chegada, za_hr_saida, za_obs FROM prd_p12.sza WHERE za_pedido = '$data' OR za_dt_entrada = '$data' ORDER BY za_id DESC");
+        $result = $sql->select("SELECT za_pedido, za_nome, za_empresa, za_documento, za_dt_lib_fat, za_dt_entrada, za_hr_chegada, za_hr_saida, za_obs 
+        FROM prd_p12.sza WHERE za_tp_saida = 'retira' AND za_pedido = '$data' OR za_dt_entrada = '$data' ORDER BY za_id DESC");
         $info = "Infos";
     }else{
-        $result = $sql->select("SELECT za_pedido, za_nome, za_empresa, za_documento, za_dt_lib_fat, za_dt_entrada, za_hr_chegada, za_hr_saida, za_obs FROM prd_p12.sza ORDER BY za_id DESC LIMIT 5");
+        $result = $sql->select("SELECT za_pedido, za_nome, za_empresa, za_documento, za_dt_lib_fat, za_dt_entrada, za_hr_chegada, za_hr_saida, za_obs 
+        FROM prd_p12.sza WHERE za_tp_saida = 'retira' ORDER BY za_id DESC LIMIT 5"); 
     }
 ?>
 
@@ -33,6 +35,7 @@
         </div>
         <div class="header-content">
             <div class="navbar">
+                <a href="./inserir.php">Inicio</a>
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
                 <a href="./sedex.php">Sedex</a>
@@ -45,13 +48,11 @@
                 <fieldset>
                     <legend><b>Pesquisa Retira</b></legend>
                     <div class="inputPesq">
-                        <select name="filtro" id="filtro" >
-                            <option value="" style="display: none;">Tipo</option>
-                            <option value="za_pedido">Pedido</option>
-                            <option value="za_dt_entrada">Data Retira</option>
-                        </select>
-                        <input type="search" name="pesquisar" id="pesquisar">
-                        <button onclick="searchDataRetira()">Pesquisar</button>
+                        <input type="search" name="pesquisar" id="pesquisar" placeholder="Nº Pedido ou Data Retirada">
+                    </div>
+                    <div class="inputPesq" style="margin-top: 10px">
+                        <button onclick="searchDataRetira()" name="submit" id="submit">Pesquisar</button>
+                        <button onclick="location.href='./pesquisaRetira.php'" name="submit" id="submit">Voltar</button>    
                     </div>
                 </fieldset>
         </div>
@@ -66,9 +67,9 @@
                             <th>Empresa</th>
                             <th>Documento</th>
                             <th>Faturamento</th>
-                            <th>Retirada</th>
-                            <th>Entrada</th>
-                            <th>Saída</th>
+                            <th>DT Retirada</th>
+                            <th>HR Entrada</th>
+                            <th>HR Saída</th>
                             <th>OBS</th>
                         </tr>
                     </thead>
@@ -98,9 +99,7 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="./js/getPesquisaRetira.js"></script>
-    <script src="./js/chancePlaceholder.js"></script>
 </body>
 </html>
 

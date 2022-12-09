@@ -12,7 +12,7 @@
 
     if(isset($_GET['za_id']) && !empty($_GET['za_id'])) 
     {
-        $result = $sql->select('SELECT za_pedido, za_empresa, za_nf, za_transportador, za_hr_chegada, za_obs, za_id FROM prd_p12.sza WHERE za_id = :za_id', array(
+        $result = $sql->select('SELECT za_pedido, za_empresa, za_nf, za_transportador, za_obs, za_id FROM prd_p12.sza WHERE za_id = :za_id', array(
             ':za_id' => $_GET['za_id']
         ));
         foreach($result as $k => $v){}
@@ -23,12 +23,11 @@
         $transp = $_POST['transp'];
 
         $result = $sql->query('UPDATE prd_p12.sza SET 
-        za_empresa = :za_empresa, za_nf = :za_nf, za_transportador = :za_transportador, za_hr_chegada = :za_hr_chegada, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
+        za_empresa = :za_empresa, za_nf = :za_nf, za_transportador = :za_transportador, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
         array(
             ':za_empresa' => $_POST['empresa'],
             ':za_nf' => $_POST['nf'],
             ':za_transportador' => $transp,
-            ':za_hr_chegada' => $_POST['time_ent'],
             ':za_obs' => $_POST['obs'],
             ':za_ip' => $_SERVER['REMOTE_ADDR'],
             ':za_id' => $_POST['za_id']
@@ -47,7 +46,7 @@
         }
     }
 
-    $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_transportador, za_hr_chegada, za_obs, za_id
+    $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_transportador, za_dt_lib_fat, za_obs, za_id
     FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_dt_saida IS NULL ORDER BY za_id DESC");
 
     
@@ -93,7 +92,7 @@
                     <br>
                     <div class="inputBox">
                         <label for="time_ent" class="labelInput">Horario Entrada</label>
-                        <input type="time" name="time_ent" id="time_ent" class="inputUser" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_hr_chegada'];}else{ echo "";}?>">
+                        <input type="time" name="time_ent" id="time_ent" class="inputUser">
                     </div>
                     <br>
                     <div class="inputBox">
@@ -137,7 +136,7 @@
                             <th>Empresa</th>
                             <th>NF</th>
                             <th>Transportador</th>
-                            <th>Chegada</th>
+                            <th>Faturamento</th>
                             <th>Saída</th>
                             <th>OBS</th>
                         </tr>
@@ -153,7 +152,7 @@
                                 echo"<td>".$v['za_empresa']."</td>";
                                 echo"<td>".$v['za_nf']."</td>";
                                 echo"<td>".$v['za_transportador']."</td>";
-                                echo"<td>".$v['za_hr_chegada']."</td>";
+                                echo"<td>".$v['za_dt_lib_fat']."</td>";
                                 echo"<td>
                                 <button onclick='confirme(".$v['za_id'].")' name='saida' id='saida'><i class='fa-solid fa-check'></i></button>
                                 </td>";

@@ -23,8 +23,6 @@ use function PHPSTORM_META\map;
         switch($info[0]['za_tp_saida']){
             case "retira":
                 header('Location: retira.php');
-            case "sedex":
-                header('Location: sedex.php');
             case "transporte":
                 header('Location: transporte.php');
             default:

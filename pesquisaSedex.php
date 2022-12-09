@@ -9,11 +9,11 @@
     {   
         $data = $_GET['search'];
         $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_prazo, za_volume, za_rastreio, za_dt_lib_fat, za_dt_saida, za_obs
-         FROM prd_p12.sza WHERE za_nf = '$data' OR za_pedido = '$data' OR za_dt_saida = '$data' ORDER BY za_id DESC");
+        FROM prd_p12.sza WHERE za_tp_saida = 'sedex' AND za_nf = '$data' OR za_pedido = '$data' OR za_dt_saida = '$data' ORDER BY za_id DESC");
         $info = "Infos";
     }else{
         $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_prazo, za_volume, za_rastreio, za_dt_lib_fat, za_dt_saida, za_obs 
-        FROM prd_p12.sza ORDER BY za_id DESC LIMIT 5"); 
+        FROM prd_p12.sza WHERE za_tp_saida = 'sedex' ORDER BY za_id DESC LIMIT 5"); 
     }
 ?>
 
@@ -35,6 +35,7 @@
         </div>
         <div class="header-content">
             <div class="navbar">
+                <a href="./inserir.php">Inicio</a>
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
                 <a href="./sedex.php">Sedex</a>
@@ -53,7 +54,7 @@
                             <option value="za_pedido">Pedido</option>
                             <option value="za_dt_entrada">Data Saída</option>
                         </select>
-                        <input type="search" name="pesquisar" id="pesquisar">
+                        <input type="search" name="pesquisar" id="pesquisar" >
                         <button onclick="searchDataSedex()">Pesquisar</button>
                     </div>
                 </fieldset>

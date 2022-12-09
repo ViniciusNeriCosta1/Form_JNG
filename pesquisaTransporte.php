@@ -8,10 +8,12 @@
     if(!empty($_GET['search']))
     {   
         $data = $_GET['search'];
-        $result = $sql->select("SELECT * FROM prd_p12.sza WHERE nf = '$data' OR pedido = '$data' OR data_saida = '$data' ORDER BY id DESC");
+        $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_transportador, za_dt_lib_fat, za_dt_saida, za_obs 
+        FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_nf = '$data' OR za_pedido = '$data' OR za_dt_saida = '$data' ORDER BY za_id DESC");
         $info = "Infos";
     }else{
-        $result = $sql->select("SELECT * FROM prd_p12.sza ORDER BY id DESC LIMIT 5"); 
+        $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_transportador, za_dt_lib_fat, za_dt_saida, za_obs 
+        FROM prd_p12.sza WHERE za_tp_saida = 'transporte' ORDER BY za_id DESC LIMIT 5"); 
     }
 ?>
 
@@ -33,6 +35,7 @@
         </div>
         <div class="header-content">
             <div class="navbar">
+                <a href="./inserir.php">Inicio</a>
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
                 <a href="./sedex.php">Sedex</a>
@@ -45,8 +48,14 @@
                 <fieldset>
                     <legend><b>Pesquisa Transporte</b></legend>
                     <div class="inputPesq">
-                        <input type="search" placeholder="Nº Pedido, NF ou Data(Ano-Mes-Dia)" id="pesquisar" maxlength="10">
-                        <button onclick="searchData()" name="pesquisar" id="pesquisar">Pesquisar</button>
+                        <select name="filtro" id="filtro" >
+                            <option value="" style="display: none;">Tipo</option>
+                            <option value="za_nf">NF</option>
+                            <option value="za_pedido">Pedido</option>
+                            <option value="za_dt_entrada">Data Saída</option>
+                        </select>
+                        <input type="search" name="pesquisar" id="pesquisar">
+                        <button onclick="searchDataTransporte()">Pesquisar</button>
                     </div>
                 </fieldset>
             </div>
@@ -57,24 +66,25 @@
                     <thead>
                         <tr>
                             <th>Nº Pedido</th>
+                            <th>Empresa</th>
                             <th>NF</th>
-                            <th>Motorista</th>
-                            <th>Data Entrada</th>
-                            <th>Data Saida</th>
+                            <th>Transportador</th>
+                            <th>Faturamento</th>
+                            <th>Saída</th>
                             <th>OBS</th>
-                            
                         </tr>
                     </thead>
                     <tbody>
                         <?php
                             foreach ($result as $k => $v) {
                                 echo"<tr>";
-                                echo"<td>".$v['pedido']."</td>";
-                                echo"<td>".$v['nf']."</td>";
-                                echo"<td>".$v['motorista']."</td>";
-                                echo"<td>".$v['data_entrada']."</td>";
-                                echo"<td>".$v['data_saida']."</td>";
-                                echo"<td>".$v['obs']."</td>";
+                                echo"<td>".$v['za_pedido']."</td>";
+                                echo"<td>".$v['za_empresa']."</td>";
+                                echo"<td>".$v['za_nf']."</td>";
+                                echo"<td>".$v['za_transportador']."</td>";
+                                echo"<td>".$v['za_dt_lib_fat']."</td>";
+                                echo"<td>".$v['za_dt_saida']."</td>";
+                                echo"<td>".$v['za_obs']."</td>";
                                 echo"</tr>";
                             }
                         ?>    
@@ -88,21 +98,9 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
-    <script>
-    var search = document.getElementById('pesquisar');
-
-    search.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") 
-        {
-            searchData();
-        }
-    });
-
-    function searchData()
-    {
-        window.location = 'pesquisaTransporte.php?search='+search.value;
-    }
-</script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="./js/getPesquisaTransporte.js"></script>
+    <script src="./js/chancePlaceholder.js"></script>
 </body>
 </html>
 

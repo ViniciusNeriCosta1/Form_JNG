@@ -1,7 +1,5 @@
 <?php
 
-use function PHPSTORM_META\map;
-
     date_default_timezone_set('America/Sao_Paulo');
     include_once('sql/Sql.php');
 
@@ -23,8 +21,10 @@ use function PHPSTORM_META\map;
         switch($info[0]['za_tp_saida']){
             case "retira":
                 header('Location: retira.php');
+                break;
             case "transporte":
                 header('Location: transporte.php');
+                break;
             default:
                 header('Location: inserir.php');
         }

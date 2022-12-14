@@ -12,7 +12,7 @@
         foreach($result as $k => $v){}
     }
 
-    if(isset($_POST['submit']) && !empty($_POST['submit']))
+    if(isset($_POST['submit']) && !empty($_POST['submit']) && !empty($_GET['za_id']))
     {
         $result = $sql->query('UPDATE prd_p12.sza SET 
         za_empresa = :za_empresa, za_nf = :za_nf, za_prazo = :za_prazo, za_volume = :za_volume, za_rastreio = :za_rastreio, za_dt_saida = :za_dt_saida, za_obs = :za_obs, za_ip = :za_ip, za_id = :za_id  
@@ -28,13 +28,10 @@
             ':za_ip' => $_SERVER['REMOTE_ADDR'],
             ':za_id' => $_POST['za_id']
         ));
-        if(! $result){//valida se o resultado do array e informa o erro do insert
-            $erros = $sql->getErrors();
-            echo "<script>alert($erros);</script>";
-        }else{
-            header('Location: sedex.php');
-            die();
-        }
+    }else{
+        //echo "<script>alert('Pedido não selecionado')</script>";
+        //header('Location: sedex.php');
+        //die();
     }
 
     $result = $sql->select("SELECT za_pedido, za_dt_lib_fat, za_id

@@ -9,7 +9,7 @@
         $transp = $_POST['transp'];
         $sql->query('INSERT INTO prd_p12.szb (zb_transportador) VALUES (:zb_transportador)', array(':zb_transportador' => $transp));
     }
-
+    
     if(isset($_GET['za_id']) && !empty($_GET['za_id'])) 
     {
         $result = $sql->select('SELECT za_pedido, za_empresa, za_nf, za_transportador, za_obs, za_id FROM prd_p12.sza WHERE za_id = :za_id', array(
@@ -23,9 +23,8 @@
         $transp = $_POST['transp'];
 
         $result = $sql->query('UPDATE prd_p12.sza SET 
-        za_empresa = :za_empresa, za_nf = :za_nf, za_transportador = :za_transportador, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
+        za_nf = :za_nf, za_transportador = :za_transportador, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
         array(
-            ':za_empresa' => $_POST['empresa'],
             ':za_nf' => $_POST['nf'],
             ':za_transportador' => $transp,
             ':za_obs' => $_POST['obs'],
@@ -91,19 +90,8 @@
                     </div>
                     <br>
                     <div class="inputBox">
-                        <label for="time_ent" class="labelInput">Horario Entrada</label>
-                        <input type="time" name="time_ent" id="time_ent" class="inputUser">
-                    </div>
-                    <br>
-                    <div class="inputBox">
-                        <label for="empresa" class="labelInput">Empresa</label>
-                        <input type="text" name="empresa" id="empresa" class="inputUser" maxlength="20" style="text-transform: uppercase" oninput="this.value = this.value.toUpperCase()"
-                        value="<?php if(!empty($_GET['za_id'])){ echo $v['za_empresa'];}else{ echo "";}?>">
-                    </div>
-                    <br>
-                    <div class="inputBox">
                         <label for="nf" class="labelInput">Nota Fiscal</label>
-                        <input type="text" name="nf" id="nf" class="inputUser" maxlength="7" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_nf'];}else{ echo "";}?>">
+                        <input type="number" name="nf" id="nf" class="inputUser" maxlength="7" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_nf'];}else{ echo "";}?>">
                     </div>
                     <br>
                     <div class="inputBox">
@@ -149,7 +137,6 @@
                                 <a href='transporte.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen'></i></a>
                                 </td>";
                                 echo"<td>".$v['za_pedido']."</td>";
-                                echo"<td>".$v['za_empresa']."</td>";
                                 echo"<td>".$v['za_nf']."</td>";
                                 echo"<td>".$v['za_transportador']."</td>";
                                 echo"<td>".$v['za_dt_lib_fat']."</td>";

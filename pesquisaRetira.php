@@ -52,7 +52,15 @@
                     </div>
                     <div class="inputPesq" style="margin-top: 10px">
                         <button onclick="searchDataRetira()" name="submit" id="submit">Pesquisar</button>
-                        <button onclick="location.href='./pesquisaRetira.php'" name="submit" id="submit">Voltar</button>    
+                        <?php 
+                        if(!empty($_GET['search']))
+                        {
+                            echo "<a href='./pesquisaRetira.php' name='submit' id='submit'>Voltar</a>";  
+                        }else
+                        {
+                            echo "<a href='./pesquisa.php' name='submit' id='submit'>Voltar</a>";
+                        }
+                        ?>
                     </div>
                 </fieldset>
         </div>
@@ -99,7 +107,7 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
-    <script src="./js/getPesquisaRetira.js"></script>
+    <script src="./js/getPesquisa.js"></script>
 </body>
 </html>
 

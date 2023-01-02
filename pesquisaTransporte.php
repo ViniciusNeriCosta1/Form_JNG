@@ -8,11 +8,11 @@
     if(!empty($_GET['search']))
     {   
         $data = $_GET['search'];
-        $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_transportador, za_dt_lib_fat, za_dt_saida, za_obs 
+        $result = $sql->select("SELECT za_pedido, za_nf, za_transportador, za_dt_lib_fat, za_dt_saida, za_obs 
         FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_nf = '$data' OR za_pedido = '$data' OR za_dt_saida = '$data' ORDER BY za_id DESC");
         $info = "Infos";
     }else{
-        $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_transportador, za_dt_lib_fat, za_dt_saida, za_obs 
+        $result = $sql->select("SELECT za_pedido, za_nf, za_transportador, za_dt_lib_fat, za_dt_saida, za_obs 
         FROM prd_p12.sza WHERE za_tp_saida = 'transporte' ORDER BY za_id DESC LIMIT 5"); 
     }
 ?>
@@ -48,14 +48,19 @@
                 <fieldset>
                     <legend><b>Pesquisa Transporte</b></legend>
                     <div class="inputPesq">
-                        <select name="filtro" id="filtro" >
-                            <option value="" style="display: none;">Tipo</option>
-                            <option value="za_nf">NF</option>
-                            <option value="za_pedido">Pedido</option>
-                            <option value="za_dt_entrada">Data Saída</option>
-                        </select>
-                        <input type="search" name="pesquisar" id="pesquisar">
-                        <button onclick="searchDataTransporte()">Pesquisar</button>
+                        <input type="search" name="pesquisar" id="pesquisar" placeholder="NF ou Nº Pedido">
+                    </div>
+                    <div class="inputPesq" style="margin-top: 10px">
+                        <button onclick="searchDataTransporte()" name="submit" id="submit">Pesquisar</button>
+                        <?php 
+                        if(!empty($_GET['search']))
+                        {
+                            echo "<a href='./pesquisaTransporte.php' name='submit' id='submit'>Voltar</a>";  
+                        }else
+                        {
+                            echo "<a href='./pesquisa.php' name='submit' id='submit'>Voltar</a>";
+                        }
+                        ?>
                     </div>
                 </fieldset>
             </div>
@@ -66,7 +71,6 @@
                     <thead>
                         <tr>
                             <th>Nº Pedido</th>
-                            <th>Empresa</th>
                             <th>NF</th>
                             <th>Transportador</th>
                             <th>Faturamento</th>
@@ -79,7 +83,6 @@
                             foreach ($result as $k => $v) {
                                 echo"<tr>";
                                 echo"<td>".$v['za_pedido']."</td>";
-                                echo"<td>".$v['za_empresa']."</td>";
                                 echo"<td>".$v['za_nf']."</td>";
                                 echo"<td>".$v['za_transportador']."</td>";
                                 echo"<td>".$v['za_dt_lib_fat']."</td>";
@@ -98,9 +101,7 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="./js/getPesquisaTransporte.js"></script>
-    <script src="./js/chancePlaceholder.js"></script>
+    <script src="./js/getPesquisa.js"></script>
 </body>
 </html>
 

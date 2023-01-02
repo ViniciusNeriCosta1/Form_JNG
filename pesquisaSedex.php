@@ -48,14 +48,19 @@
                 <fieldset>
                     <legend><b>Pesquisa Sedex</b></legend>
                     <div class="inputPesq">
-                        <select name="filtro" id="filtro" >
-                            <option value="" style="display: none;">Tipo</option>
-                            <option value="za_nf">NF</option>
-                            <option value="za_pedido">Pedido</option>
-                            <option value="za_dt_entrada">Data Saída</option>
-                        </select>
-                        <input type="search" name="pesquisar" id="pesquisar" >
-                        <button onclick="searchDataSedex()">Pesquisar</button>
+                        <input type="search" name="pesquisar" id="pesquisar" placeholder="NF, Nº Pedido ou Data Retirada">
+                    </div>
+                    <div class="inputPesq" style="margin-top: 10px">
+                        <button onclick="searchDataSedex()" name="submit" id="submit">Pesquisar</button>
+                        <?php 
+                        if(!empty($_GET['search']))
+                        {
+                            echo "<a href='./pesquisaSedex.php' name='submit' id='submit'>Voltar</a>";  
+                        }else
+                        {
+                            echo "<a href='./pesquisa.php' name='submit' id='submit'>Voltar</a>";
+                        }
+                        ?>
                     </div>
                 </fieldset>
             </div>
@@ -102,9 +107,7 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="./js/getPesquisaSedex.js"></script>
-    <script src="./js/chancePlaceholder.js"></script>
+    <script src="./js/getPesquisa.js"></script>
 </body>
 </html>
 

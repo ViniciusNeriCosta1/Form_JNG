@@ -1,0 +1,261 @@
+*{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    width: 65%;
+    border-radius: 0px 0px 10px 10px;
+    justify-content: space-between;
+    margin: auto;
+}
+
+.img_logo_header{
+    width: 200px;
+    margin: 10px;
+}
+
+.header-content{
+    gap: 5px;
+}
+
+.navbar{
+    display: flex;
+    border: none;
+    padding: 8px;
+    color: black;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+    gap: 8px;
+}
+
+.navbar a{
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.navbar a:hover{
+    color: #00aae3;
+}
+
+
+body{
+    background-image: linear-gradient(to right, #003676, #00aae3);
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2%;
+}
+
+.inputLogin{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 0!important;
+}
+
+.inputLogin input{
+    padding: 10px;
+    outline: none;
+}
+
+.fundo_dados legend{
+    margin-bottom: 5px;
+}
+
+.fundo_dados{
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border-radius: 15px;
+    width: 30%;
+    color: white;
+}
+
+fieldset{
+    border: 3px solid #0072bb;
+}
+
+legend{
+    border: 1px solid #0072bb;
+    padding: 10px;
+    text-align: center;
+    background-color: #0072bb;
+    border-radius: 10px;
+}
+
+.inputBox{
+    position: relative;
+}
+
+.inputUser{
+    background: none;
+    border: none;
+    border-bottom: 1px solid white;
+    outline: none;
+    color: white;
+    font-size: 15px;
+    width: 100%;
+    letter-spacing: 2px;
+}
+
+.inputUser:focus ~ .labelInput, .inputUser:valid ~ .labelInput{
+    top: -20px;
+    font-size: 12px;
+}
+
+.inputSelect{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid white;
+}
+
+.labelSelect, .labelInput{
+    padding-bottom: 5px;
+}
+
+.inputPesq{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5px;
+    width: 100%;
+}
+
+.inputPesq select{
+    width: 100%;
+    text-align: center;
+}
+
+.inputPesq input{
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.inputPesq button{
+    background-image: linear-gradient(to right, #003676, #0072bb);
+    width: 30%;
+    border: none;
+    padding: 0px 10px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.inputTransp{
+    display: flex;
+    flex-direction: row;
+}
+
+.inputPesq button:hover{
+    background-image: linear-gradient(to right, #003676, #00aae3);
+}
+
+select,
+option{
+    position: relative;
+    display: flex;
+    border: 0!important;
+    font-size: medium;
+    cursor: pointer;
+}
+
+.inputUser:focus ~ .labelInput, .inputUser:valid ~ .labelInput{
+    top: -20px;
+    font-size: 12px;
+}
+
+#submit{
+    background-image: linear-gradient(to right, #003676, #0072bb);
+    width: 100%;
+    border: none;
+    padding: 15px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+}
+
+#submit:hover{
+    background-image: linear-gradient(to right, #003676, #00aae3);
+}
+
+table{
+    width: 100%;
+}
+
+table, th, td, tr{
+    border:1px solid black;
+    text-align: center;
+    background:  none;
+    color: white;
+    border: none;
+}
+
+th, td, tr{
+    border-bottom: 1px solid white;
+}
+
+tr{
+    padding: 3px;
+}
+
+.fundo_table{
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    width: 95%;
+    padding: 15px;
+    border-radius: 15px;
+    color: white;
+    margin-top: 2%;
+}
+
+#informe,
+#editar,
+#saida,
+#incluir{
+    background-image: linear-gradient(to right, #003676, #0072bb);
+    border: none;
+    padding: 0px 10px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+#informe:hover,
+#editar:hover,
+#saida:hover,
+#incluir:hover{
+    background-image: linear-gradient(to right, #003676, #00aae3);
+}
+
+footer{
+    position: relative;
+    display: end;
+    bottom: 0;
+    background-color: black;
+    color: #FFF;
+    width: 100%;
+    height: 50px;    
+    text-align: center;
+    line-height: 50px;
+}

@@ -4,6 +4,8 @@ search.addEventListener("keydown", function(event) {
     if (event.key === "Enter") 
     {
         searchDataRetira();
+        searchDataSedex();
+        searchDataTransporte();
     }
 });
 

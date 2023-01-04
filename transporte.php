@@ -12,7 +12,7 @@
     
     if(isset($_GET['za_id']) && !empty($_GET['za_id'])) 
     {
-        $result = $sql->select('SELECT za_pedido, za_empresa, za_nf, za_transportador, za_obs, za_id FROM prd_p12.sza WHERE za_id = :za_id', array(
+        $result = $sql->select('SELECT za_pedido, za_origem, za_nf, za_transportador, za_obs, za_id FROM prd_p12.sza WHERE za_id = :za_id', array(
             ':za_id' => $_GET['za_id']
         ));
         foreach($result as $k => $v){}
@@ -23,8 +23,9 @@
         $transp = $_POST['transp'];
 
         $result = $sql->query('UPDATE prd_p12.sza SET 
-        za_nf = :za_nf, za_transportador = :za_transportador, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
+        za_origem = :za_origem, za_nf = :za_nf, za_transportador = :za_transportador, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
         array(
+            ':za_origem' => $_POST['origem'],
             ':za_nf' => $_POST['nf'],
             ':za_transportador' => $transp,
             ':za_obs' => $_POST['obs'],
@@ -38,14 +39,14 @@
             echo "<script type='text/javascript'>confirm('Deseja incluir ".$transp." nos transportes?')".incluirTranps()."</script>";
         }elseif(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
-            echo "<script>alert($erros);</script>";
+            echo "<script type='text/javascript'>alert($erros);</script>";
         }else{
             header('Location: transporte.php');
             die();
         }
     }
 
-    $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_transportador, za_dt_lib_fat, za_obs, za_id
+    $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_dt_lib_fat, za_obs, za_id
     FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_dt_saida IS NULL ORDER BY za_id DESC");
 
     
@@ -53,7 +54,7 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./assets/style.css">
     <link rel="shortcut icon" type = "imagem/x-icon" href = "./assets/logo_jng.ico"/>
 <head>
     <meta charset="UTF-8">
@@ -85,14 +86,23 @@
                     <legend><b>Formulário de Transporte</b></legend>
                     <input type="hidden" name="za_id" id="za_id" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_id'];}else{ echo "";}?>">
                     <div class="inputBox">
-                        <label for="pedido" class="labelInput">Pedido </label>
+                        <label for="pedido" class="labelInput">Pedido</label>
                         <input type="text" name="pedido" id="pedido" class="inputUser" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_pedido'];}else{ echo "Clique em editar pedido";}?>" disabled>
+                    </div>
+                    <br>
+                    <div class="inputSelect">
+                        <label for="origem" class="labelSelect">Origem</label>
+                        <select type="text" name="origem" id="origem" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_origem'];}else{ echo "";}?>">
+                            <option value="CND">CND</option>
+                            <option value="CDA">CDA</option>
+                        </select>
                     </div>
                     <br>
                     <div class="inputBox">
                         <label for="nf" class="labelInput">Nota Fiscal</label>
                         <input type="number" name="nf" id="nf" class="inputUser" maxlength="7" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_nf'];}else{ echo "";}?>">
                     </div>
+
                     <br>
                     <div class="inputBox">
                         <label for="transp" class="labelInput">Transporte</label>
@@ -121,7 +131,7 @@
                         <tr>
                             <th>Editar</th>
                             <th>Nº Pedido</th>
-                            <th>Empresa</th>
+                            <th>Origem</th>
                             <th>NF</th>
                             <th>Transportador</th>
                             <th>Faturamento</th>
@@ -137,6 +147,7 @@
                                 <a href='transporte.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen'></i></a>
                                 </td>";
                                 echo"<td>".$v['za_pedido']."</td>";
+                                echo"<td>".$v['za_origem']."</td>";
                                 echo"<td>".$v['za_nf']."</td>";
                                 echo"<td>".$v['za_transportador']."</td>";
                                 echo"<td>".$v['za_dt_lib_fat']."</td>";

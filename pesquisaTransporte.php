@@ -4,14 +4,27 @@
 
     $info = "Ultimos 5";
 
-    if(!empty($_GET['search']))
+    if(!empty($_GET['search']) && empty($_GET['origem']))
     {   
         $origem = $_GET['origem'];
         $select = $_GET['select'];
         $data = $_GET['search'];
         $result = $sql->select("SELECT za_pedido, za_origem, za_nf, za_transportador, za_prazo,za_dt_lib_fat, za_dt_saida, za_obs 
-        FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_origem = '$origem' AND $select = '$data' ORDER BY za_id DESC");
+        FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND $select = '$data' ORDER BY za_id DESC");
         $info = "Infos";
+        if(! $result){//valida se o resultado do array e informa o erro do insert
+            $erros = $sql->getErrors();
+        }
+    }elseif(!empty($_GET['search'])){
+        $origem = $_GET['origem'];
+        $select = $_GET['select'];
+        $data = $_GET['search'];
+        $result = $sql->select("SELECT za_pedido, za_origem, za_nf, za_transportador, za_prazo,za_dt_lib_fat, za_dt_saida, za_obs 
+        FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND $select = '$data' AND za_origem = '$origem' ORDER BY za_id DESC");
+        $info = "Infos";
+        if(! $result){//valida se o resultado do array e informa o erro do insert
+            $erros = $sql->getErrors();
+        }
     }else{
         $result = $sql->select("SELECT za_pedido, za_origem, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_dt_saida, za_obs 
         FROM prd_p12.sza WHERE za_tp_saida = 'transporte' ORDER BY za_id DESC LIMIT 5"); 
@@ -51,15 +64,16 @@
                         <select type="text" name="select" id="select" style="width: 200px;">
                             <option value="za_pedido">Pedido</option>
                             <option value="za_nf">NF</option>
-                            <option value="za_dt_saida">Data Saída</option>
+                            <option selected value="za_dt_saida">Data Saída</option>
                         </select>
-                        <input type="search" name="pesquisar" id="pesquisar" placeholder="NF, Nº Pedido ou Data Saída">
+                        <input type="search" name="pesquisar" id="pesquisar" placeholder="Ano-Mês-Dia">
                     </div>
                     <div class="inputSelect">
                         <label for="origem" class="labelSelect">Origem</label>
                         <select type="text" name="origem" id="origem">
+                            <option></option>
                             <option value="CND">CND</option>
-                            <option value="CDA">CDA</option>
+                            <option selected value="CDA">CDA</option>
                         </select>
                     </div>
                     <div class="inputPesq" style="margin-top: 10px">
@@ -117,10 +131,8 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="./js/chancePlaceholder.js"></script>
     <script src="./js/getPesquisa.js"></script>
 </body>
 </html>
-
-
-

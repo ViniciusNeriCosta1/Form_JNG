@@ -12,7 +12,7 @@
     
     if(isset($_GET['za_id']) && !empty($_GET['za_id'])) 
     {
-        $result = $sql->select('SELECT za_pedido, za_origem, za_nf, za_transportador, za_obs, za_id FROM prd_p12.sza WHERE za_id = :za_id', array(
+        $result = $sql->select('SELECT za_pedido, za_origem, za_nf, za_transportador, za_prazo, za_obs, za_id FROM prd_p12.sza WHERE za_id = :za_id', array(
             ':za_id' => $_GET['za_id']
         ));
         foreach($result as $k => $v){}
@@ -23,11 +23,12 @@
         $transp = $_POST['transp'];
 
         $result = $sql->query('UPDATE prd_p12.sza SET 
-        za_origem = :za_origem, za_nf = :za_nf, za_transportador = :za_transportador, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
+        za_origem = :za_origem, za_nf = :za_nf, za_transportador = :za_transportador, za_prazo = :za_prazo, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
         array(
             ':za_origem' => $_POST['origem'],
             ':za_nf' => $_POST['nf'],
             ':za_transportador' => $transp,
+            ':za_prazo' => $_POST['prazo'],
             ':za_obs' => $_POST['obs'],
             ':za_ip' => $_SERVER['REMOTE_ADDR'],
             ':za_id' => $_POST['za_id']
@@ -39,14 +40,15 @@
             echo "<script type='text/javascript'>confirm('Deseja incluir ".$transp." nos transportes?')".incluirTranps()."</script>";
         }elseif(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
-            echo "<script type='text/javascript'>alert($erros);</script>";
+            var_dump("<script type='text/javascript'>alert($erros);</script>");
+            //var_dump($erros);
         }else{
             header('Location: transporte.php');
             die();
         }
     }
 
-    $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_dt_lib_fat, za_obs, za_id
+    $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_obs, za_id
     FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_dt_saida IS NULL ORDER BY za_id DESC");
 
     
@@ -92,7 +94,8 @@
                     <br>
                     <div class="inputSelect">
                         <label for="origem" class="labelSelect">Origem</label>
-                        <select type="text" name="origem" id="origem" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_origem'];}else{ echo "";}?>">
+                        <select type="text" name="origem" id="origem" required>
+                            <option></option>
                             <option value="CND">CND</option>
                             <option value="CDA">CDA</option>
                         </select>
@@ -110,6 +113,11 @@
                         value="<?php if(!empty($_GET['za_id'])){ echo $v['za_transportador'];}else{ echo "";}?>">
                         <span id="resultado_pesquisa"></span>
                         <input type="hidden" name="id_transp" id="id_transp" class="inputUser">
+                    </div>
+                    <br>
+                    <div class="inputBox">
+                        <label for="prazo" class="labelInput">Prazo</label>
+                        <input type="text" name="prazo" id="prazo" class="inputUser" maxlength="2">
                     </div>
                     <br>
                     <div class="inputBox">
@@ -134,7 +142,8 @@
                             <th>Origem</th>
                             <th>NF</th>
                             <th>Transportador</th>
-                            <th>Faturamento</th>
+                            <th>Prazo</th>
+                            <th>Entrada</th>
                             <th>Saída</th>
                             <th>OBS</th>
                         </tr>
@@ -150,6 +159,7 @@
                                 echo"<td>".$v['za_origem']."</td>";
                                 echo"<td>".$v['za_nf']."</td>";
                                 echo"<td>".$v['za_transportador']."</td>";
+                                echo"<td>".$v['za_prazo']."</td>";
                                 echo"<td>".$v['za_dt_lib_fat']."</td>";
                                 echo"<td>
                                 <button onclick='confirme(".$v['za_id'].")' name='saida' id='saida'><i class='fa-solid fa-check'></i></button>

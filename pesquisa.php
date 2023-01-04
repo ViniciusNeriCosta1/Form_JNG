@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./assets/style.css">
     <link rel="shortcut icon" type = "imagem/x-icon" href = "./assets/logo_jng.ico"/>
 <head>
     <meta charset="UTF-8">

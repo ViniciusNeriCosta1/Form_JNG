@@ -7,9 +7,9 @@
     if(!empty($_GET['search']))
     {   
         $select = $_GET['select'];
-        $data = $_GET['search'];
+        $data = "%".$_GET['search']."%";
         $result = $sql->select("SELECT za_pedido, za_empresa, za_nf, za_prazo, za_volume, za_rastreio, za_dt_lib_fat, za_dt_saida, za_obs
-        FROM prd_p12.sza WHERE za_tp_saida = 'sedex' AND $select = '$data' ORDER BY za_id DESC");
+        FROM prd_p12.sza WHERE za_tp_saida = 'sedex' AND $select LIKE '$data' ORDER BY za_id DESC");
         $info = "Infos";
         if(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();

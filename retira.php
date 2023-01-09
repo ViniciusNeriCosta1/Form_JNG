@@ -85,17 +85,17 @@
                     <br>
                     <div class="inputBox">
                         <label for="nome" class="labelInput">Nome</label>
-                        <input type="text" name="nome" id="nome" class="inputUser" required maxlength="20">
+                        <input type="text" name="nome" id="nome" class="inputUser" maxlength="20">
                     </div>
                     <br>
                     <div class="inputBox">
                         <label for="empresa" class="labelInput">Empresa</label>
-                        <input type="text" name="empresa" id="empresa" class="inputUser" required maxlength="20">
+                        <input type="text" name="empresa" id="empresa" class="inputUser" maxlength="20">
                     </div>
                     <br>
                     <div class="inputBox">
                         <label for="doc" class="labelInput">Documento</label>
-                        <input type="text" name="doc" id="doc" class="inputUser" required maxlength="11">
+                        <input type="text" name="doc" id="doc" class="inputUser" maxlength="11">
                     </div>
                     <br>
                     <div class="inputBox">

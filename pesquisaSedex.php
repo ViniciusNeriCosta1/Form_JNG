@@ -41,6 +41,7 @@
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
                 <a href="./sedex.php">Sedex</a>
+                <a href="./baixa.php">Baixa</a>
                 <a href="./pesquisa.php">Pesquisa</a>
             </div>    
         </div>

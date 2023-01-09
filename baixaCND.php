@@ -37,7 +37,7 @@
     <main>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>Baixa CND</b></legend>
+                <legend><b><?php echo count($result).' Baixa CND'?></b></legend>
                 <table>
                     <thead>
                         <tr>

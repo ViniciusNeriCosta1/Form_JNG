@@ -12,7 +12,8 @@
     
     if(isset($_GET['za_id']) && !empty($_GET['za_id'])) 
     {
-        $result = $sql->select('SELECT za_pedido, za_origem, za_nf, za_transportador, za_prazo, za_obs, za_id FROM prd_p12.sza WHERE za_id = :za_id', array(
+        $result = $sql->select('SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_obs, za_id 
+        FROM prd_p12.sza WHERE za_id = :za_id', array(
             ':za_id' => $_GET['za_id']
         ));
         foreach($result as $k => $v){}
@@ -23,9 +24,10 @@
         $transp = $_POST['transp'];
 
         $result = $sql->query('UPDATE prd_p12.sza SET 
-        za_origem = :za_origem, za_nf = :za_nf, za_transportador = :za_transportador, za_prazo = :za_prazo, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
+        za_origem = :za_origem, za_empresa = :za_empresa, za_nf = :za_nf, za_transportador = :za_transportador, za_prazo = :za_prazo, za_obs = :za_obs, za_ip = :za_ip WHERE za_id = :za_id', 
         array(
             ':za_origem' => $_POST['origem'],
+            ':za_empresa' => $_POST['empresa'],
             ':za_nf' => $_POST['nf'],
             ':za_transportador' => $transp,
             ':za_prazo' => $_POST['prazo'],
@@ -40,8 +42,8 @@
             echo "<script type='text/javascript'>confirm('Deseja incluir ".$transp." nos transportes?')".incluirTranps()."</script>";
         }elseif(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
-            var_dump("<script type='text/javascript'>alert($erros);</script>");
-            //var_dump($erros);
+            //var_dump("<script type='text/javascript'>alert($erros);</script>");
+            var_dump($erros);
         }else{
             header('Location: transporte.php');
             die();
@@ -99,10 +101,14 @@
                     </div>
                     <br>
                     <div class="inputBox">
+                        <label for="empresa" class="labelInput">Empresa</label>
+                        <input type="text" name="empresa" id="empresa" class="inputUser" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_empresa'];}else{ echo "";}?>">
+                    </div>
+                    <br>
+                    <div class="inputBox">
                         <label for="nf" class="labelInput">Nota Fiscal</label>
                         <input type="number" name="nf" id="nf" class="inputUser" maxlength="7" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_nf'];}else{ echo "";}?>">
                     </div>
-
                     <br>
                     <div class="inputBox">
                         <label for="transp" class="labelInput">Transporte</label>
@@ -114,7 +120,7 @@
                     <br>
                     <div class="inputBox">
                         <label for="prazo" class="labelInput">Prazo</label>
-                        <input type="text" name="prazo" id="prazo" class="inputUser" maxlength="2">
+                        <input type="text" name="prazo" id="prazo" class="inputUser" maxlength="2" value="<?php if(!empty($_GET['za_id'])){ echo $v['za_prazo'];}else{ echo "";}?>">
                     </div>
                     <br>
                     <div class="inputBox">
@@ -130,6 +136,51 @@
         </div>
         <div class="fundo_table">
             <fieldset>
+                <legend><b>Pendentes Sem Origem</b></legend>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Editar</th>
+                            <th>Nº Pedido</th>
+                            <th>Origem</th>
+                            <th>Empresa</th>
+                            <th>NF</th>
+                            <th>Transportador</th>
+                            <th>Prazo</th>
+                            <th>Entrada</th>
+                            <th>Saída</th>
+                            <th>OBS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_obs, za_id
+                            FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_origem IS NULL AND za_dt_saida IS NULL ORDER BY za_id DESC");
+                            foreach($result as $k => $v) {
+                                echo"<tr>";
+                                echo"<td>
+                                <a href='transporte.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen'></i></a>
+                                </td>";
+                                echo"<td>".$v['za_pedido']."</td>";
+                                echo"<td>".$v['za_origem']."</td>";
+                                echo"<td>".$v['za_empresa']."</td>";
+                                echo"<td>".$v['za_nf']."</td>";
+                                echo"<td>".$v['za_transportador']."</td>";
+                                echo"<td>".$v['za_prazo']."</td>";
+                                echo"<td>".$v['za_dt_lib_fat']."</td>";
+                                echo"<td>
+                                <button onclick='confirme(".$v['za_id'].")' name='saida' id='saida'><i class='fa-solid fa-check'></i></button>
+                                </td>";
+                                echo"<td>".$v['za_obs']."</td>";
+                                echo"</tr>";
+                            }
+                        ?>    
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+        <div class="fundo_table">
+            <fieldset>
                 <legend><b>Pendentes CND</b></legend>
                 <table>
                     <thead>
@@ -137,6 +188,7 @@
                             <th>Editar</th>
                             <th>Nº Pedido</th>
                             <th>Origem</th>
+                            <th>Empresa</th>
                             <th>NF</th>
                             <th>Transportador</th>
                             <th>Prazo</th>
@@ -156,6 +208,7 @@
                                 </td>";
                                 echo"<td>".$v['za_pedido']."</td>";
                                 echo"<td>".$v['za_origem']."</td>";
+                                echo"<td>".$v['za_empresa']."</td>";
                                 echo"<td>".$v['za_nf']."</td>";
                                 echo"<td>".$v['za_transportador']."</td>";
                                 echo"<td>".$v['za_prazo']."</td>";
@@ -180,6 +233,7 @@
                             <th>Editar</th>
                             <th>Nº Pedido</th>
                             <th>Origem</th>
+                            <th>Empresa</th>
                             <th>NF</th>
                             <th>Transportador</th>
                             <th>Prazo</th>
@@ -199,6 +253,7 @@
                                 </td>";
                                 echo"<td>".$v['za_pedido']."</td>";
                                 echo"<td>".$v['za_origem']."</td>";
+                                echo"<td>".$v['za_empresa']."</td>";
                                 echo"<td>".$v['za_nf']."</td>";
                                 echo"<td>".$v['za_transportador']."</td>";
                                 echo"<td>".$v['za_prazo']."</td>";

@@ -48,10 +48,6 @@
         }
     }
 
-    $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_obs, za_id
-    FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_dt_saida IS NULL ORDER BY za_id DESC");
-
-    
 ?>
 
 <!DOCTYPE html>
@@ -77,6 +73,7 @@
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
                 <a href="./sedex.php">Sedex</a>
+                <a href="./baixa.php">Baixa</a>
                 <a href="./pesquisa.php">Pesquisa</a>
             </div>    
         </div>
@@ -133,7 +130,7 @@
         </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>Pendentes</b></legend>
+                <legend><b>Pendentes CND</b></legend>
                 <table>
                     <thead>
                         <tr>
@@ -150,6 +147,51 @@
                     </thead>
                     <tbody>
                         <?php
+                            $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_obs, za_id
+                            FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_origem = 'CND' AND za_dt_saida IS NULL ORDER BY za_id DESC");
+                            foreach($result as $k => $v) {
+                                echo"<tr>";
+                                echo"<td>
+                                <a href='transporte.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen'></i></a>
+                                </td>";
+                                echo"<td>".$v['za_pedido']."</td>";
+                                echo"<td>".$v['za_origem']."</td>";
+                                echo"<td>".$v['za_nf']."</td>";
+                                echo"<td>".$v['za_transportador']."</td>";
+                                echo"<td>".$v['za_prazo']."</td>";
+                                echo"<td>".$v['za_dt_lib_fat']."</td>";
+                                echo"<td>
+                                <button onclick='confirme(".$v['za_id'].")' name='saida' id='saida'><i class='fa-solid fa-check'></i></button>
+                                </td>";
+                                echo"<td>".$v['za_obs']."</td>";
+                                echo"</tr>";
+                            }
+                        ?>    
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+        <div class="fundo_table">
+            <fieldset>
+                <legend><b>Pendentes CDA</b></legend>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Editar</th>
+                            <th>Nº Pedido</th>
+                            <th>Origem</th>
+                            <th>NF</th>
+                            <th>Transportador</th>
+                            <th>Prazo</th>
+                            <th>Entrada</th>
+                            <th>Saída</th>
+                            <th>OBS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_obs, za_id
+                            FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_origem = 'CDA' AND za_dt_saida IS NULL ORDER BY za_id DESC");
                             foreach($result as $k => $v) {
                                 echo"<tr>";
                                 echo"<td>

@@ -28,8 +28,6 @@
             die();
         }
     }
-
-    $result = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_dt_saida IS NULL ORDER BY za_id DESC");
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +53,7 @@
                 <a href="./retira.php">Retira</a>
                 <a href="./transporte.php">Transporte</a>
                 <a href="./sedex.php">Sedex</a>
+                <a href="./baixa.php">Baixa</a>
                 <a href="./pesquisa.php">Pesquisa</a>
             </div>    
         </div>
@@ -84,7 +83,7 @@
         </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>Pendentes</b></legend>
+                <legend><b>Pendentes Retira</b></legend>
                 <table>
                     <thead>
                         <tr>
@@ -96,6 +95,68 @@
                     </thead>
                     <tbody>
                         <?php
+                            $result = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_tp_saida = 'retira' AND za_dt_saida IS NULL ORDER BY za_id DESC");
+                            foreach($result as $k => $v){
+                                echo"<tr>";
+                                echo"<td>".$v['za_pedido']."</td>";
+                                echo"<td>".$v['za_tp_saida']."</td>";
+                                echo"<td>".$v['za_dt_lib_fat']."</td>";
+                                echo"<td>
+                                <a href='{$v['za_tp_saida']}.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen' name='editar' id='editar'></i></a>
+                                </td>";
+                                echo"</tr>";
+                            }
+                        ?>
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+        <div class="fundo_table">
+            <fieldset>
+                <legend><b>Pendentes Transporte</b></legend>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nº Pedido</th>
+                            <th>Tipo de Saída</th></th>
+                            <th>Data Entrada</th>
+                            <th>Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            $result = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_dt_saida IS NULL ORDER BY za_id DESC");
+
+                            foreach($result as $k => $v){
+                                echo"<tr>";
+                                echo"<td>".$v['za_pedido']."</td>";
+                                echo"<td>".$v['za_tp_saida']."</td>";
+                                echo"<td>".$v['za_dt_lib_fat']."</td>";
+                                echo"<td>
+                                <a href='{$v['za_tp_saida']}.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen' name='editar' id='editar'></i></a>
+                                </td>";
+                                echo"</tr>";
+                            }
+                        ?>
+                    </tbody>
+                </table>
+            </fieldset>
+        </div>
+        <div class="fundo_table">
+            <fieldset>
+                <legend><b>Pendentes Sedex</b></legend>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nº Pedido</th>
+                            <th>Tipo de Saída</th></th>
+                            <th>Data Entrada</th>
+                            <th>Editar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            $result = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_tp_saida = 'sedex' AND za_dt_saida IS NULL ORDER BY za_id DESC");
                             foreach($result as $k => $v){
                                 echo"<tr>";
                                 echo"<td>".$v['za_pedido']."</td>";

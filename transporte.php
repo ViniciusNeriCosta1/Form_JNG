@@ -50,6 +50,15 @@
         }
     }
 
+    $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_obs, za_id
+    FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_origem IS NULL AND za_dt_saida IS NULL ORDER BY za_id DESC");
+
+    $resultCND = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_obs, za_id
+    FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_origem = 'CND' AND za_dt_saida IS NULL ORDER BY za_id DESC");
+
+    $resultCDA = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_obs, za_id
+    FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_origem = 'CDA' AND za_dt_saida IS NULL ORDER BY za_id DESC");
+
 ?>
 
 <!DOCTYPE html>
@@ -136,7 +145,7 @@
         </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>Pendentes Sem Origem</b></legend>
+                <legend><b><?php echo count($result).' Pendentes Sem Origem'?></b></legend>
                 <table>
                     <thead>
                         <tr>
@@ -154,8 +163,6 @@
                     </thead>
                     <tbody>
                         <?php
-                            $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_obs, za_id
-                            FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_origem IS NULL AND za_dt_saida IS NULL ORDER BY za_id DESC");
                             foreach($result as $k => $v) {
                                 echo"<tr>";
                                 echo"<td>
@@ -181,7 +188,7 @@
         </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>Pendentes CND</b></legend>
+                <legend><b><?php echo count($resultCND).' Pendentes CND'?></b></legend>
                 <table>
                     <thead>
                         <tr>
@@ -199,9 +206,7 @@
                     </thead>
                     <tbody>
                         <?php
-                            $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_obs, za_id
-                            FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_origem = 'CND' AND za_dt_saida IS NULL ORDER BY za_id DESC");
-                            foreach($result as $k => $v) {
+                            foreach($resultCND as $k => $v) {
                                 echo"<tr>";
                                 echo"<td>
                                 <a href='transporte.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen'></i></a>
@@ -226,7 +231,7 @@
         </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>Pendentes CDA</b></legend>
+                <legend><b><?php echo count($resultCDA).' Pendentes CDA'?></b></legend>
                 <table>
                     <thead>
                         <tr>
@@ -244,9 +249,7 @@
                     </thead>
                     <tbody>
                         <?php
-                            $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_obs, za_id
-                            FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_origem = 'CDA' AND za_dt_saida IS NULL ORDER BY za_id DESC");
-                            foreach($result as $k => $v) {
+                            foreach($resultCDA as $k => $v) {
                                 echo"<tr>";
                                 echo"<td>
                                 <a href='transporte.php?za_id={$v['za_id']}' name='editar' id='editar''><i class='fal fa-solid fa-file-pen'></i></a>

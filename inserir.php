@@ -28,6 +28,13 @@
             die();
         }
     }
+
+    $resultRetira = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_tp_saida = 'retira' AND za_dt_saida IS NULL ORDER BY za_id DESC");
+
+    $resultTrans = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_dt_saida IS NULL ORDER BY za_id DESC");
+
+    $resultSedex = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_tp_saida = 'sedex' AND za_dt_saida IS NULL ORDER BY za_id DESC");
+
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +90,7 @@
         </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>Pendentes Retira</b></legend>
+                <legend><b><?php echo count($resultRetira).' Pendentes Retira'?></b></legend>
                 <table>
                     <thead>
                         <tr>
@@ -95,8 +102,7 @@
                     </thead>
                     <tbody>
                         <?php
-                            $result = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_tp_saida = 'retira' AND za_dt_saida IS NULL ORDER BY za_id DESC");
-                            foreach($result as $k => $v){
+                            foreach($resultRetira as $k => $v){
                                 echo"<tr>";
                                 echo"<td>".$v['za_pedido']."</td>";
                                 echo"<td>".$v['za_tp_saida']."</td>";
@@ -113,7 +119,7 @@
         </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>Pendentes Transporte</b></legend>
+            <legend><b><?php echo count($resultTrans).' Pendentes Transporte'?></b></legend>
                 <table>
                     <thead>
                         <tr>
@@ -125,9 +131,7 @@
                     </thead>
                     <tbody>
                         <?php
-                            $result = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_dt_saida IS NULL ORDER BY za_id DESC");
-
-                            foreach($result as $k => $v){
+                            foreach($resultTrans as $k => $v){
                                 echo"<tr>";
                                 echo"<td>".$v['za_pedido']."</td>";
                                 echo"<td>".$v['za_tp_saida']."</td>";
@@ -144,7 +148,7 @@
         </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>Pendentes Sedex</b></legend>
+                <legend><b><?php echo count($resultSedex).' Pendentes Sedex'?></b></legend>
                 <table>
                     <thead>
                         <tr>
@@ -156,8 +160,8 @@
                     </thead>
                     <tbody>
                         <?php
-                            $result = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_tp_saida = 'sedex' AND za_dt_saida IS NULL ORDER BY za_id DESC");
-                            foreach($result as $k => $v){
+                            
+                            foreach($resultSedex as $k => $v){
                                 echo"<tr>";
                                 echo"<td>".$v['za_pedido']."</td>";
                                 echo"<td>".$v['za_tp_saida']."</td>";

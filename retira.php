@@ -110,7 +110,7 @@
         </div>
         <div class="fundo_table">
             <fieldset>
-                <legend><b>Pendentes</b></legend>
+                <legend><b><?php echo count($result).' Pendentes'?></b></legend>
                 <table>
                     <thead>
                         <tr>

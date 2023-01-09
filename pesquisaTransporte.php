@@ -9,7 +9,7 @@
         $origem = $_GET['origem'];
         $select = $_GET['select'];
         $data = "%".$_GET['search']."%";
-        $result = $sql->select("SELECT za_pedido, za_origem, za_nf, za_transportador, za_prazo,za_dt_lib_fat, za_dt_saida, za_obs 
+        $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_dt_saida, za_obs 
         FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND $select LIKE '$data' ORDER BY za_id DESC");
         $info = "Infos";
         if(! $result){//valida se o resultado do array e informa o erro do insert
@@ -19,14 +19,14 @@
         $origem = $_GET['origem'];
         $select = $_GET['select'];
         $data = "%".$_GET['search']."%";
-        $result = $sql->select("SELECT za_pedido, za_origem, za_nf, za_transportador, za_prazo,za_dt_lib_fat, za_dt_saida, za_obs 
+        $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_dt_saida, za_obs 
         FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND $select LIKE '$data' AND za_origem = '$origem' ORDER BY za_id DESC");
         $info = "Infos";
         if(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
         }
     }else{
-        $result = $sql->select("SELECT za_pedido, za_origem, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_dt_saida, za_obs 
+        $result = $sql->select("SELECT za_pedido, za_origem, za_empresa, za_nf, za_transportador, za_prazo, za_dt_lib_fat, za_dt_saida, za_obs 
         FROM prd_p12.sza WHERE za_tp_saida = 'transporte' ORDER BY za_id DESC LIMIT 5"); 
     }
 ?>
@@ -65,6 +65,7 @@
                         <select type="text" name="select" id="select" style="width: 200px;">
                             <option value="za_pedido">Pedido</option>
                             <option value="za_nf">NF</option>
+                            <option value="za_empresa">Empresa</option>
                             <option selected value="za_dt_saida">Data Saída</option>
                         </select>
                         <input type="search" name="pesquisar" id="pesquisar" placeholder="Ano-Mês-Dia">
@@ -99,6 +100,7 @@
                         <tr>
                             <th>Nº Pedido</th>
                             <th>Origem</th>
+                            <th>Empresa</th>
                             <th>NF</th>
                             <th>Transportador</th>
                             <th>Prazo</th>
@@ -113,6 +115,7 @@
                                 echo"<tr>";
                                 echo"<td>".$v['za_pedido']."</td>";
                                 echo"<td>".$v['za_origem']."</td>";
+                                echo"<td>".$v['za_empresa']."</td>";
                                 echo"<td>".$v['za_nf']."</td>";
                                 echo"<td>".$v['za_transportador']."</td>";
                                 echo"<td>".$v['za_prazo']."</td>";

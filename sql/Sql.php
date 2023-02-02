@@ -61,4 +61,54 @@ class Sql {
 	public function getErrors() {
 		return $this->errors;
 	}
+
+	public function insert($table, $data = array()) {
+		$query = " INSERT INTO $table (";
+		foreach($data as $field => $value) $query .= "{$field}, ";
+		$query = substr($query, 0, -2); //remove última vírgula da string
+		$query .= ") VALUES (";
+
+		$args = array();
+		foreach($data as $field => $value) {
+			$data[$field] = ($value == '') ? null : $value;
+			
+			$query .= ":{$field}, ";
+			$args[$field] = $value;
+		}
+
+		$query = substr($query, 0, -2); //remove última vírgula da string
+		$query .= ')';
+
+		return $this->query($query, $args);
+	}
+
+	public function update($table, $data = array(), $where = null, $id = null) {
+		if ($id === null) $id = "id_{$table}";
+		if ($where === null) $where = "{$id} = :{$id}";
+
+		$query = " UPDATE $table SET ";
+		$args = array();
+
+		foreach($data as $field => $value) {
+			$data[$field] = ($value == '') ? null : $value;
+			
+			$query .= "{$field} = :{$field}, ";
+			$args[$field] = $value;
+		}
+
+		$query = substr($query, 0, -2); //remove última vírgula da string
+		$query .= " WHERE $where";
+
+		return $this->query($query, $args);
+	}
+
+	public function delete($table, $value, $where = null, $id = null) {
+		if ($id === null) $id = "id_{$table}";
+		if ($where === null) $where = "{$id} = :{$id}";
+
+		$query = " DELETE FROM $table WHERE $where";
+		$args = [":{$id}" => $value];
+		
+		return $this->query($query, $args);
+	}
 }

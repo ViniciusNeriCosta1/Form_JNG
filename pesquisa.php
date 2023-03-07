@@ -1,3 +1,11 @@
+<?php
+    //session_start();
+    include_once('sessiontimeout.php');
+
+    ob_start();
+
+    //$sql = new Sql();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <link rel="stylesheet" href="./assets/style.css">
@@ -14,17 +22,28 @@
         <div class="logo_header">
             <img src="./assets/logo_JNG_azul.png" alt="Logo JNG" class="img_logo_header">
         </div>
-        <div class="header-content">
-        <div class="navbar">
-                <a href="./inserir.php">Inicio</a>
-                <a href="./retira.php">Retira</a>
-                <a href="./transporte.php">Transporte</a>
-                <a href="./sedex.php">Sedex</a>
-                <a href="./baixa.php">Baixa</a>
-                <a href="./pesquisa.php">Pesquisa</a>
-            </div>    
-        </div>
-        </div>
+        <?php
+        //$_SESSION['ZC_depart'];
+        if($_SESSION['ZC_depart'] === 'consulta'){
+            echo "<div class='header-content'>";
+            echo "<div class='navbar'>";
+            echo "<a href='./pesquisa.php'>Pesquisa</a>";
+            echo "</div>";    
+            echo "</div>";
+            echo "</div>";
+        }else{
+            echo "<div class='header-content'>";
+            echo "<div class='navbar'>";
+            echo "<a href='./inserir.php'>Inicio</a>";
+            echo "<a href='./retira.php'>Retira</a>";
+            echo "<a href='./transporte.php'>Transporte</a>";
+            echo "<a href='./sedex.php'>Sedex</a>";
+            echo "<a href='./pesquisa.php'>Pesquisa</a>";
+            echo "</div>";
+            echo "</div>";
+        }
+        ?>
+        <a href="sair.php" name="editar" id="editar">Sair</a>
     </header>
     <main>
         <div class="fundo_dados">

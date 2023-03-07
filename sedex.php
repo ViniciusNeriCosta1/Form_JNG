@@ -1,8 +1,10 @@
 <?php
     date_default_timezone_set('America/Sao_Paulo');
     include_once('sql/Sql.php');
+    include_once('sql/erro.php');
 
     $sql = new Sql();
+    $erro = new erro();
 
     if(isset($_GET['za_id']) && !empty($_GET['za_id'])) 
     {
@@ -10,28 +12,38 @@
             ':za_id' => $_GET['za_id']
         ));
         foreach($result as $k => $v){}
+    }else{
+       $erro->erroPedido();
     }
 
-    if(isset($_POST['submit']) && !empty($_POST['submit']) && !empty($_GET['za_id']))
+    if(isset($_POST['submit']) && !empty($_POST['submit']))
     {
-        $result = $sql->query('UPDATE prd_p12.sza SET 
-        za_empresa = :za_empresa, za_nf = :za_nf, za_prazo = :za_prazo, za_volume = :za_volume, za_rastreio = :za_rastreio, za_dt_saida = :za_dt_saida, za_obs = :za_obs, za_ip = :za_ip, za_id = :za_id  
-        WHERE za_id = :za_id', 
-        array(
-            ':za_empresa' => $_POST['empresa'],
-            ':za_nf' => $_POST['nf'],
-            ':za_prazo' => $_POST['prazo'],
-            ':za_volume' => $_POST['volume'],
-            ':za_rastreio' => $_POST['rastreio'],
-            ':za_dt_saida' => date('Y-m-d'),
-            ':za_obs' => $_POST['obs'],
-            ':za_ip' => $_SERVER['REMOTE_ADDR'],
-            ':za_id' => $_POST['za_id']
-        ));
-    }else{
-        //echo "<script>alert('Pedido não selecionado')</script>";
-        //header('Location: sedex.php');
-        //die();
+        if(empty($_GET['za_id'])){
+            $erro->erroPedido();
+        }else{
+            $result = $sql->query('UPDATE prd_p12.sza SET 
+            za_empresa = :za_empresa, za_nf = :za_nf, za_prazo = :za_prazo, za_volume = :za_volume, za_rastreio = :za_rastreio, za_dt_saida = :za_dt_saida, za_obs = :za_obs, za_ip = :za_ip, za_id = :za_id  
+            WHERE za_id = :za_id', 
+            array(
+                ':za_empresa' => $_POST['empresa'],
+                ':za_nf' => $_POST['nf'],
+                ':za_prazo' => $_POST['prazo'],
+                ':za_volume' => $_POST['volume'],
+                ':za_rastreio' => $_POST['rastreio'],
+                ':za_dt_saida' => date('Y-m-d'),
+                ':za_obs' => $_POST['obs'],
+                ':za_ip' => $_SERVER['REMOTE_ADDR'],
+                ':za_id' => $_POST['za_id']
+            ));
+            if(!$result){//valida se o resultado do array e informa o erro do insert
+                $erros = $sql->getErrors();
+                echo "<script>alert($erros);</script>";
+            }else{
+                header('Location: sedex.php');
+                die();
+            }
+        }
+
     }
 
     $result = $sql->select("SELECT za_pedido, za_dt_lib_fat, za_id

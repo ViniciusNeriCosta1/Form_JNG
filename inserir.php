@@ -1,32 +1,59 @@
 <?php
+    //include_once('sessiontimeout.php');
+    session_start();
+    ob_start();
+
+    if((!isset($_SESSION['ZC_id'])) AND (!isset($_SESSION['ZC_depart']))){
+        header('Location: home.php');
+        $_SESSION['msg'] = "<p style='color: red'>Erro: Necessário realizar o login.</p>";
+    }
+
     date_default_timezone_set('America/Sao_Paulo');
+
     include_once('sql/Sql.php');
 
     $sql = new Sql();
 
+    function incluirPedido()
+    {
+        $sql = new Sql();
+        $_POST['za_dt_lib_fat'] = date('Y-m-d');
+        $_POST['za_ip'] = $_SERVER['REMOTE_ADDR'];
+        unset($_POST['submit']);
+        $sql -> insert('prd_p12.sza', $_POST);
+        //var_dump($sql);
+        //var_dump($sql->getErrors());
+    }
+
     if(isset($_POST['submit']))
     {
-        $pedido = $_POST['pedido'];
-        $tp_saida = $_POST['tp_saida'];
-
-        $result = $sql->query('INSERT INTO prd_p12.sza(
-            za_pedido, za_tp_saida, za_dt_lib_fat, za_ip
-        ) VALUES (
-            :za_pedido, :za_tp_saida, :za_dt_lib_fat, :za_ip
-        )
-        ', array(
-        ':za_pedido' => $pedido,
-        ':za_tp_saida' => $tp_saida,
-        ':za_dt_lib_fat' => date('Y-m-d'),
-        ':za_ip' => $_SERVER['REMOTE_ADDR']
-        ));        
-        if(! $result){//valida se o resultado do array e informa o erro do insert
+        $pedido = $_POST['za_pedido'];
+        $verifica = $sql->select('SELECT za_id, za_pedido, za_dt_saida FROM prd_p12.sza WHERE za_dt_saida IS NOT NULL AND za_pedido LIKE :za_pedido', array(
+            ':za_pedido' => $pedido
+        ));
+        if(empty($verifica)){
+            $result = incluirPedido();
+        }elseif($verifica){
+            echo "<script type='text/javascript'>var resultado = confirm('Pedido: ".$pedido." já existe, o pedido não será incluido?');
+            if(resultado == true){
+                alert('false');
+            }
+            else{
+                certo();
+            }
+            function certo(){"
+                .incluirPedido()."
+            }
+            </script>";
+        }elseif(! $result){//valida se o resultado do array e informa o erro do insert
             $erros = $sql->getErrors();
-            echo "<script>alert($erros);</script>";
+            //echo "<script>alert($erros);</script>";
+            var_dump($erros);
         }else{
             header('Location: inserir.php');
             die();
         }
+        //var_dump($_POST);
     }
 
     $resultRetira = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_tp_saida = 'retira' AND za_dt_saida IS NULL ORDER BY za_id DESC");
@@ -34,7 +61,6 @@
     $resultTrans = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_tp_saida = 'transporte' AND za_dt_saida IS NULL ORDER BY za_id DESC");
 
     $resultSedex = $sql->select("SELECT za_pedido, za_tp_saida, za_dt_lib_fat, za_id FROM prd_p12.sza WHERE za_tp_saida = 'sedex' AND za_dt_saida IS NULL ORDER BY za_id DESC");
-
 ?>
 
 <!DOCTYPE html>
@@ -54,16 +80,27 @@
         <div class="logo_header">
             <img src="./assets/logo_JNG_azul.png" alt="Logo JNG" class="img_logo_header">
         </div>
-        <div class="header-content">
-            <div class="navbar">
-                <a href="./inserir.php">Inicio</a>
-                <a href="./retira.php">Retira</a>
-                <a href="./transporte.php">Transporte</a>
-                <a href="./sedex.php">Sedex</a>
-                <a href="./baixa.php">Baixa</a>
-                <a href="./pesquisa.php">Pesquisa</a>
-            </div>    
-        </div>
+        <?php
+        if($_SESSION['ZC_depart'] === 'consulta'){
+            echo "<div class='header-content'>";
+            echo "<div class='navbar'>";
+            echo "<a href='./pesquisa.php'>Pesquisa</a>";
+            echo "</div>";    
+            echo "</div>";
+            echo "</div>";
+        }else{
+            echo "<div class='header-content'>";
+            echo "<div class='navbar'>";
+            echo "<a href='./inserir.php'>Inicio</a>";
+            echo "<a href='./retira.php'>Retira</a>";
+            echo "<a href='./transporte.php'>Transporte</a>";
+            echo "<a href='./sedex.php'>Sedex</a>";
+            echo "<a href='./pesquisa.php'>Pesquisa</a>";
+            echo "</div>";
+            echo "</div>";
+        }
+        ?>
+        <a href="sair.php" name="editar" id="editar">Sair</a>
     </header>
     <main>
         <div class="fundo_dados">
@@ -71,12 +108,12 @@
                 <fieldset>
                     <legend><b>Inserir Pedido</b></legend>
                     <div class="inputBox">
-                    <label for="pedido" class="labelSelect">Numero do Pedido</label>
-                        <input type="number" name="pedido" id="pedido" class="inputUser" required maxlength="6" min="0">
+                    <label for="za_pedido" class="labelSelect">Numero do Pedido</label>
+                        <input type="number" name="za_pedido" id="za_pedido" class="inputUser" required maxlength="6" min="0">
                     </div>
                     <div class="inputSelect">
-                        <label for="tp_saida" class="labelSelect">Tipo de Saída</label>
-                        <select type="text" name="tp_saida" id="tp_saida">
+                        <label for="za_tp_saida" class="labelSelect">Tipo de Saída</label>
+                        <select type="text" name="za_tp_saida" id="za_tp_saida">
                             <option value="retira">Retira</option>
                             <option value="transporte">Transporte</option>
                             <option value="sedex">Sedex</option>
@@ -182,6 +219,11 @@
             <p>Copyright © 2022 Intranet JNG</p>
         </div>
     </footer>
+    <script>
+        function certo(){
+            alert('true');
+        }
+    </script>
     <script src="./js/maxTam.js"></script>
 </body>
 </html>
